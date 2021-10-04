@@ -1,0 +1,2073 @@
+{
+  "SurveyEntry": {
+    "SurveyID": "SV_eLnpGNWb3hM31cy",
+    "SurveyName": "Acquisition Headline Survey (Randomizer, Small Example)",
+    "SurveyDescription": null,
+    "SurveyOwnerID": "UR_3WUHDMGK0A1YPvo",
+    "SurveyBrandID": "ucdavis",
+    "DivisionID": "DV_bCz0vLDEYcivdHv",
+    "SurveyLanguage": "EN",
+    "SurveyActiveResponseSet": "RS_dgMRsbI5TIbBjLw",
+    "SurveyStatus": "Inactive",
+    "SurveyStartDate": "0000-00-00 00:00:00",
+    "SurveyExpirationDate": "0000-00-00 00:00:00",
+    "SurveyCreationDate": "2021-09-02 21:33:29",
+    "CreatorID": "UR_3WUHDMGK0A1YPvo",
+    "LastModified": "2021-09-02 21:35:33",
+    "LastAccessed": "0000-00-00 00:00:00",
+    "LastActivated": "0000-00-00 00:00:00",
+    "Deleted": null
+  },
+  "SurveyElements": [
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "BL",
+      "PrimaryAttribute": "Survey Blocks",
+      "SecondaryAttribute": null,
+      "TertiaryAttribute": null,
+      "Payload": {
+        "1": {
+          "Type": "Trash",
+          "Description": "Trash / Unused Questions",
+          "ID": "BL_3JCZSrANuFazQ7I",
+          "Options": {
+            "BlockLocking": "false",
+            "RandomizeQuestions": "false",
+            "BlockVisibility": "Expanded"
+          },
+          "BlockElements": []
+        },
+        "2": {
+          "Type": "Standard",
+          "SubType": "",
+          "Description": "Block 2",
+          "ID": "BL_2",
+          "BlockElements": [
+            {
+              "Type": "Question",
+              "QuestionID": "QID1"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID2"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID3"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID4"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID5"
+            },
+            {
+              "Type": "Page Break"
+            }
+          ],
+          "Options": {
+            "BlockLocking": "false",
+            "RandomizeQuestions": "false",
+            "BlockVisibility": "Collapsed"
+          }
+        },
+        "3": {
+          "Type": "Standard",
+          "SubType": "",
+          "Description": "Block 3",
+          "ID": "BL_3",
+          "BlockElements": [
+            {
+              "Type": "Question",
+              "QuestionID": "QID6"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID7"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID8"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID9"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID10"
+            },
+            {
+              "Type": "Page Break"
+            }
+          ],
+          "Options": {
+            "BlockLocking": "false",
+            "RandomizeQuestions": "false",
+            "BlockVisibility": "Collapsed"
+          }
+        },
+        "4": {
+          "Type": "Standard",
+          "SubType": "",
+          "Description": "Block 4",
+          "ID": "BL_4",
+          "BlockElements": [
+            {
+              "Type": "Question",
+              "QuestionID": "QID11"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID12"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID13"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID14"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID15"
+            },
+            {
+              "Type": "Page Break"
+            }
+          ],
+          "Options": {
+            "BlockLocking": "false",
+            "RandomizeQuestions": "false",
+            "BlockVisibility": "Collapsed"
+          }
+        },
+        "5": {
+          "Type": "Standard",
+          "SubType": "",
+          "Description": "Block 5",
+          "ID": "BL_5",
+          "BlockElements": [
+            {
+              "Type": "Question",
+              "QuestionID": "QID16"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID17"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID18"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID19"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID20"
+            },
+            {
+              "Type": "Page Break"
+            }
+          ],
+          "Options": {
+            "BlockLocking": "false",
+            "RandomizeQuestions": "false",
+            "BlockVisibility": "Collapsed"
+          }
+        },
+        "6": {
+          "Type": "Standard",
+          "SubType": "",
+          "Description": "Block 6",
+          "ID": "BL_6",
+          "BlockElements": [
+            {
+              "Type": "Question",
+              "QuestionID": "QID21"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID22"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID23"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID24"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID25"
+            },
+            {
+              "Type": "Page Break"
+            }
+          ],
+          "Options": {
+            "BlockLocking": "false",
+            "RandomizeQuestions": "false",
+            "BlockVisibility": "Collapsed"
+          }
+        },
+        "7": {
+          "Type": "Standard",
+          "SubType": "",
+          "Description": "Block 7",
+          "ID": "BL_7",
+          "BlockElements": [
+            {
+              "Type": "Question",
+              "QuestionID": "QID26"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID27"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID28"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID29"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID30"
+            },
+            {
+              "Type": "Page Break"
+            }
+          ],
+          "Options": {
+            "BlockLocking": "false",
+            "RandomizeQuestions": "false",
+            "BlockVisibility": "Collapsed"
+          }
+        },
+        "8": {
+          "Type": "Standard",
+          "SubType": "",
+          "Description": "Block 8",
+          "ID": "BL_8",
+          "BlockElements": [
+            {
+              "Type": "Question",
+              "QuestionID": "QID31"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID32"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID33"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID34"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID35"
+            },
+            {
+              "Type": "Page Break"
+            }
+          ],
+          "Options": {
+            "BlockLocking": "false",
+            "RandomizeQuestions": "false",
+            "BlockVisibility": "Collapsed"
+          }
+        },
+        "9": {
+          "Type": "Standard",
+          "SubType": "",
+          "Description": "Block 9",
+          "ID": "BL_9",
+          "BlockElements": [
+            {
+              "Type": "Question",
+              "QuestionID": "QID36"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID37"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID38"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID39"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID40"
+            },
+            {
+              "Type": "Page Break"
+            }
+          ],
+          "Options": {
+            "BlockLocking": "false",
+            "RandomizeQuestions": "false",
+            "BlockVisibility": "Collapsed"
+          }
+        },
+        "10": {
+          "Type": "Standard",
+          "SubType": "",
+          "Description": "Block 10",
+          "ID": "BL_10",
+          "BlockElements": [
+            {
+              "Type": "Question",
+              "QuestionID": "QID41"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID42"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID43"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID44"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID45"
+            },
+            {
+              "Type": "Page Break"
+            }
+          ],
+          "Options": {
+            "BlockLocking": "false",
+            "RandomizeQuestions": "false",
+            "BlockVisibility": "Collapsed"
+          }
+        },
+        "11": {
+          "Type": "Standard",
+          "SubType": "",
+          "Description": "Block 11",
+          "ID": "BL_11",
+          "BlockElements": [
+            {
+              "Type": "Question",
+              "QuestionID": "QID46"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID47"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID48"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID49"
+            },
+            {
+              "Type": "Question",
+              "QuestionID": "QID50"
+            },
+            {
+              "Type": "Page Break"
+            }
+          ],
+          "Options": {
+            "BlockLocking": "false",
+            "RandomizeQuestions": "false",
+            "BlockVisibility": "Collapsed"
+          }
+        }
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "FL",
+      "PrimaryAttribute": "Survey Flow",
+      "SecondaryAttribute": null,
+      "TertiaryAttribute": null,
+      "Payload": {
+        "Type": "Root",
+        "FlowID": "FL_1",
+        "Flow": [
+          {
+            "Type": "BlockRandomizer",
+            "FlowID": "FL_4",
+            "SubSet": 5,
+            "EvenPresentation": true,
+            "Flow": [
+              {
+                "Type": "Block",
+                "ID": "BL_2",
+                "FlowID": "FL_2",
+                "Autofill": []
+              },
+              {
+                "Type": "Block",
+                "ID": "BL_3",
+                "FlowID": "FL_3",
+                "Autofill": []
+              },
+              {
+                "Type": "Block",
+                "ID": "BL_4",
+                "FlowID": "FL_4",
+                "Autofill": []
+              },
+              {
+                "Type": "Block",
+                "ID": "BL_5",
+                "FlowID": "FL_5",
+                "Autofill": []
+              },
+              {
+                "Type": "Block",
+                "ID": "BL_6",
+                "FlowID": "FL_6",
+                "Autofill": []
+              },
+              {
+                "Type": "Block",
+                "ID": "BL_7",
+                "FlowID": "FL_7",
+                "Autofill": []
+              },
+              {
+                "Type": "Block",
+                "ID": "BL_8",
+                "FlowID": "FL_8",
+                "Autofill": []
+              },
+              {
+                "Type": "Block",
+                "ID": "BL_9",
+                "FlowID": "FL_9",
+                "Autofill": []
+              },
+              {
+                "Type": "Block",
+                "ID": "BL_10",
+                "FlowID": "FL_10",
+                "Autofill": []
+              },
+              {
+                "Type": "Block",
+                "ID": "BL_11",
+                "FlowID": "FL_11",
+                "Autofill": []
+              }
+            ]
+          }
+        ],
+        "Properties": {
+          "Count": 11,
+          "RemovedFieldsets": []
+        }
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SO",
+      "PrimaryAttribute": "Survey Options",
+      "SecondaryAttribute": null,
+      "TertiaryAttribute": null,
+      "Payload": {
+        "BackButton": "false",
+        "SaveAndContinue": "true",
+        "SurveyProtection": "PublicSurvey",
+        "BallotBoxStuffingPrevention": "false",
+        "NoIndex": "Yes",
+        "SecureResponseFiles": "true",
+        "SurveyExpiration": "None",
+        "SurveyTermination": "DefaultMessage",
+        "Header": "",
+        "Footer": "",
+        "ProgressBarDisplay": "Text",
+        "PartialData": "+1 week",
+        "ValidationMessage": null,
+        "PreviousButton": "",
+        "NextButton": "",
+        "SurveyTitle": "Qualtrics Survey | Qualtrics Experience Management",
+        "SkinLibrary": "ucdavis",
+        "SkinType": "MQ",
+        "Skin": "ucdavis2",
+        "NewScoring": 1,
+        "EOSMessage": null,
+        "ShowExportTags": "false",
+        "CollectGeoLocation": "false",
+        "SurveyMetaDescription": "The most powerful, simple and trusted way to gather experience data. Start your journey to experience management and try a free account today.",
+        "PasswordProtection": "No",
+        "AnonymizeResponse": "No",
+        "RefererCheck": "No",
+        "UseCustomSurveyLinkCompletedMessage": null,
+        "SurveyLinkCompletedMessage": null,
+        "SurveyLinkCompletedMessageLibrary": null,
+        "ResponseSummary": "No",
+        "EOSMessageLibrary": null,
+        "EOSRedirectURL": null,
+        "EmailThankYou": "false",
+        "ThankYouEmailMessageLibrary": null,
+        "ThankYouEmailMessage": null,
+        "ValidateMessage": "false",
+        "ValidationMessageLibrary": null,
+        "InactiveSurvey": null,
+        "PartialDeletion": null,
+        "PartialDataCloseAfter": "LastActivity",
+        "InactiveMessageLibrary": null,
+        "InactiveMessage": null,
+        "AvailableLanguages": {
+          "EN": []
+        }
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID1",
+      "SecondaryAttribute": "2. Headline: NEP via Mediatec Solutions to Acquire Bigélius Produktion",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "2. Headline: <br><br>\n<b>NEP via Mediatec Solutions to Acquire Bigélius Produktion</b>\n",
+        "QuestionID": "QID1",
+        "QuestionType": "DB",
+        "Selector": "TB",
+        "QuestionDescription": "2. Headline: NEP via Mediatec Solutions to Acquire Bigélius Produktion",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "DataExportTag": "QID1",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID2",
+      "SecondaryAttribute": "Do you think that this headline refers to an acquisition or merger?",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "Do you think that this headline refers to an acquisition or merger?\n\n",
+        "QuestionID": "QID2",
+        "QuestionType": "MC",
+        "Selector": "DL",
+        "QuestionDescription": "Do you think that this headline refers to an acquisition or merger?",
+        "Choices": {
+          "1": {
+            "Display": "Yes"
+          },
+          "2": {
+            "Display": "No"
+          },
+          "3": {
+            "Display": "Not sure"
+          },
+          "4": {
+            "Display": "Not a headline"
+          }
+        },
+        "Validation": {
+          "Settings": {
+            "ForceResponse": "ON",
+            "ForceResponseType": "ON",
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "DataExportTag": "QID2",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID3",
+      "SecondaryAttribute": "ACQUIRER (leave blank if not indicated or unclear):",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "ACQUIRER (leave blank if not indicated or unclear):\n\n",
+        "QuestionID": "QID3",
+        "QuestionType": "TE",
+        "Selector": "SL",
+        "QuestionDescription": "ACQUIRER (leave blank if not indicated or unclear):",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "SearchSource": {
+          "AllowFreeResponse": "false"
+        },
+        "DataExportTag": "QID3",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID4",
+      "SecondaryAttribute": "ACQUIRED (leave blank if not indicated or unclear):",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "ACQUIRED (leave blank if not indicated or unclear):\n\n",
+        "QuestionID": "QID4",
+        "QuestionType": "TE",
+        "Selector": "SL",
+        "QuestionDescription": "ACQUIRED (leave blank if not indicated or unclear):",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "SearchSource": {
+          "AllowFreeResponse": "false"
+        },
+        "DataExportTag": "QID4",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_b1uuK02TDahcMrs",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID5",
+      "SecondaryAttribute": "Timing",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "Timing",
+        "DefaultChoices": false,
+        "DataExportTag": "QID5",
+        "QuestionType": "Timing",
+        "Selector": "PageTimer",
+        "Configuration": {
+          "QuestionDescriptionOption": "UseText",
+          "MinSeconds": "0",
+          "MaxSeconds": "0"
+        },
+        "QuestionDescription": "Timing",
+        "Choices": {
+          "1": {
+            "Display": "First Click"
+          },
+          "2": {
+            "Display": "Last Click"
+          },
+          "3": {
+            "Display": "Page Submit"
+          },
+          "4": {
+            "Display": "Click Count"
+          }
+        },
+        "GradingData": [],
+        "Language": [],
+        "NextChoiceId": 1,
+        "NextAnswerId": 1,
+        "QuestionID": "QID5"
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID6",
+      "SecondaryAttribute": "3. Headline: Citycon Oyj's Financial Statements Release for 1 January - 31 December 2017: Good operational results in Sweden and Norway",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "3. Headline: <br><br>\n<b>Citycon Oyj's Financial Statements Release for 1 January - 31 December 2017: Good operational results in Sweden and Norway</b>\n",
+        "QuestionID": "QID6",
+        "QuestionType": "DB",
+        "Selector": "TB",
+        "QuestionDescription": "3. Headline: Citycon Oyj's Financial Statements Release for 1 January - 31 December 2017: Good operational results in Sweden and Norway",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "DataExportTag": "QID6",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID7",
+      "SecondaryAttribute": "Do you think that this headline refers to an acquisition or merger?",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "Do you think that this headline refers to an acquisition or merger?\n\n",
+        "QuestionID": "QID7",
+        "QuestionType": "MC",
+        "Selector": "DL",
+        "QuestionDescription": "Do you think that this headline refers to an acquisition or merger?",
+        "Choices": {
+          "1": {
+            "Display": "Yes"
+          },
+          "2": {
+            "Display": "No"
+          },
+          "3": {
+            "Display": "Not sure"
+          },
+          "4": {
+            "Display": "Not a headline"
+          }
+        },
+        "Validation": {
+          "Settings": {
+            "ForceResponse": "ON",
+            "ForceResponseType": "ON",
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "DataExportTag": "QID7",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID8",
+      "SecondaryAttribute": "ACQUIRER (leave blank if not indicated or unclear):",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "ACQUIRER (leave blank if not indicated or unclear):\n\n",
+        "QuestionID": "QID8",
+        "QuestionType": "TE",
+        "Selector": "SL",
+        "QuestionDescription": "ACQUIRER (leave blank if not indicated or unclear):",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "SearchSource": {
+          "AllowFreeResponse": "false"
+        },
+        "DataExportTag": "QID8",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID9",
+      "SecondaryAttribute": "ACQUIRED (leave blank if not indicated or unclear):",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "ACQUIRED (leave blank if not indicated or unclear):\n\n",
+        "QuestionID": "QID9",
+        "QuestionType": "TE",
+        "Selector": "SL",
+        "QuestionDescription": "ACQUIRED (leave blank if not indicated or unclear):",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "SearchSource": {
+          "AllowFreeResponse": "false"
+        },
+        "DataExportTag": "QID9",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_b1uuK02TDahcMrs",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID10",
+      "SecondaryAttribute": "Timing",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "Timing",
+        "DefaultChoices": false,
+        "DataExportTag": "QID10",
+        "QuestionType": "Timing",
+        "Selector": "PageTimer",
+        "Configuration": {
+          "QuestionDescriptionOption": "UseText",
+          "MinSeconds": "0",
+          "MaxSeconds": "0"
+        },
+        "QuestionDescription": "Timing",
+        "Choices": {
+          "1": {
+            "Display": "First Click"
+          },
+          "2": {
+            "Display": "Last Click"
+          },
+          "3": {
+            "Display": "Page Submit"
+          },
+          "4": {
+            "Display": "Click Count"
+          }
+        },
+        "GradingData": [],
+        "Language": [],
+        "NextChoiceId": 1,
+        "NextAnswerId": 1,
+        "QuestionID": "QID10"
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID11",
+      "SecondaryAttribute": "4. Headline: TransAtlantic Interim Report January - June 2014",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "4. Headline: <br><br>\n<b>TransAtlantic Interim Report January - June 2014</b>\n",
+        "QuestionID": "QID11",
+        "QuestionType": "DB",
+        "Selector": "TB",
+        "QuestionDescription": "4. Headline: TransAtlantic Interim Report January - June 2014",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "DataExportTag": "QID11",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID12",
+      "SecondaryAttribute": "Do you think that this headline refers to an acquisition or merger?",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "Do you think that this headline refers to an acquisition or merger?\n\n",
+        "QuestionID": "QID12",
+        "QuestionType": "MC",
+        "Selector": "DL",
+        "QuestionDescription": "Do you think that this headline refers to an acquisition or merger?",
+        "Choices": {
+          "1": {
+            "Display": "Yes"
+          },
+          "2": {
+            "Display": "No"
+          },
+          "3": {
+            "Display": "Not sure"
+          },
+          "4": {
+            "Display": "Not a headline"
+          }
+        },
+        "Validation": {
+          "Settings": {
+            "ForceResponse": "ON",
+            "ForceResponseType": "ON",
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "DataExportTag": "QID12",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID13",
+      "SecondaryAttribute": "ACQUIRER (leave blank if not indicated or unclear):",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "ACQUIRER (leave blank if not indicated or unclear):\n\n",
+        "QuestionID": "QID13",
+        "QuestionType": "TE",
+        "Selector": "SL",
+        "QuestionDescription": "ACQUIRER (leave blank if not indicated or unclear):",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "SearchSource": {
+          "AllowFreeResponse": "false"
+        },
+        "DataExportTag": "QID13",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID14",
+      "SecondaryAttribute": "ACQUIRED (leave blank if not indicated or unclear):",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "ACQUIRED (leave blank if not indicated or unclear):\n\n",
+        "QuestionID": "QID14",
+        "QuestionType": "TE",
+        "Selector": "SL",
+        "QuestionDescription": "ACQUIRED (leave blank if not indicated or unclear):",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "SearchSource": {
+          "AllowFreeResponse": "false"
+        },
+        "DataExportTag": "QID14",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_b1uuK02TDahcMrs",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID15",
+      "SecondaryAttribute": "Timing",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "Timing",
+        "DefaultChoices": false,
+        "DataExportTag": "QID15",
+        "QuestionType": "Timing",
+        "Selector": "PageTimer",
+        "Configuration": {
+          "QuestionDescriptionOption": "UseText",
+          "MinSeconds": "0",
+          "MaxSeconds": "0"
+        },
+        "QuestionDescription": "Timing",
+        "Choices": {
+          "1": {
+            "Display": "First Click"
+          },
+          "2": {
+            "Display": "Last Click"
+          },
+          "3": {
+            "Display": "Page Submit"
+          },
+          "4": {
+            "Display": "Click Count"
+          }
+        },
+        "GradingData": [],
+        "Language": [],
+        "NextChoiceId": 1,
+        "NextAnswerId": 1,
+        "QuestionID": "QID15"
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID16",
+      "SecondaryAttribute": "5. Headline: Atlas Copco acquires U.S. compressor distributor",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "5. Headline: <br><br>\n<b>Atlas Copco acquires U.S. compressor distributor</b>\n",
+        "QuestionID": "QID16",
+        "QuestionType": "DB",
+        "Selector": "TB",
+        "QuestionDescription": "5. Headline: Atlas Copco acquires U.S. compressor distributor",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "DataExportTag": "QID16",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID17",
+      "SecondaryAttribute": "Do you think that this headline refers to an acquisition or merger?",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "Do you think that this headline refers to an acquisition or merger?\n\n",
+        "QuestionID": "QID17",
+        "QuestionType": "MC",
+        "Selector": "DL",
+        "QuestionDescription": "Do you think that this headline refers to an acquisition or merger?",
+        "Choices": {
+          "1": {
+            "Display": "Yes"
+          },
+          "2": {
+            "Display": "No"
+          },
+          "3": {
+            "Display": "Not sure"
+          },
+          "4": {
+            "Display": "Not a headline"
+          }
+        },
+        "Validation": {
+          "Settings": {
+            "ForceResponse": "ON",
+            "ForceResponseType": "ON",
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "DataExportTag": "QID17",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID18",
+      "SecondaryAttribute": "ACQUIRER (leave blank if not indicated or unclear):",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "ACQUIRER (leave blank if not indicated or unclear):\n\n",
+        "QuestionID": "QID18",
+        "QuestionType": "TE",
+        "Selector": "SL",
+        "QuestionDescription": "ACQUIRER (leave blank if not indicated or unclear):",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "SearchSource": {
+          "AllowFreeResponse": "false"
+        },
+        "DataExportTag": "QID18",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID19",
+      "SecondaryAttribute": "ACQUIRED (leave blank if not indicated or unclear):",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "ACQUIRED (leave blank if not indicated or unclear):\n\n",
+        "QuestionID": "QID19",
+        "QuestionType": "TE",
+        "Selector": "SL",
+        "QuestionDescription": "ACQUIRED (leave blank if not indicated or unclear):",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "SearchSource": {
+          "AllowFreeResponse": "false"
+        },
+        "DataExportTag": "QID19",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_b1uuK02TDahcMrs",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID20",
+      "SecondaryAttribute": "Timing",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "Timing",
+        "DefaultChoices": false,
+        "DataExportTag": "QID20",
+        "QuestionType": "Timing",
+        "Selector": "PageTimer",
+        "Configuration": {
+          "QuestionDescriptionOption": "UseText",
+          "MinSeconds": "0",
+          "MaxSeconds": "0"
+        },
+        "QuestionDescription": "Timing",
+        "Choices": {
+          "1": {
+            "Display": "First Click"
+          },
+          "2": {
+            "Display": "Last Click"
+          },
+          "3": {
+            "Display": "Page Submit"
+          },
+          "4": {
+            "Display": "Click Count"
+          }
+        },
+        "GradingData": [],
+        "Language": [],
+        "NextChoiceId": 1,
+        "NextAnswerId": 1,
+        "QuestionID": "QID20"
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID21",
+      "SecondaryAttribute": "6. Headline: Trigon Agri A/S: Executive Board members becomeshareholders of Trigon Agri",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "6. Headline: <br><br>\n<b>Trigon Agri A/S: Executive Board members becomeshareholders of Trigon Agri</b>\n",
+        "QuestionID": "QID21",
+        "QuestionType": "DB",
+        "Selector": "TB",
+        "QuestionDescription": "6. Headline: Trigon Agri A/S: Executive Board members becomeshareholders of Trigon Agri",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "DataExportTag": "QID21",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID22",
+      "SecondaryAttribute": "Do you think that this headline refers to an acquisition or merger?",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "Do you think that this headline refers to an acquisition or merger?\n\n",
+        "QuestionID": "QID22",
+        "QuestionType": "MC",
+        "Selector": "DL",
+        "QuestionDescription": "Do you think that this headline refers to an acquisition or merger?",
+        "Choices": {
+          "1": {
+            "Display": "Yes"
+          },
+          "2": {
+            "Display": "No"
+          },
+          "3": {
+            "Display": "Not sure"
+          },
+          "4": {
+            "Display": "Not a headline"
+          }
+        },
+        "Validation": {
+          "Settings": {
+            "ForceResponse": "ON",
+            "ForceResponseType": "ON",
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "DataExportTag": "QID22",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID23",
+      "SecondaryAttribute": "ACQUIRER (leave blank if not indicated or unclear):",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "ACQUIRER (leave blank if not indicated or unclear):\n\n",
+        "QuestionID": "QID23",
+        "QuestionType": "TE",
+        "Selector": "SL",
+        "QuestionDescription": "ACQUIRER (leave blank if not indicated or unclear):",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "SearchSource": {
+          "AllowFreeResponse": "false"
+        },
+        "DataExportTag": "QID23",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID24",
+      "SecondaryAttribute": "ACQUIRED (leave blank if not indicated or unclear):",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "ACQUIRED (leave blank if not indicated or unclear):\n\n",
+        "QuestionID": "QID24",
+        "QuestionType": "TE",
+        "Selector": "SL",
+        "QuestionDescription": "ACQUIRED (leave blank if not indicated or unclear):",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "SearchSource": {
+          "AllowFreeResponse": "false"
+        },
+        "DataExportTag": "QID24",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_b1uuK02TDahcMrs",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID25",
+      "SecondaryAttribute": "Timing",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "Timing",
+        "DefaultChoices": false,
+        "DataExportTag": "QID25",
+        "QuestionType": "Timing",
+        "Selector": "PageTimer",
+        "Configuration": {
+          "QuestionDescriptionOption": "UseText",
+          "MinSeconds": "0",
+          "MaxSeconds": "0"
+        },
+        "QuestionDescription": "Timing",
+        "Choices": {
+          "1": {
+            "Display": "First Click"
+          },
+          "2": {
+            "Display": "Last Click"
+          },
+          "3": {
+            "Display": "Page Submit"
+          },
+          "4": {
+            "Display": "Click Count"
+          }
+        },
+        "GradingData": [],
+        "Language": [],
+        "NextChoiceId": 1,
+        "NextAnswerId": 1,
+        "QuestionID": "QID25"
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID26",
+      "SecondaryAttribute": "7. Headline: Ericsson Capital Markets Day 2018",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "7. Headline: <br><br>\n<b>Ericsson Capital Markets Day 2018</b>\n",
+        "QuestionID": "QID26",
+        "QuestionType": "DB",
+        "Selector": "TB",
+        "QuestionDescription": "7. Headline: Ericsson Capital Markets Day 2018",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "DataExportTag": "QID26",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID27",
+      "SecondaryAttribute": "Do you think that this headline refers to an acquisition or merger?",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "Do you think that this headline refers to an acquisition or merger?\n\n",
+        "QuestionID": "QID27",
+        "QuestionType": "MC",
+        "Selector": "DL",
+        "QuestionDescription": "Do you think that this headline refers to an acquisition or merger?",
+        "Choices": {
+          "1": {
+            "Display": "Yes"
+          },
+          "2": {
+            "Display": "No"
+          },
+          "3": {
+            "Display": "Not sure"
+          },
+          "4": {
+            "Display": "Not a headline"
+          }
+        },
+        "Validation": {
+          "Settings": {
+            "ForceResponse": "ON",
+            "ForceResponseType": "ON",
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "DataExportTag": "QID27",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID28",
+      "SecondaryAttribute": "ACQUIRER (leave blank if not indicated or unclear):",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "ACQUIRER (leave blank if not indicated or unclear):\n\n",
+        "QuestionID": "QID28",
+        "QuestionType": "TE",
+        "Selector": "SL",
+        "QuestionDescription": "ACQUIRER (leave blank if not indicated or unclear):",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "SearchSource": {
+          "AllowFreeResponse": "false"
+        },
+        "DataExportTag": "QID28",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID29",
+      "SecondaryAttribute": "ACQUIRED (leave blank if not indicated or unclear):",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "ACQUIRED (leave blank if not indicated or unclear):\n\n",
+        "QuestionID": "QID29",
+        "QuestionType": "TE",
+        "Selector": "SL",
+        "QuestionDescription": "ACQUIRED (leave blank if not indicated or unclear):",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "SearchSource": {
+          "AllowFreeResponse": "false"
+        },
+        "DataExportTag": "QID29",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_b1uuK02TDahcMrs",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID30",
+      "SecondaryAttribute": "Timing",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "Timing",
+        "DefaultChoices": false,
+        "DataExportTag": "QID30",
+        "QuestionType": "Timing",
+        "Selector": "PageTimer",
+        "Configuration": {
+          "QuestionDescriptionOption": "UseText",
+          "MinSeconds": "0",
+          "MaxSeconds": "0"
+        },
+        "QuestionDescription": "Timing",
+        "Choices": {
+          "1": {
+            "Display": "First Click"
+          },
+          "2": {
+            "Display": "Last Click"
+          },
+          "3": {
+            "Display": "Page Submit"
+          },
+          "4": {
+            "Display": "Click Count"
+          }
+        },
+        "GradingData": [],
+        "Language": [],
+        "NextChoiceId": 1,
+        "NextAnswerId": 1,
+        "QuestionID": "QID30"
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID31",
+      "SecondaryAttribute": "8. Headline: Skanska sells office property in Stockholm, Sweden, for about SEK 600 M",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "8. Headline: <br><br>\n<b>Skanska sells office property in Stockholm, Sweden, for about SEK 600 M</b>\n",
+        "QuestionID": "QID31",
+        "QuestionType": "DB",
+        "Selector": "TB",
+        "QuestionDescription": "8. Headline: Skanska sells office property in Stockholm, Sweden, for about SEK 600 M",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "DataExportTag": "QID31",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID32",
+      "SecondaryAttribute": "Do you think that this headline refers to an acquisition or merger?",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "Do you think that this headline refers to an acquisition or merger?\n\n",
+        "QuestionID": "QID32",
+        "QuestionType": "MC",
+        "Selector": "DL",
+        "QuestionDescription": "Do you think that this headline refers to an acquisition or merger?",
+        "Choices": {
+          "1": {
+            "Display": "Yes"
+          },
+          "2": {
+            "Display": "No"
+          },
+          "3": {
+            "Display": "Not sure"
+          },
+          "4": {
+            "Display": "Not a headline"
+          }
+        },
+        "Validation": {
+          "Settings": {
+            "ForceResponse": "ON",
+            "ForceResponseType": "ON",
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "DataExportTag": "QID32",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID33",
+      "SecondaryAttribute": "ACQUIRER (leave blank if not indicated or unclear):",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "ACQUIRER (leave blank if not indicated or unclear):\n\n",
+        "QuestionID": "QID33",
+        "QuestionType": "TE",
+        "Selector": "SL",
+        "QuestionDescription": "ACQUIRER (leave blank if not indicated or unclear):",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "SearchSource": {
+          "AllowFreeResponse": "false"
+        },
+        "DataExportTag": "QID33",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID34",
+      "SecondaryAttribute": "ACQUIRED (leave blank if not indicated or unclear):",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "ACQUIRED (leave blank if not indicated or unclear):\n\n",
+        "QuestionID": "QID34",
+        "QuestionType": "TE",
+        "Selector": "SL",
+        "QuestionDescription": "ACQUIRED (leave blank if not indicated or unclear):",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "SearchSource": {
+          "AllowFreeResponse": "false"
+        },
+        "DataExportTag": "QID34",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_b1uuK02TDahcMrs",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID35",
+      "SecondaryAttribute": "Timing",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "Timing",
+        "DefaultChoices": false,
+        "DataExportTag": "QID35",
+        "QuestionType": "Timing",
+        "Selector": "PageTimer",
+        "Configuration": {
+          "QuestionDescriptionOption": "UseText",
+          "MinSeconds": "0",
+          "MaxSeconds": "0"
+        },
+        "QuestionDescription": "Timing",
+        "Choices": {
+          "1": {
+            "Display": "First Click"
+          },
+          "2": {
+            "Display": "Last Click"
+          },
+          "3": {
+            "Display": "Page Submit"
+          },
+          "4": {
+            "Display": "Click Count"
+          }
+        },
+        "GradingData": [],
+        "Language": [],
+        "NextChoiceId": 1,
+        "NextAnswerId": 1,
+        "QuestionID": "QID35"
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID36",
+      "SecondaryAttribute": "9. Headline: Resolutions at the Annual General Meeting in Biotage AB on April 27, 2017",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "9. Headline: <br><br>\n<b>Resolutions at the Annual General Meeting in Biotage AB on April 27, 2017</b>\n",
+        "QuestionID": "QID36",
+        "QuestionType": "DB",
+        "Selector": "TB",
+        "QuestionDescription": "9. Headline: Resolutions at the Annual General Meeting in Biotage AB on April 27, 2017",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "DataExportTag": "QID36",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID37",
+      "SecondaryAttribute": "Do you think that this headline refers to an acquisition or merger?",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "Do you think that this headline refers to an acquisition or merger?\n\n",
+        "QuestionID": "QID37",
+        "QuestionType": "MC",
+        "Selector": "DL",
+        "QuestionDescription": "Do you think that this headline refers to an acquisition or merger?",
+        "Choices": {
+          "1": {
+            "Display": "Yes"
+          },
+          "2": {
+            "Display": "No"
+          },
+          "3": {
+            "Display": "Not sure"
+          },
+          "4": {
+            "Display": "Not a headline"
+          }
+        },
+        "Validation": {
+          "Settings": {
+            "ForceResponse": "ON",
+            "ForceResponseType": "ON",
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "DataExportTag": "QID37",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID38",
+      "SecondaryAttribute": "ACQUIRER (leave blank if not indicated or unclear):",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "ACQUIRER (leave blank if not indicated or unclear):\n\n",
+        "QuestionID": "QID38",
+        "QuestionType": "TE",
+        "Selector": "SL",
+        "QuestionDescription": "ACQUIRER (leave blank if not indicated or unclear):",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "SearchSource": {
+          "AllowFreeResponse": "false"
+        },
+        "DataExportTag": "QID38",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID39",
+      "SecondaryAttribute": "ACQUIRED (leave blank if not indicated or unclear):",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "ACQUIRED (leave blank if not indicated or unclear):\n\n",
+        "QuestionID": "QID39",
+        "QuestionType": "TE",
+        "Selector": "SL",
+        "QuestionDescription": "ACQUIRED (leave blank if not indicated or unclear):",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "SearchSource": {
+          "AllowFreeResponse": "false"
+        },
+        "DataExportTag": "QID39",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_b1uuK02TDahcMrs",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID40",
+      "SecondaryAttribute": "Timing",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "Timing",
+        "DefaultChoices": false,
+        "DataExportTag": "QID40",
+        "QuestionType": "Timing",
+        "Selector": "PageTimer",
+        "Configuration": {
+          "QuestionDescriptionOption": "UseText",
+          "MinSeconds": "0",
+          "MaxSeconds": "0"
+        },
+        "QuestionDescription": "Timing",
+        "Choices": {
+          "1": {
+            "Display": "First Click"
+          },
+          "2": {
+            "Display": "Last Click"
+          },
+          "3": {
+            "Display": "Page Submit"
+          },
+          "4": {
+            "Display": "Click Count"
+          }
+        },
+        "GradingData": [],
+        "Language": [],
+        "NextChoiceId": 1,
+        "NextAnswerId": 1,
+        "QuestionID": "QID40"
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID41",
+      "SecondaryAttribute": "10. Headline: INTERIM REPORT JANUARY-JUNE 2015",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "10. Headline: <br><br>\n<b>INTERIM REPORT JANUARY-JUNE 2015</b>\n",
+        "QuestionID": "QID41",
+        "QuestionType": "DB",
+        "Selector": "TB",
+        "QuestionDescription": "10. Headline: INTERIM REPORT JANUARY-JUNE 2015",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "DataExportTag": "QID41",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID42",
+      "SecondaryAttribute": "Do you think that this headline refers to an acquisition or merger?",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "Do you think that this headline refers to an acquisition or merger?\n\n",
+        "QuestionID": "QID42",
+        "QuestionType": "MC",
+        "Selector": "DL",
+        "QuestionDescription": "Do you think that this headline refers to an acquisition or merger?",
+        "Choices": {
+          "1": {
+            "Display": "Yes"
+          },
+          "2": {
+            "Display": "No"
+          },
+          "3": {
+            "Display": "Not sure"
+          },
+          "4": {
+            "Display": "Not a headline"
+          }
+        },
+        "Validation": {
+          "Settings": {
+            "ForceResponse": "ON",
+            "ForceResponseType": "ON",
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "DataExportTag": "QID42",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID43",
+      "SecondaryAttribute": "ACQUIRER (leave blank if not indicated or unclear):",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "ACQUIRER (leave blank if not indicated or unclear):\n\n",
+        "QuestionID": "QID43",
+        "QuestionType": "TE",
+        "Selector": "SL",
+        "QuestionDescription": "ACQUIRER (leave blank if not indicated or unclear):",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "SearchSource": {
+          "AllowFreeResponse": "false"
+        },
+        "DataExportTag": "QID43",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID44",
+      "SecondaryAttribute": "ACQUIRED (leave blank if not indicated or unclear):",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "ACQUIRED (leave blank if not indicated or unclear):\n\n",
+        "QuestionID": "QID44",
+        "QuestionType": "TE",
+        "Selector": "SL",
+        "QuestionDescription": "ACQUIRED (leave blank if not indicated or unclear):",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "SearchSource": {
+          "AllowFreeResponse": "false"
+        },
+        "DataExportTag": "QID44",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_b1uuK02TDahcMrs",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID45",
+      "SecondaryAttribute": "Timing",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "Timing",
+        "DefaultChoices": false,
+        "DataExportTag": "QID45",
+        "QuestionType": "Timing",
+        "Selector": "PageTimer",
+        "Configuration": {
+          "QuestionDescriptionOption": "UseText",
+          "MinSeconds": "0",
+          "MaxSeconds": "0"
+        },
+        "QuestionDescription": "Timing",
+        "Choices": {
+          "1": {
+            "Display": "First Click"
+          },
+          "2": {
+            "Display": "Last Click"
+          },
+          "3": {
+            "Display": "Page Submit"
+          },
+          "4": {
+            "Display": "Click Count"
+          }
+        },
+        "GradingData": [],
+        "Language": [],
+        "NextChoiceId": 1,
+        "NextAnswerId": 1,
+        "QuestionID": "QID45"
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID46",
+      "SecondaryAttribute": "11. Headline: Financial Report July - September 2017",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "11. Headline: <br><br>\n<b>Financial Report July - September 2017</b>\n",
+        "QuestionID": "QID46",
+        "QuestionType": "DB",
+        "Selector": "TB",
+        "QuestionDescription": "11. Headline: Financial Report July - September 2017",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "DataExportTag": "QID46",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID47",
+      "SecondaryAttribute": "Do you think that this headline refers to an acquisition or merger?",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "Do you think that this headline refers to an acquisition or merger?\n\n",
+        "QuestionID": "QID47",
+        "QuestionType": "MC",
+        "Selector": "DL",
+        "QuestionDescription": "Do you think that this headline refers to an acquisition or merger?",
+        "Choices": {
+          "1": {
+            "Display": "Yes"
+          },
+          "2": {
+            "Display": "No"
+          },
+          "3": {
+            "Display": "Not sure"
+          },
+          "4": {
+            "Display": "Not a headline"
+          }
+        },
+        "Validation": {
+          "Settings": {
+            "ForceResponse": "ON",
+            "ForceResponseType": "ON",
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "DataExportTag": "QID47",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID48",
+      "SecondaryAttribute": "ACQUIRER (leave blank if not indicated or unclear):",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "ACQUIRER (leave blank if not indicated or unclear):\n\n",
+        "QuestionID": "QID48",
+        "QuestionType": "TE",
+        "Selector": "SL",
+        "QuestionDescription": "ACQUIRER (leave blank if not indicated or unclear):",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "SearchSource": {
+          "AllowFreeResponse": "false"
+        },
+        "DataExportTag": "QID48",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID49",
+      "SecondaryAttribute": "ACQUIRED (leave blank if not indicated or unclear):",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "ACQUIRED (leave blank if not indicated or unclear):\n\n",
+        "QuestionID": "QID49",
+        "QuestionType": "TE",
+        "Selector": "SL",
+        "QuestionDescription": "ACQUIRED (leave blank if not indicated or unclear):",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "SearchSource": {
+          "AllowFreeResponse": "false"
+        },
+        "DataExportTag": "QID49",
+        "NextChoiceId": 1,
+        "NextAnswerId": 1
+      }
+    },
+    {
+      "SurveyID": "SV_b1uuK02TDahcMrs",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID50",
+      "SecondaryAttribute": "Timing",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "Timing",
+        "DefaultChoices": false,
+        "DataExportTag": "QID50",
+        "QuestionType": "Timing",
+        "Selector": "PageTimer",
+        "Configuration": {
+          "QuestionDescriptionOption": "UseText",
+          "MinSeconds": "0",
+          "MaxSeconds": "0"
+        },
+        "QuestionDescription": "Timing",
+        "Choices": {
+          "1": {
+            "Display": "First Click"
+          },
+          "2": {
+            "Display": "Last Click"
+          },
+          "3": {
+            "Display": "Page Submit"
+          },
+          "4": {
+            "Display": "Click Count"
+          }
+        },
+        "GradingData": [],
+        "Language": [],
+        "NextChoiceId": 1,
+        "NextAnswerId": 1,
+        "QuestionID": "QID50"
+      }
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+[[AdvancedFormat]]
+
+[[Question:Text]]
+For each headline, we want you to: <br>
+a) identify whether the release is about an acquisition or not <br>
+b) if it is, for you to identify and enter (preferably by copy-pasting verbatim) the ACQUIRER and ACQUIRED companies. <br><br>
+If the ACQUIRER or ACQUIRED names are not obvious from the headline, please leave the corresponding box blank.
+
+[[PageBreak]]
+[[Question:Text]]
+1. Headline: <br><br>
+<b>'$100 Million Payday For Feedburner � This Deal Is Confirmed'</b>
+[[Question:MC:DropDown]]
+Does this headline refer to an acquisition?
+
+[[Choices]]
+Yes
+No
+Not sure
+Not a headline
+
+
+[[Question:TextEntry:SingleLine]]
+ACQUIRER:
+
+[[Question:TextEntry:SingleLine]]
+ACQUIRED:
+
+[[Question:MC:MultipleAnswer]]
+
+[[Choices]]
+Click here if there is something strange about this headline that we should pay attention to.
+
+
+[[Question:TextEntry:Essay]]
+Optional notes
+
+[[PageBreak]]
+[[Question:Text]]
+2. Headline: <br><br>
+<b>'Acquisition of ClarityBlue by Experian'</b>
+[[Question:MC:DropDown]]
+Does this headline refer to an acquisition?
+
+[[Choices]]
+Yes
+No
+Not sure
+Not a headline
+
+
+[[Question:TextEntry:SingleLine]]
+ACQUIRER:
+
+[[Question:TextEntry:SingleLine]]
+ACQUIRED:
+
+[[Question:MC:MultipleAnswer]]
+
+[[Choices]]
+Click here if there is something strange about this headline that we should pay attention to.
+
+
+[[Question:TextEntry:Essay]]
+Optional notes
+
+[[PageBreak]]
+[[Question:Text]]
+3. Headline: <br><br>
+<b>'Acquisition of Hitwise'</b>
+[[Question:MC:DropDown]]
+Does this headline refer to an acquisition?
+
+[[Choices]]
+Yes
+No
+Not sure
+Not a headline
+
+
+[[Question:TextEntry:SingleLine]]
+ACQUIRER:
+
+[[Question:TextEntry:SingleLine]]
+ACQUIRED:
+
+[[Question:MC:MultipleAnswer]]
+
+[[Choices]]
+Click here if there is something strange about this headline that we should pay attention to.
+
+
+[[Question:TextEntry:Essay]]
+Optional notes
+
+[[PageBreak]]
+[[Question:Text]]
+4. Headline: <br><br>
+<b>'Acquisition of LowerMyBills.com by Experian for $330m plus earn-out'</b>
+[[Question:MC:DropDown]]
+Does this headline refer to an acquisition?
+
+[[Choices]]
+Yes
+No
+Not sure
+Not a headline
+
+
+[[Question:TextEntry:SingleLine]]
+ACQUIRER:
+
+[[Question:TextEntry:SingleLine]]
+ACQUIRED:
+
+[[Question:MC:MultipleAnswer]]
+
+[[Choices]]
+Click here if there is something strange about this headline that we should pay attention to.
+
+
+[[Question:TextEntry:Essay]]
+Optional notes
+
+[[PageBreak]]
+[[Question:Text]]
+5. Headline: <br><br>
+<b>'ADTECH'</b>
+[[Question:MC:DropDown]]
+Does this headline refer to an acquisition?
+
+[[Choices]]
+Yes
+No
+Not sure
+Not a headline
+
+
+[[Question:TextEntry:SingleLine]]
+ACQUIRER:
+
+[[Question:TextEntry:SingleLine]]
+ACQUIRED:
+
+[[Question:MC:MultipleAnswer]]
+
+[[Choices]]
+Click here if there is something strange about this headline that we should pay attention to.
+
+
+[[Question:TextEntry:Essay]]
+Optional notes
+
+[[PageBreak]]
