@@ -1,6 +1,7 @@
 import pandas as pd 
 import json
 import math
+import sys
 import numpy as np
 
 # The Mturk question: In order to get paid for the work you have done on this survey, you need to enter the following code in the box at the bottom of the Mechanical Turk page where you started once you close this survey.
@@ -17,15 +18,15 @@ all_titles = list(pd.read_csv("ra_data.csv", encoding = 'utf8')["Headline"])
 num_headlines = 30 # unique titles to be classified
 num_students = 4 # number of people taking this survey version
 overlap = 0.2 # percent of headlines assigned to 1 respondent that will be duplicated
-training_length = 5 # number of training titles
+training_length = 3 # number of training titles
 training_headlines = ["Training headline {}".format(i) for i in range(training_length)]
-block_size = 10 # number of questions in a block (between attention-check)
+block_size = 5 # number of questions in a block (between attention-check)
 
 conditional = False
 
 survey_name = "MTurk Trial"
 assignments_name = "mturk_assignments.json"
-qsf_name = "mturk_trial.qsf"
+qsf_name = "mturk_trial_refactored.qsf"
 
 titles = list(all_titles)
 
@@ -34,7 +35,7 @@ titles_per_student = math.ceil(num_headlines / ((1 - overlap) * num_students))
 uniques_per_student = math.floor(num_headlines / num_students)
 print(titles_per_student, uniques_per_student)
 
-attention_check_length = 5 # number of questions in an attention-check block
+attention_check_length = 2 # number of questions in an attention-check block
 attention_check_headlines = [["Attention check headline {}".format(i) for i in range(attention_check_length)] for j in range(math.floor(titles_per_student / block_size))]
 
 uniques_left = num_headlines - num_students * uniques_per_student
@@ -57,12 +58,16 @@ for i in range(num_students):
 	dup_selection = np.random.choice(list(student_assignments[(i - 1) % num_students]), size = titles_per_student - uniques[i], replace = False)
 	dup_selection_lst.append(list(dup_selection))
 
+x = []
 for i in range(num_students):
 	student_assignments[i].extend(dup_selection_lst[i])
 
 student_assignments_json = {}
+titles_to_classify = []
 for student, assignments in student_assignments.items():
 	student_assignments_json[str(student)] = [titles[a] for a in assignments]
+	titles_to_classify.append(student_assignments_json[str(student)])
+titles_to_classify = list(set(np.array(titles_to_classify).flatten()))
 
 with open(assignments_name, 'w') as f:
 	json.dump(student_assignments_json, f, ensure_ascii = False, indent = 2)
@@ -88,92 +93,6 @@ survey_info["SurveyEntry"] = {
 	"Deleted": None,
 }
 
-# survey_info["SurveyElements"] = [
-# 	{
-# 		"SurveyID": "SV_eLnpGNWb3hM31cy",
-# 		"Element": "BL",
-# 		"PrimaryAttribute": "Survey Blocks",
-# 		"SecondaryAttribute": None,
-# 		"TertiaryAttribute": None,
-# 	},
-# 	{
-#       "SurveyID": "SV_eLnpGNWb3hM31cy",
-#       "Element": "FL",
-#       "PrimaryAttribute": "Survey Flow",
-#       "SecondaryAttribute": None,
-#       "TertiaryAttribute": None,
-#       "Payload": {
-#         "Flow": [
-#           {
-#             "ID": "BL_0NURAV8QJNtGHEq",
-#             "Type": "Standard",
-#             "FlowID": "FL_3"
-#           }
-#         ],
-#         "Properties": {
-#           "Count": 3
-#         },
-#         "FlowID": "FL_1",
-#         "Type": "Root"
-#       }
-#     },
-#     {
-#       "SurveyID": "SV_eLnpGNWb3hM31cy",
-#       "Element": "SO",
-#       "PrimaryAttribute": "Survey Options",
-#       "SecondaryAttribute": None,
-#       "TertiaryAttribute": None,
-#       "Payload": {
-#         "BackButton": "false",
-#         "SaveAndContinue": "true",
-#         "SurveyProtection": "PublicSurvey",
-#         "BallotBoxStuffingPrevention": "false",
-#         "NoIndex": "Yes",
-#         "SecureResponseFiles": "true",
-#         "SurveyExpiration": "None",
-#         "SurveyTermination": "DefaultMessage",
-#         "Header": "",
-#         "Footer": "",
-#         "ProgressBarDisplay": "Text",
-#         "PartialData": "+1 week",
-#         "ValidationMessage": None,
-#         "PreviousButton": "",
-#         "NextButton": "",
-#         "SurveyTitle": "Qualtrics Survey | Qualtrics Experience Management",
-#         "SkinLibrary": "ucdavis",
-#         "SkinType": "MQ",
-#         "Skin": "ucdavis2",
-#         "NewScoring": 1,
-#         "EOSMessage": None,
-#         "ShowExportTags": "false",
-#         "CollectGeoLocation": "false",
-#         "SurveyMetaDescription": "The most powerful, simple and trusted way to gather experience data. Start your journey to experience management and try a free account today.",
-#         "PasswordProtection": "No",
-#         "AnonymizeResponse": "No",
-#         "RefererCheck": "No",
-#         "UseCustomSurveyLinkCompletedMessage": None,
-#         "SurveyLinkCompletedMessage": None,
-#         "SurveyLinkCompletedMessageLibrary": None,
-#         "ResponseSummary": "No",
-#         "EOSMessageLibrary": None,
-#         "EOSRedirectURL": None,
-#         "EmailThankYou": "false",
-#         "ThankYouEmailMessageLibrary": None,
-#         "ThankYouEmailMessage": None,
-#         "ValidateMessage": "false",
-#         "ValidationMessageLibrary": None,
-#         "InactiveSurvey": None,
-#         "PartialDeletion": None,
-#         "PartialDataCloseAfter": "LastActivity",
-#         "InactiveMessageLibrary": None,
-#         "InactiveMessage": None,
-#         "AvailableLanguages": {
-#           "EN": []
-#         }
-#       }
-#     },
-# ]
-
 survey_info["SurveyElements"] = [
 	{
 		"SurveyID": "SV_eLnpGNWb3hM31cy",
@@ -181,6 +100,7 @@ survey_info["SurveyElements"] = [
 		"PrimaryAttribute": "Survey Blocks",
 		"SecondaryAttribute": None,
 		"TertiaryAttribute": None,
+		"Payload": [],
 	},
 	{
       "SurveyID": "SV_eLnpGNWb3hM31cy",
@@ -192,11 +112,7 @@ survey_info["SurveyElements"] = [
       	"Type": "Root",
       	"FlowID": "FL_1",
         "Flow": [
-          {
-          	"ID": "BL_0NURAV8QJNtGHEq",
-            "Type": "Standard",
-            "FlowID": "FL_4",
-          }
+          
         ],
         "Properties": {
           "Count": 3,
@@ -220,93 +136,109 @@ survey_info["SurveyElements"] = [
         "SurveyTermination": "DefaultMessage",
         "Header": "",
         "Footer": "",
-        "ProgressBarDisplay": "Text",
+        "ProgressBarDisplay": "None",
         "PartialData": "+1 week",
-        "ValidationMessage": None,
+        "ValidationMessage": "",
         "PreviousButton": "",
         "NextButton": "",
         "SurveyTitle": "Qualtrics Survey | Qualtrics Experience Management",
         "SkinLibrary": "ucdavis",
         "SkinType": "MQ",
         "Skin": "ucdavis2",
-        "NewScoring": 1,
-        "EOSMessage": None,
-        "ShowExportTags": "false",
-        "CollectGeoLocation": "false",
-        "SurveyMetaDescription": "The most powerful, simple and trusted way to gather experience data. Start your journey to experience management and try a free account today.",
-        "PasswordProtection": "No",
-        "AnonymizeResponse": "No",
-        "RefererCheck": "No",
-        "UseCustomSurveyLinkCompletedMessage": None,
-        "SurveyLinkCompletedMessage": None,
-        "SurveyLinkCompletedMessageLibrary": None,
-        "ResponseSummary": "No",
-        "EOSMessageLibrary": None,
-        "EOSRedirectURL": None,
-        "EmailThankYou": "false",
-        "ThankYouEmailMessageLibrary": None,
-        "ThankYouEmailMessage": None,
-        "ValidateMessage": "false",
-        "ValidationMessageLibrary": None,
-        "InactiveSurvey": None,
-        "PartialDeletion": None,
-        "PartialDataCloseAfter": "LastActivity",
-        "InactiveMessageLibrary": None,
-        "InactiveMessage": None,
-        "AvailableLanguages": {
-          "EN": []
-        }
+        "NewScoring": 1
+	  }
+	},
+	{
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SCO",
+      "PrimaryAttribute": "Scoring",
+      "SecondaryAttribute": None,
+      "TertiaryAttribute": None,
+      "Payload": {
+        "ScoringCategories": [],
+        "ScoringCategoryGroups": [],
+        "ScoringSummaryCategory": None,
+        "ScoringSummaryAfterQuestions": 0,
+        "ScoringSummaryAfterSurvey": 0,
+        "DefaultScoringCategory": None,
+        "AutoScoringCategory": None
       }
     },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "PROJ",
+      "PrimaryAttribute": "CORE",
+      "SecondaryAttribute": None,
+      "TertiaryAttribute": "1.1.0",
+      "Payload": {
+        "ProjectCategory": "CORE",
+        "SchemaVersion": "1.1.0"
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "STAT",
+      "PrimaryAttribute": "Survey Statistics",
+      "SecondaryAttribute": None,
+      "TertiaryAttribute": None,
+      "Payload": {
+        "MobileCompatible": True,
+        "ID": "Survey Statistics"
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "QC",
+      "PrimaryAttribute": "Survey Question Count",
+      "SecondaryAttribute": "3",
+      "TertiaryAttribute": None,
+      "Payload": None
+    }
 ]
 
-survey_info["SurveyElements"][0]["Payload"] = {
-	"1": {
+survey_info["SurveyElements"][0]["Payload"].append(
+	{
 		"Type": "Trash",
 		"Description": "Trash / Unused Questions",
 		"ID": "BL_3JCZSrANuFazQ7I",
-		"Options": {
-		"BlockLocking": "false",
-		"RandomizeQuestions": "false",
-		"BlockVisibility": "Expanded"
-		},
-		"BlockElements": [],
 	}
-}
+)
 
-# insert key 2 into payload
-survey_info["SurveyElements"][0]["Payload"]["2"] = {
-	"Type": "Standard",
-	"SubType": "",
-	"Description": "Survey Body",
-	"ID": "BL_2",
-	"BlockElements": [],
-	"Options": {
-		"BlockLocking": "false",
-		"RandomizeQuestions": "false",
-		"BlockVisibility": "Collapsed",
-	}
-}
+# # insert key 2 into payload
+# survey_info["SurveyElements"][0]["Payload"].append(
+# 	{
+# 		"Type": "Standard",
+# 		"SubType": "",
+# 		"Description": "Survey Body",
+# 		"ID": "BL_2",
+# 		# "BlockElements": [],
+# 		# "Options": {
+# 		# 	"BlockLocking": "false",
+# 		# 	"RandomizeQuestions": "false",
+# 		# 	"BlockVisibility": "Collapsed",
+# 		# }
+# 	}
+# )
 
 survey_elements = survey_info["SurveyElements"]
-block_elements = survey_elements[0]["Payload"]["2"]["BlockElements"]
+# block_elements = survey_elements[0]["Payload"][0]["BlockElements"]
 
-# description of survey
-block_elements.append({
-	"Type": "Question",
-	"QuestionID": "QID1"
-})
+# # description of survey
+# block_elements.append({
+# 	"Type": "Question",
+# 	"QuestionID": "QID1"
+# })
 
-# student ID question
-block_elements.append({
-	"Type": "Question",
-	"QuestionID": "QID2"
-})
+# # student ID question
+# block_elements.append({
+# 	"Type": "Question",
+# 	"QuestionID": "QID2"
+# })
 
-# page break
-block_elements.append({
-	"Type": "Page Break",
-})
+# # page break
+# block_elements.append({
+# 	"Type": "Page Break",
+# })
 
 directions = """For each headline, we want you to: 
 a) Identify whether the headline is about an acquisition or merger. 
@@ -349,71 +281,81 @@ qid = "QID{}".format(1)
 # 	}
 # })
 
-# add student ID question
-qid = "QID{}".format(0)
-student_qid = qid
-sid_choices = {}
-for i in range(num_students):
-	sid_choices[str(i)] = { "Display": str(i) }
+# # add student ID question
+# qid = "QID{}".format(0)
+# student_qid = qid
+# sid_choices = {}
+# for i in range(num_students):
+# 	sid_choices[str(i)] = { "Display": str(i) }
 
-sort_sid_choices = list(sid_choices.keys())
-sort_sid_choices.sort()
-block_elements = survey_info["SurveyElements"][0]["Payload"]["2"]["BlockElements"]
-block_elements.append({
-	"Type": "Question",
-    "QuestionID": "QID0"
-	})
-block_elements.append({
-	"Type": "Page Break",
-	})
+# sort_sid_choices = list(sid_choices.keys())
+# sort_sid_choices.sort()
+# block_elements = survey_info["SurveyElements"][0]["Payload"]["2"]["BlockElements"]
+# block_elements.append({
+# 	"Type": "Question",
+#     "QuestionID": "QID0"
+# 	})
+# block_elements.append({
+# 	"Type": "Page Break",
+# 	})
 
-elem = {
-	"QuestionText": "Student ID\n\n",
-	"QuestionID": qid,
-	"QuestionType": "MC",
-	"Selector": "DL",
-	"QuestionDescription": "Student ID",
-	"Choices": sid_choices,
-	"Validation": {
-		"Settings": {
-			"ForceResponse": "ON",
-			"ForceResponseType": "ON",
-			"Type":"None"
-		}
-	},
-	"Language": [],
-	"DataExportTag": qid,
-	"SubSelector": "TX",
-	"DataVisibility": {
-		"Private": False,
-		"Hidden": False
-	},
-	"Configuration": {
-		"QuestionDescriptionOption": "UseText"
-	},
-	"ChoiceOrder": sort_sid_choices,
-	"NextChoiceId": str(int(sort_sid_choices[len(sort_sid_choices) - 1]) + 1),
-	"NextAnswerId": 1,
-}
-survey_elements.append(elem)
+# elem = {
+# 	"QuestionText": "Student ID\n\n",
+# 	"QuestionID": qid,
+# 	"QuestionType": "MC",
+# 	"Selector": "DL",
+# 	"QuestionDescription": "Student ID",
+# 	"Choices": sid_choices,
+# 	"Validation": {
+# 		"Settings": {
+# 			"ForceResponse": "ON",
+# 			"ForceResponseType": "ON",
+# 			"Type":"None"
+# 		}
+# 	},
+# 	"Language": [],
+# 	"DataExportTag": qid,
+# 	"SubSelector": "TX",
+# 	"DataVisibility": {
+# 		"Private": False,
+# 		"Hidden": False
+# 	},
+# 	"Configuration": {
+# 		"QuestionDescriptionOption": "UseText"
+# 	},
+# 	"ChoiceOrder": sort_sid_choices,
+# 	"NextChoiceId": str(int(sort_sid_choices[len(sort_sid_choices) - 1]) + 1),
+# 	"NextAnswerId": 1,
+# }
+# survey_elements.append(elem)
 
-block_elements.append({
-	"Type": "Page Break"
-})
+# block_elements.append({
+# 	"Type": "Page Break"
+# })
 
-i = 3
-offset = 3
 num_subparts = 5
-counter = 3
-block_counter = 3
 
 title_to_student = {}
+attention_check_title_to_student = {}
+training_title_to_student = {}
+
 for student, title_idxs in student_assignments.items():
 	for t in title_idxs:
 		if t in title_to_student:
 			title_to_student[t].append(student)
 		else:
 			title_to_student[t] = [student]
+
+for a_chunk in attention_check_headlines:
+	for a in a_chunk:
+		attention_check_title_to_student[a] = list(range(num_students))
+
+for t in training_headlines:
+	training_title_to_student[t] = list(range(num_students))
+
+print('regular', title_to_student)
+print('attention', attention_check_title_to_student)
+print('training', training_title_to_student)
 
 def add_cond_display(student_qid, sids):
 	q_cond_display = {
@@ -441,54 +383,35 @@ def add_cond_display(student_qid, sids):
 		conj = "Or"
 	return q_cond_display
 
-displayed_titles = training_headlines
-valid_titles = titles[:num_headlines]
-at_count = len(attention_check_headlines)
-val_block_count = math.ceil(len(valid_titles) / block_size)
-i = 0
-while val_block_count and at_count:
-	displayed_titles.extend(valid_titles[block_size * i:block_size * (i + 1)])
-	displayed_titles.extend(attention_check_headlines[i])
-	val_block_count -= 1
-	at_count -= 1
-	i += 1
+def create_question(curr_title, curr):
+	qid = "QID{}".format(curr)
 
-if val_block_count:
-	displayed_titles.extend(valid_titles[block_size * i:block_size * (i + 1)])
-elif at_count:
-	displayed_titles.extend(attention_check_headlines[i:])
-
-print(len(displayed_titles))
-
-for curr_title in displayed_titles:
-	# add to block elements
-	req_qid = "QID{}".format(i + 1)
-	disp_students = title_to_student[counter - 3]
-
-	# insert key 2 into payload
-	survey_info["SurveyElements"][0]["Payload"][str(counter)] = {
+	survey_info["SurveyElements"][0]["Payload"].append({
 		"Type": "Standard",
 		"SubType": "",
-		"Description": "Block {}".format(block_counter),
-		"ID": "BL_{}".format(block_counter),
+		"Description": "Block {}".format(curr),
+		"ID": "BL_{}".format(curr),
 		"BlockElements": [],
 		"Options": {
 			"BlockLocking": "false",
 			"RandomizeQuestions": "false",
 			"BlockVisibility": "Collapsed",
 		}
-	}
-	# survey_info["SurveyElements"][1]["Payload"]["Flow"][0]["Flow"].append({
-	# 	"Type": "Block",
-	# 	"ID": "BL_{}".format(block_counter),
-	# 	"FlowID": "FL_{}".format(block_counter),
-	# 	"Autofill": [],
-	# 	})
-	block_elements = survey_info["SurveyElements"][0]["Payload"][str(counter)]["BlockElements"]
+	})
+	block_elements = survey_info["SurveyElements"][0]["Payload"][curr - 1]["BlockElements"]
+	
+	# append to flow payload
+	survey_info["SurveyElements"][1]["Payload"]["Flow"].append(
+		{
+			"ID": "BL_{}".format(curr),
+			"Type": "Block",
+			"FlowID": "FL_{}".format(curr)
+		}
+	)
 
 	for subpart in range(num_subparts):
-		curr = i + subpart
-		qid = "QID{}".format(curr)
+		curr_sub = (curr - 2) * num_subparts + subpart
+		qid = "QID{}".format(curr_sub)
 
 		block_elements.append({
 			"Type": "Question",
@@ -500,14 +423,14 @@ for curr_title in displayed_titles:
 		      "SurveyID": "SV_eLnpGNWb3hM31cy",
 		      "Element": "SQ",
 		      "PrimaryAttribute": qid,
-		      "SecondaryAttribute": "{}. Headline: {}".format(counter, curr_title),
+		      "SecondaryAttribute": "{}. Headline: {}".format(curr_sub, curr_title),
 		      "TertiaryAttribute": None,
 		      "Payload": {
-		        "QuestionText": "{}. Headline: <br><br>\n<b>{}</b>\n".format(counter, curr_title),
+		        "QuestionText": "{}. Headline: <br><br>\n<b>{}</b>\n".format(curr_sub, curr_title),
 		        "QuestionID": qid,
 		        "QuestionType": "DB",
 		        "Selector": "TB",
-		        "QuestionDescription": "{}. Headline: {}".format(counter, curr_title),
+		        "QuestionDescription": "{}. Headline: {}".format(curr_sub, curr_title),
 		        "Validation": {
 		          "Settings": {
 		            "Type": "None"
@@ -525,34 +448,47 @@ for curr_title in displayed_titles:
 				"SecondaryAttribute": "Do you think that this headline refers to an acquisition or merger?",
 				"TertiaryAttribute": None,
 				"Payload": {
-				"QuestionText": "Do you think that this headline refers to an acquisition or merger?\n\n",
-				"QuestionID": qid,
-				"QuestionType": "MC",
-				"Selector": "DL",
-				"QuestionDescription": "Do you think that this headline refers to an acquisition or merger?",
-				"Choices": {
-					"1": {
-					"Display": "Yes"
+					"QuestionText": "Do you think that this headline refers to an acquisition or merger?\n\n",
+					"QuestionID": qid,
+					"DataExportTag": qid,
+					"QuestionType": "MC",
+					"Selector": "DL",
+					"Configuration": {
+						"QuestionDescriptionOption": "UseText"
 					},
-					"2": {
-					"Display": "No"
+					"QuestionDescription": "Do you think that this headline refers to an acquisition or merger?",
+					"Choices": {
+						"1": {
+							"Display": "Yes"
+						},
+						"2": {
+							"Display": "No"
+						},
+						"3": {
+							"Display": "Not sure"
+						},
+						"4": {
+							"Display": "Not a headline"
+						}
 					},
-					"3": {
-					"Display": "Not sure"
+					"ChoiceOrder": [
+						"1",
+						"2",
+						"3",
+						"4",
+					],
+					"Validation": {
+						"Settings": {
+							"ForceResponse": "ON",
+							"ForceResponseType": "ON",
+							"Type":"None"
+						}
 					},
-					"4": {
-					"Display": "Not a headline"
-					}
-				},
-				"Validation": {
-					"Settings": {
-						"ForceResponse": "ON",
-						"ForceResponseType": "ON",
-						"Type":"None"
-					}
-				},
-				"Language": [],
-				"DataExportTag": qid,
+					"GradingData": [],
+					"Language": [],
+					"NextChoiceId": 5,
+        			"NextAnswerId": 1,
+					"QuestionID": qid
 				},
 			}
 		elif subpart == 2:
@@ -563,21 +499,29 @@ for curr_title in displayed_titles:
 				"SecondaryAttribute": "ACQUIRER (leave blank if not indicated or unclear):",
 				"TertiaryAttribute": None,
 				"Payload": {
-				"QuestionText": "ACQUIRER (leave blank if not indicated or unclear):\n\n",
-				"QuestionID": qid,
-				"QuestionType": "TE",
-				"Selector": "SL",
-				"QuestionDescription": "ACQUIRER (leave blank if not indicated or unclear):",
-				"Validation": {
-					"Settings": {
-					"Type": "None"
-					}
-				},
-				"Language": [],
-				"SearchSource": {
-					"AllowFreeResponse": "false"
-				},
-				"DataExportTag": qid,
+					"QuestionText": "ACQUIRER (leave blank if not indicated or unclear):\n\n",
+					"DefaultChoices": False,
+					"QuestionID": qid,
+					"QuestionType": "TE",
+					"Selector": "SL",
+					"Configuration": {
+						"QuestionDescriptionOption": "UseText"
+					},
+					"QuestionDescription": "ACQUIRER (leave blank if not indicated or unclear):",
+					"Validation": {
+						"Settings": {
+							"ForceResponse": "OFF",
+							"Type": "None"
+						}
+					},
+					"GradingData": [],
+					"Language": [],
+					"NextChoiceId": 4,
+        			"NextAnswerId": 1,
+					"SearchSource": {
+						"AllowFreeResponse": "false"
+					},
+					"DataExportTag": qid,
 				}
 		    }
 		elif subpart == 3:
@@ -588,26 +532,34 @@ for curr_title in displayed_titles:
 				"SecondaryAttribute": "ACQUIRED (leave blank if not indicated or unclear):",
 				"TertiaryAttribute": None,
 				"Payload": {
-				"QuestionText": "ACQUIRED (leave blank if not indicated or unclear):\n\n",
-				"QuestionID": qid,
-				"QuestionType": "TE",
-				"Selector": "SL",
-				"QuestionDescription": "ACQUIRED (leave blank if not indicated or unclear):",
-				"Validation": {
-					"Settings": {
-					"Type": "None"
-					}
-				},
-				"Language": [],
-				"SearchSource": {
-					"AllowFreeResponse": "false"
-				},
-				"DataExportTag": qid,
+					"QuestionText": "ACQUIRED (leave blank if not indicated or unclear):\n\n",
+					"DefaultChoices": False,
+					"QuestionID": qid,
+					"QuestionType": "TE",
+					"Selector": "SL",
+					"Configuration": {
+						"QuestionDescriptionOption": "UseText"
+					},
+					"QuestionDescription": "ACQUIRED (leave blank if not indicated or unclear):",
+					"Validation": {
+						"Settings": {
+							"ForceResponse": "OFF",
+							"Type": "None"
+						}
+					},
+					"GradingData": [],
+					"Language": [],
+					"NextChoiceId": 4,
+        			"NextAnswerId": 1,
+					"SearchSource": {
+						"AllowFreeResponse": "false"
+					},
+					"DataExportTag": qid,
 				}
 		    }
 		elif subpart == 4:
 			elem = {
-		      "SurveyID": "SV_b1uuK02TDahcMrs",
+		      "SurveyID": "SV_eLnpGNWb3hM31cy",
 		      "Element": "SQ",
 		      "PrimaryAttribute": qid,
 		      "SecondaryAttribute": "Timing",
@@ -640,26 +592,29 @@ for curr_title in displayed_titles:
 		        },
 		        "GradingData": [],
 		        "Language": [],
-		        "NextChoiceId": "QID{}".format(i - 3),
+		        "NextChoiceId": 4,
 		        "NextAnswerId": 1,
 		        "QuestionID": qid
 		      }
 		    }
 
-		elem["Payload"]["DisplayLogic"] = add_cond_display(student_qid, disp_students)
-		elem["Payload"]["NextChoiceId"] = 1
-		elem["Payload"]["NextAnswerId"] = 1
+		# elem["Payload"]["DisplayLogic"] = add_cond_display(student_qid, disp_students)
 		survey_elements.append(elem)
-
+	
 	block_elements.append({
 		"Type": "Page Break"
 	})
-	
-	i += num_subparts
-	counter += 1
-	block_counter += 1
 
-	print(curr_title)
+# start with all training headlines
+curr = 2
+for t in list(training_title_to_student.keys()):
+	create_question(t, curr)
+	curr += 1
+
+# for i in range():
+# 	# in every iteration
+# 	# pick attention check number of attention check headlines
+# 	# pick block size - attention check number of regular headlines
 
 with open(qsf_name, 'w') as f:
 	json.dump(survey_info, f, ensure_ascii = False, indent = 2)
