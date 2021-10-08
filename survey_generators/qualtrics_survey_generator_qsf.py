@@ -35,7 +35,11 @@ titles_per_student = math.ceil(num_headlines / ((1 - overlap) * num_students))
 uniques_per_student = math.floor(num_headlines / num_students)
 
 attention_check_length = 3 # number of questions in an attention-check block
-attention_check_headlines = [["Attention check headline {}".format(i) for i in range(attention_check_length)] for j in range(math.ceil(titles_per_student / block_size))]
+attention_check_headlines = [["Attention check headline {}, Block {}".format(i, j) for i in range(attention_check_length)] for j in range(math.ceil(titles_per_student / block_size))]
+attention_check_answers = {}
+for i in attention_check_headlines:
+	for j in i:
+		attention_check_answers[j] = ["Yes", "Acquirer", "Acquired"]
 
 uniques_left = num_headlines - num_students * uniques_per_student
 uniques = [uniques_per_student for i in range(num_students)]
