@@ -132,7 +132,7 @@ survey_info["SurveyEntry"] = {
 	"SurveyName": survey_name,
 	"SurveyDescription": None,
 	"SurveyOwnerID": "UR_3WUHDMGK0A1YPvo",
-	"SurveyBrandID": "ucdavis",
+	"SurveyBrandID": "",
 	"DivisionID": "DV_bCz0vLDEYcivdHv",
 	"SurveyLanguage": "EN",
 	"SurveyActiveResponseSet": "RS_dgMRsbI5TIbBjLw",
@@ -195,8 +195,22 @@ survey_info["SurveyElements"] = [
         "NextButton": "",
         "SurveyTitle": "Qualtrics Survey | Qualtrics Experience Management",
         "SkinLibrary": "ucdavis",
-        "SkinType": "MQ",
-        "Skin": "ucdavis2",
+        "SkinType": "templated",
+        "Skin": {
+          "brandingId": None,
+          "templateId": "*base",
+          "overrides": {
+            "questionText": {
+              "size": "16px"
+            },
+            "answerText": {
+              "size": "14px"
+            },
+			"layout": {
+				"spacing": 0
+			}
+          }
+        },
         "NewScoring": 1
 	  }
 	},
