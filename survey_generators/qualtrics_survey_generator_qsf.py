@@ -5,12 +5,6 @@ import sys
 import numpy as np
 import copy
 
-# The Mturk question: In order to get paid for the work you have done on this survey, you need to enter the following code in the box at the bottom of the Mechanical Turk page where you started once you close this survey.
-
-# Please write this down so you don't forget:
-
-# ${rand://int/10000:99999}
-
 np.random.seed(0)
 
 # survey settings
@@ -138,13 +132,13 @@ set_end_id = {
 	"FlowID": "FL_0",
 	"EmbeddedData": [
 		{
-		"Description": "endID",
-		"Type": "Custom",
-		"Field": "endID",
-		"VariableType": "String",
-		"DataVisibility": [],
-		"AnalyzeText": False,
-		"Value": "$e{${gr://SC_0/Score} * 100000000 * 1/0.9}${rand://int/100000:1000000}"
+			"Description": "endID",
+			"Type": "Custom",
+			"Field": "endID",
+			"VariableType": "String",
+			"DataVisibility": [],
+			"AnalyzeText": False,
+			"Value": "$e{${gr://SC_0/Score} * 100000000 * 1/0.9}${rand://int/100000:1000000}"
 		}
 	]
 }
@@ -382,50 +376,44 @@ survey_info["SurveyElements"][0]["Payload"].append(
 
 survey_elements = survey_info["SurveyElements"]
 
-directions = """For each headline, we want you to: 
-a) Identify whether the headline is about an acquisition or merger. 
-b) if it is, for you to identify and enter (preferably by copy-pasting verbatim) the ACQUIRER and ACQUIRED companies. 
-c) If the ACQUIRER or ACQUIRED names are not obvious from the headline, please leave the corresponding box blank. 
-d) If there are two company names, but you don't know who acquired whom (as in the case of a merger), please still enter the names in either field. 
-e) If you are not sure if the headline refers to an acquisition, or if the text does not look like a headline, please mark "not sure" or "This is not a headline". You can still enter company names if relevant.
-
-To increase speed, we suggest using the keyboard to navigate the response:
-- "Tab" moves to the next field
-- You can use "Y" or "N" keys to select the corresponding drop-down field
-
-Student ID Assignments
-- Jahanvi: 0
-- Meghna: 1
-- Sanjana: 2
-- Karina: 3\n\n
+directions = """For each headline, we want you to: <br><br>
+a) Identify whether the headline is about an acquisition or merger. <br>
+b) if it is, for you to identify and enter (preferably by copy-pasting verbatim) the ACQUIRER and ACQUIRED companies. <br>
+c) If the ACQUIRER or ACQUIRED names are not obvious from the headline, please leave the corresponding box blank. <br>
+d) If there are two company names, but you don't know who acquired whom (as in the case of a merger), please still enter the names in either field. <br>
+e) If you are not sure if the headline refers to an acquisition, or if the text does not look like a headline, please mark "not sure" or "This is not a headline". You can still enter company names if relevant. <br>
+<br><br>
+To increase speed, we suggest using the keyboard to navigate the response: <br><br>
+- "Tab" moves to the next field <br>
+- You can use "Y" or "N" keys to select the corresponding drop-down field <br>
 """
 
 # # add student ID question
-# curr = 0
-# qid = "QID{}".format(curr)
-# student_qid = qid
-# survey_elements.append({
-# 	"SurveyID": "SV_eLnpGNWb3hM31cy",
-# 	"Element": "SQ",
-# 	"PrimaryAttribute": qid,
-# 	"SecondaryAttribute": directions,
-# 	"TertiaryAttribute": None,
-# 	"Payload": {
-# 	"QuestionText": directions,
-# 	"QuestionID": qid,
-# 	"QuestionType": "DB",
-# 	"Selector": "TB",
-# 	"QuestionDescription": directions,
-# 	"Validation": {
-# 	  "Settings": {
-# 	    "Type": "None"
-# 	  }
-# 	},
-# 	"Language": [],
-# 	"DataExportTag": qid
-# 	}
-# })
-# sid_elem = survey_elements[-1]
+curr = 0
+qid = "QID{}".format(curr)
+student_qid = qid
+survey_elements.append({
+	"SurveyID": "SV_eLnpGNWb3hM31cy",
+	"Element": "SQ",
+	"PrimaryAttribute": qid,
+	"SecondaryAttribute": directions,
+	"TertiaryAttribute": None,
+	"Payload": {
+	"QuestionText": directions,
+	"QuestionID": qid,
+	"QuestionType": "DB",
+	"Selector": "TB",
+	"QuestionDescription": directions,
+	"Validation": {
+	  "Settings": {
+	    "Type": "None"
+	  }
+	},
+	"Language": [],
+	"DataExportTag": qid
+	}
+})
+sid_elem = survey_elements[-1]
 
 sid_choices = {}
 for i in range(num_students):
@@ -433,35 +421,35 @@ for i in range(num_students):
 
 sort_sid_choices = list(sid_choices.keys())
 sort_sid_choices.sort()
-# survey_info["SurveyElements"][0]["Payload"].append({
-# 	"Type": "Standard",
-# 	"SubType": "",
-# 	"Description": "Block {}".format(curr),
-# 	"ID": "BL_{}".format(curr),
-# 	"BlockElements": [],
-# 	"Options": {
-# 		"BlockLocking": "false",
-# 		"RandomizeQuestions": "false",
-# 		"BlockVisibility": "Collapsed",
-# 	}
-# })
-# block_elements = survey_info["SurveyElements"][0]["Payload"][1]["BlockElements"]
+survey_info["SurveyElements"][0]["Payload"].append({
+	"Type": "Standard",
+	"SubType": "",
+	"Description": "Block {}".format(curr),
+	"ID": "BL_{}".format(curr),
+	"BlockElements": [],
+	"Options": {
+		"BlockLocking": "false",
+		"RandomizeQuestions": "false",
+		"BlockVisibility": "Collapsed",
+	}
+})
+block_elements = survey_info["SurveyElements"][0]["Payload"][1]["BlockElements"]
 
-# survey_info["SurveyElements"][1]["Payload"]["Flow"].append(
-# 	{
-# 		"ID": "BL_{}".format(curr),
-# 		"Type": "Block",
-# 		"FlowID": "FL_{}".format(curr)
-# 	}
-# )
+survey_info["SurveyElements"][1]["Payload"]["Flow"].append(
+	{
+		"ID": "BL_{}".format(curr),
+		"Type": "Block",
+		"FlowID": "FL_{}".format(curr)
+	}
+)
 
-# block_elements.append({
-# 	"Type": "Question",
-#     "QuestionID": "QID0"
-# 	})
-# block_elements.append({
-# 	"Type": "Page Break",
-# 	})
+block_elements.append({
+	"Type": "Question",
+    "QuestionID": "QID0"
+	})
+block_elements.append({
+	"Type": "Page Break",
+	})
 
 # elem = {
 # 	"QuestionText": "Student ID\n\n",
@@ -654,7 +642,7 @@ def create_question(curr_title, curr, disp_settings = [], train_ans = -1):
 	)
 
 	for subpart in range(num_subparts):
-		curr_sub = curr * num_subparts + subpart + 1
+		curr_sub = (curr - 1) * num_subparts + subpart + 1
 		qid = "QID{}".format(curr_sub)
 
 		block_elements.append({
@@ -852,7 +840,7 @@ def create_question(curr_title, curr, disp_settings = [], train_ans = -1):
 	})
 
 # start with all training headlines
-curr = 1
+curr = 2
 for t in list(training_title_to_student.keys()):
 	create_question(t, curr, list(range(num_students)), training_answers[curr - 2])
 	curr += 1
