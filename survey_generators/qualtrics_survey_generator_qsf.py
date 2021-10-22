@@ -16,10 +16,10 @@ np.random.seed(0)
 # survey settings
 all_titles = list(pd.read_csv("../input_headlines/ra_data.csv", encoding = 'utf8')["Headline"])
 
-num_headlines = 5 # 50 # unique titles to be classified
-num_students = 2 # 5 # number of people taking this survey version
+num_headlines = 50 # unique titles to be classified
+num_students = 5 # number of people taking this survey version
 overlap = 0.2 # percent of headlines assigned to 1 respondent that will be duplicated
-training_length = 3 # number of training titles
+training_length = 5 # number of training titles
 training_headlines = ["Training headline {}".format(i) for i in range(training_length)]
 training_answers = [np.random.randint(4) for i in range(len(training_headlines))]
 block_size = 3 # number of questions in a block (between attention-check)
@@ -106,6 +106,11 @@ branch_logic_template = {
 	}
 }
 
+end_survey_display = {
+		"ID": "BL_{}",
+		"Type": "Block",
+		"FlowID": "FL_{}"
+}
 end_survey = {
 	"Type": "EndSurvey",
 	"FlowID": "FL_-500"
@@ -296,32 +301,32 @@ Student ID Assignments
 - Karina: 3\n\n
 """
 
-# add student ID question
-curr = 0
-qid = "QID{}".format(curr)
-student_qid = qid
-survey_elements.append({
-	"SurveyID": "SV_eLnpGNWb3hM31cy",
-	"Element": "SQ",
-	"PrimaryAttribute": qid,
-	"SecondaryAttribute": directions,
-	"TertiaryAttribute": None,
-	"Payload": {
-	"QuestionText": directions,
-	"QuestionID": qid,
-	"QuestionType": "DB",
-	"Selector": "TB",
-	"QuestionDescription": directions,
-	"Validation": {
-	  "Settings": {
-	    "Type": "None"
-	  }
-	},
-	"Language": [],
-	"DataExportTag": qid
-	}
-})
-sid_elem = survey_elements[-1]
+# # add student ID question
+# curr = 0
+# qid = "QID{}".format(curr)
+# student_qid = qid
+# survey_elements.append({
+# 	"SurveyID": "SV_eLnpGNWb3hM31cy",
+# 	"Element": "SQ",
+# 	"PrimaryAttribute": qid,
+# 	"SecondaryAttribute": directions,
+# 	"TertiaryAttribute": None,
+# 	"Payload": {
+# 	"QuestionText": directions,
+# 	"QuestionID": qid,
+# 	"QuestionType": "DB",
+# 	"Selector": "TB",
+# 	"QuestionDescription": directions,
+# 	"Validation": {
+# 	  "Settings": {
+# 	    "Type": "None"
+# 	  }
+# 	},
+# 	"Language": [],
+# 	"DataExportTag": qid
+# 	}
+# })
+# sid_elem = survey_elements[-1]
 
 sid_choices = {}
 for i in range(num_students):
@@ -329,65 +334,65 @@ for i in range(num_students):
 
 sort_sid_choices = list(sid_choices.keys())
 sort_sid_choices.sort()
-survey_info["SurveyElements"][0]["Payload"].append({
-	"Type": "Standard",
-	"SubType": "",
-	"Description": "Block {}".format(curr),
-	"ID": "BL_{}".format(curr),
-	"BlockElements": [],
-	"Options": {
-		"BlockLocking": "false",
-		"RandomizeQuestions": "false",
-		"BlockVisibility": "Collapsed",
-	}
-})
-block_elements = survey_info["SurveyElements"][0]["Payload"][1]["BlockElements"]
+# survey_info["SurveyElements"][0]["Payload"].append({
+# 	"Type": "Standard",
+# 	"SubType": "",
+# 	"Description": "Block {}".format(curr),
+# 	"ID": "BL_{}".format(curr),
+# 	"BlockElements": [],
+# 	"Options": {
+# 		"BlockLocking": "false",
+# 		"RandomizeQuestions": "false",
+# 		"BlockVisibility": "Collapsed",
+# 	}
+# })
+# block_elements = survey_info["SurveyElements"][0]["Payload"][1]["BlockElements"]
 
-survey_info["SurveyElements"][1]["Payload"]["Flow"].append(
-	{
-		"ID": "BL_{}".format(curr),
-		"Type": "Block",
-		"FlowID": "FL_{}".format(curr)
-	}
-)
+# survey_info["SurveyElements"][1]["Payload"]["Flow"].append(
+# 	{
+# 		"ID": "BL_{}".format(curr),
+# 		"Type": "Block",
+# 		"FlowID": "FL_{}".format(curr)
+# 	}
+# )
 
-block_elements.append({
-	"Type": "Question",
-    "QuestionID": "QID0"
-	})
-block_elements.append({
-	"Type": "Page Break",
-	})
+# block_elements.append({
+# 	"Type": "Question",
+#     "QuestionID": "QID0"
+# 	})
+# block_elements.append({
+# 	"Type": "Page Break",
+# 	})
 
-elem = {
-	"QuestionText": "Student ID\n\n",
-	"QuestionID": qid,
-	"QuestionType": "MC",
-	"Selector": "DL",
-	"QuestionDescription": "Student ID",
-	"Choices": sid_choices,
-	"Validation": {
-		"Settings": {
-			"ForceResponse": "ON",
-			"ForceResponseType": "ON",
-			"Type":"None"
-		}
-	},
-	"Language": [],
-	"DataExportTag": qid,
-	"SubSelector": "TX",
-	"DataVisibility": {
-		"Private": False,
-		"Hidden": False
-	},
-	"Configuration": {
-		"QuestionDescriptionOption": "UseText"
-	},
-	"ChoiceOrder": sort_sid_choices,
-	"NextChoiceId": str(int(sort_sid_choices[len(sort_sid_choices) - 1]) + 1),
-	"NextAnswerId": 1,
-}
-sid_elem["Payload"] = elem
+# elem = {
+# 	"QuestionText": "Student ID\n\n",
+# 	"QuestionID": qid,
+# 	"QuestionType": "MC",
+# 	"Selector": "DL",
+# 	"QuestionDescription": "Student ID",
+# 	"Choices": sid_choices,
+# 	"Validation": {
+# 		"Settings": {
+# 			"ForceResponse": "ON",
+# 			"ForceResponseType": "ON",
+# 			"Type":"None"
+# 		}
+# 	},
+# 	"Language": [],
+# 	"DataExportTag": qid,
+# 	"SubSelector": "TX",
+# 	"DataVisibility": {
+# 		"Private": False,
+# 		"Hidden": False
+# 	},
+# 	"Configuration": {
+# 		"QuestionDescriptionOption": "UseText"
+# 	},
+# 	"ChoiceOrder": sort_sid_choices,
+# 	"NextChoiceId": str(int(sort_sid_choices[len(sort_sid_choices) - 1]) + 1),
+# 	"NextAnswerId": 1,
+# }
+# sid_elem["Payload"] = elem
 
 num_subparts = 5
 
@@ -438,6 +443,26 @@ def add_cond_display(student_qid, sids):
 def create_branch_logic(branch_logic_template, fl_id, thresh):
 	branch_logic_template_copy = copy.deepcopy(branch_logic_template)
 	branch_logic_template_copy["FlowID"] = "FL_{}".format(fl_id)
+	# curr_end_survey_display = copy.deepcopy(end_survey_display)
+	# curr_end_survey_display["Block"] = curr_end_survey_display["Block"].format(block_id)
+	# curr_end_survey_display["FlowID"] = curr_end_survey_display["FlowID"].format(fl_id - 1)
+	# survey_info["SurveyElements"][0]["Payload"].append({
+	# 	"Type": "Standard",
+	# 	"SubType": "",
+	# 	"Description": "Block {}".format(block_id),
+	# 	"ID": "BL_{}".format(block_id),
+	# 	"BlockElements": [
+	# 		{
+	# 			"Type": "Question",
+	# 			"QuestionID": "QID{}".format(block_id - 1),
+	# 		}
+	# 	],
+	# 	"Options": {
+	# 		"BlockLocking": "false",
+	# 		"RandomizeQuestions": "false",
+	# 		"BlockVisibility": "Collapsed",
+	# 	}
+	# })
 	branch_logic_template_copy["Flow"] = [end_survey]
 	branch_logic_template_copy["BranchLogic"]["0"]["0"]["RightOperand"] = str(thresh)
 	branch_logic_template_copy["BranchLogic"]["0"]["0"]["Description"] = "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">Score</span> <span class=\"OpDesc\">Is Less Than</span> <span class=\"RightOpDesc\"> {} </span>".format(thresh)
@@ -524,7 +549,7 @@ def create_question(curr_title, curr, disp_settings = [], train_ans = -1):
 		        "QuestionID": qid,
 		        "QuestionType": "DB",
 		        "Selector": "TB",
-		        "QuestionDescription": "{}. Headline: {}".format(curr - 1, curr_title),
+		        "QuestionDescription": curr_title,
 		        "Validation": {
 		          "Settings": {
 		            "Type": "None"
@@ -702,7 +727,7 @@ def create_question(curr_title, curr, disp_settings = [], train_ans = -1):
 	})
 
 # start with all training headlines
-curr = 2
+curr = 1
 for t in list(training_title_to_student.keys()):
 	create_question(t, curr, list(range(num_students)), training_answers[curr - 2])
 	curr += 1
@@ -715,7 +740,7 @@ flow_elements.append(set_score)
 training_thresh_num = math.ceil(training_thresh * training_length)
 fl_id = -1
 flow_elements.append(create_branch_logic(branch_logic_template, fl_id, training_thresh_num))
-fl_id -= 1
+fl_id -= 2
 
 num_blocks = len(attention_check_headlines)
 
@@ -760,7 +785,7 @@ for i in range(num_blocks):
 
 	attention_thresh_num = training_thresh_num + sum(calc_attention_thresh[:i + 1])
 	flow_elements.append(create_branch_logic(branch_logic_template, fl_id, attention_thresh_num))
-	fl_id -= 1
+	fl_id -= 2
 
 # create the rest of the questions for the remaining regular headlines
 for student, remaining in student_assignments.items():
@@ -771,3 +796,17 @@ for student, remaining in student_assignments.items():
 
 with open(qsf_name, 'w') as f:
 	json.dump(survey_info, f, ensure_ascii = False, indent = 2)
+
+# test that all headlines in the MTurk dump are displayed to at least one user
+curr_idx = 0
+mturk_survey_q_dump = survey_elements[7:]
+headlines_displayed = {}
+while curr_idx < len(mturk_survey_q_dump):
+	curr_headline = mturk_survey_q_dump[curr_idx]["Payload"]["QuestionDescription"]
+	curr_idx += num_subparts
+	if curr_headline in headlines_displayed:
+		headlines_displayed[curr_headline] += 1
+	else:
+		headlines_displayed[curr_headline] = 1
+
+assert(len(set(headlines_displayed.keys())) == num_headlines + training_length + len(attention_check_headlines) * attention_check_length)
