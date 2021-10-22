@@ -16,10 +16,10 @@ np.random.seed(0)
 # survey settings
 all_titles = list(pd.read_csv("../input_headlines/ra_data.csv", encoding = 'utf8')["Headline"])
 
-num_headlines = 50 # unique titles to be classified
-num_students = 5 # number of people taking this survey version
+num_headlines = 3 # unique titles to be classified
+num_students = 2 # number of people taking this survey version
 overlap = 0.2 # percent of headlines assigned to 1 respondent that will be duplicated
-training_length = 5 # number of training titles
+training_length = 1 # number of training titles
 training_headlines = ["Training headline {}".format(i) for i in range(training_length)]
 training_answers = [np.random.randint(4) for i in range(len(training_headlines))]
 block_size = 3 # number of questions in a block (between attention-check)
@@ -170,7 +170,23 @@ survey_info["SurveyElements"] = [
       "Payload": {
       	"Type": "Root",
       	"FlowID": "FL_1",
-        "Flow": [],
+        "Flow": [
+			{
+				"Type": "EmbeddedData",
+				"FlowID": "FL_13",
+				"EmbeddedData": [
+					{
+						"Description": "respondentID",
+						"Type": "Custom",
+						"Field": "respondentID",
+						"VariableType": "String",
+						"DataVisibility": [],
+						"AnalyzeText": False,
+						"Value": "${qo://QO_wsLz1sdn4gxRJxy/QuotaCount}"
+					}
+				]
+          	},
+		],
         "Properties": {
           "Count": 3,
         },
@@ -270,7 +286,73 @@ survey_info["SurveyElements"] = [
       "SecondaryAttribute": "3",
       "TertiaryAttribute": None,
       "Payload": None
-    }
+    },
+	{
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "QO",
+      "PrimaryAttribute": "QO_wsLz1sdn4gxRJxy",
+      "SecondaryAttribute": "Number of respondents",
+      "TertiaryAttribute": None,
+      "Payload": {
+        "Name": "Number of respondents",
+        "Occurrences": num_students,
+        "Logic": {
+          "0": {
+            "0": {
+              "LogicType": "Quota",
+              "QuotaID": "QO_wsLz1sdn4gxRJxy",
+              "QuotaType": "Simple",
+              "Operator": "QuotaMet",
+              "LeftOperand": "qo://QO_wsLz1sdn4gxRJxy/QuotaMet",
+              "QuotaName": "Number of respondents",
+              "Type": "Expression",
+              "Description": "<span class=\"ConjDesc\">If</span> <span class=\"QuestionDesc\">Quota</span> <span class=\"LeftOpDesc\">Number of respondents</span> <span class=\"OpDesc\">Has Been Met</span> "
+            },
+            "Type": "If"
+          },
+          "Type": "BooleanExpression"
+        },
+        "LogicType": "Simple",
+        "QuotaAction": "ForBranching",
+        "OverQuotaAction": "Record",
+        "ActionInfo": {
+          "0": {
+            "0": {
+              "ActionType": "ForBranching",
+              "Type": "Expression",
+              "LogicType": "QuotaAction"
+            },
+            "Type": "If"
+          },
+          "Type": "BooleanExpression"
+        },
+        "ID": "QO_wsLz1sdn4gxRJxy",
+        "QuotaRealm": "Survey",
+        "QuotaSchedule": None,
+        "EndSurveyOptions": {
+          "EndingType": "Default",
+          "ResponseFlag": "QuotaMet",
+          "SurveyTermination": "DefaultMessage"
+        }
+      }
+    },
+	{
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "QG",
+      "PrimaryAttribute": "QG_M8GH3g6zuPBjQgw",
+      "SecondaryAttribute": "Default Quota Group",
+      "TertiaryAttribute": None,
+      "Payload": {
+        "ID": "QG_M8GH3g6zuPBjQgw",
+        "Name": "Default Quota Group",
+        "Selected": True,
+        "MultipleMatch": "PlaceInAll",
+        "Public": False,
+        "Quotas": [
+          "QO_wsLz1sdn4gxRJxy"
+        ]
+      }
+    },
 ]
 
 survey_info["SurveyElements"][0]["Payload"].append(
@@ -425,15 +507,20 @@ def add_cond_display(student_qid, sids):
 	for s in range(len(sids)):
 		sid = sids[s]
 		q_cond_display["0"][str(s)] = {
-			"LogicType": "Question",
-			"QuestionID": student_qid,
-			"QuestionIsInLoop": "no",
-			"ChoiceLocator": "q://{}/SelectableChoice/{}".format(student_qid, sid),
-			"Operator": "Selected",
-			"QuestionIDFromLocator": student_qid,
-			"LeftOperand": "q://{}/SelectableChoice/{}".format(student_qid, sid),
+			"LogicType": "EmbeddedField",
+			"LeftOperand": "respondentID",
+			"Operator": "EqualTo",
+			"RightOperand": str(sid),
 			"Type": "Expression",
-			"Description": "<span class=\"ConjDesc\">{}</span> <span class=\"QuestionDesc\">Student ID</span> <span class=\"LeftOpDesc\">{}</span> <span class=\"OpDesc\">Is Selected</span> ".format(conj, sid)
+			"Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> {} </span>".format(sid)
+			# "QuestionID": student_qid,
+			# "QuestionIsInLoop": "no",
+			# "ChoiceLocator": "q://{}/SelectableChoice/{}".format(student_qid, sid),
+			# "Operator": "Selected",
+			# "QuestionIDFromLocator": student_qid,
+			# "LeftOperand": "q://{}/SelectableChoice/{}".format(student_qid, sid),
+			# "Type": "Expression",
+			# "Description": "<span class=\"ConjDesc\">{}</span> <span class=\"QuestionDesc\">Student ID</span> <span class=\"LeftOpDesc\">{}</span> <span class=\"OpDesc\">Is Selected</span> ".format(conj, sid)
 		}
 		if s > 0:
 			q_cond_display["0"][str(s)]["Conjuction"] = "Or"
@@ -529,7 +616,7 @@ def create_question(curr_title, curr, disp_settings = [], train_ans = -1):
 	)
 
 	for subpart in range(num_subparts):
-		curr_sub = (curr - 2) * num_subparts + subpart + 1
+		curr_sub = curr * num_subparts + subpart + 1
 		qid = "QID{}".format(curr_sub)
 
 		block_elements.append({
@@ -799,7 +886,7 @@ with open(qsf_name, 'w') as f:
 
 # test that all headlines in the MTurk dump are displayed to at least one user
 curr_idx = 0
-mturk_survey_q_dump = survey_elements[7:]
+mturk_survey_q_dump = survey_elements[9:]
 headlines_displayed = {}
 while curr_idx < len(mturk_survey_q_dump):
 	curr_headline = mturk_survey_q_dump[curr_idx]["Payload"]["QuestionDescription"]
