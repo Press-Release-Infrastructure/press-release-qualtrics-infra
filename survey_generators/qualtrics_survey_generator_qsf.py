@@ -868,7 +868,10 @@ for i in range(num_blocks):
 			regular_headline_idxes[j] = student_assignments[j]
 		else:
 			continue
-		student_assignments[j] = list(set(student_assignments[j]) - set(regular_headline_idxes[j])) # remove the chosen headline idxes
+		# student_assignments[j] = list(set(student_assignments[j]) - set(regular_headline_idxes[j])) # remove the chosen headline idxes
+		# remove the chosen headline idxes from all student assignments
+		for sa in student_assignments.keys():
+			student_assignments[sa] = list(set(student_assignments[sa]) - set(regular_headline_idxes[j]))
 		regular_headlines = titles[np.array(regular_headline_idxes[j])]
 		curr_headlines = curr_headlines.union(set(regular_headlines))
 		for r in regular_headlines:
@@ -897,11 +900,15 @@ for i in range(num_blocks):
 	fl_id -= 2
 
 # create the rest of the questions for the remaining regular headlines
+remaining_headlines = []
 for student, remaining in student_assignments.items():
-	for r in remaining:
-		# special display settings
-		create_question(titles[r], curr, title_to_student[r])
-		curr += 1
+	remaining_headlines.extend(remaining)
+remaining_headlines = list(set(remaining_headlines))
+	
+for r in remaining_headlines:
+	# special display settings
+	create_question(titles[r], curr, title_to_student[r])
+	curr += 1
 
 for eos_block in eos_payload_blocks:
 	survey_info["SurveyElements"][0]["Payload"].append(eos_block)
@@ -911,14 +918,15 @@ with open(qsf_name, 'w') as f:
 
 # test that all headlines in the MTurk dump are displayed to at least one user
 curr_idx = 0
-mturk_survey_q_dump = survey_elements[9:]
+mturk_survey_q_dump = survey_elements[10:]
 headlines_displayed = {}
 while curr_idx < len(mturk_survey_q_dump):
 	curr_headline = mturk_survey_q_dump[curr_idx]["Payload"]["QuestionDescription"]
-	curr_idx += num_subparts + 1
-	if curr_headline in headlines_displayed:
-		headlines_displayed[curr_headline] += 1
-	else:
-		headlines_displayed[curr_headline] = 1
+	if not sum([i in curr_headline for i in ["End", "Timing", "Do you think", "ACQUIRED", "ACQUIRER"]]):
+		if curr_headline in headlines_displayed:
+			headlines_displayed[curr_headline] += 1
+		else:
+			headlines_displayed[curr_headline] = 1
+	curr_idx += 1
 
-assert(len(set(headlines_displayed.keys())) == num_headlines + training_length + len(attention_check_headlines) * attention_check_length)
+assert(len(set(headlines_displayed.keys())) == num_headlines + training_length + num_blocks * attention_check_length)
