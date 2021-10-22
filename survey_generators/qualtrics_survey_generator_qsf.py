@@ -13,13 +13,13 @@ all_titles = list(pd.read_csv("../input_headlines/ra_data.csv", encoding = 'utf8
 num_headlines = 3 # unique titles to be classified
 num_students = 2 # number of people taking this survey version
 overlap = 0.2 # percent of headlines assigned to 1 respondent that will be duplicated
-training_length = 1 # number of training titles
+training_length = 2 # number of training titles
 training_headlines = ["Training headline {}".format(i) for i in range(training_length)]
 training_answers = [np.random.randint(4) for i in range(len(training_headlines))]
 block_size = 3 # number of questions in a block (between attention-check)
 
-training_thresh = 0.9
-attention_thresh = 0.9
+training_thresh = 0.5
+attention_thresh = 0.5
 
 conditional = False
 
@@ -526,7 +526,7 @@ def add_cond_display(student_qid, sids):
 
 eos_payload_blocks = []
 
-def create_branch_logic(branch_logic_template, fl_id, eos_block_id, thresh):
+def create_branch_logic(branch_logic_template, fl_id, eos_block_id, thresh, training = False):
 	branch_logic_template_copy = copy.deepcopy(branch_logic_template)
 	branch_logic_template_copy["FlowID"] = "FL_{}".format(fl_id)
 	curr_end_survey_display = copy.deepcopy(end_survey_display)
@@ -552,6 +552,12 @@ def create_branch_logic(branch_logic_template, fl_id, eos_block_id, thresh):
 	}
 	eos_payload_blocks.append(eos_payload)
 
+	msg = "Your score {} wasn't high enough to continue with the survey."
+	if training:
+		msg = msg.format("on the training questions")
+	else:
+		msg = msg.format("in the current block")
+
 	elem = {
 		"SurveyID": "SV_eLnpGNWb3hM31cy",
 		"Element": "SQ",
@@ -559,7 +565,7 @@ def create_branch_logic(branch_logic_template, fl_id, eos_block_id, thresh):
 		"SecondaryAttribute": "End of survey",
 		"TertiaryAttribute": None,
 		"Payload": {
-		"QuestionText": "In order to get paid for the work you have done on this survey, you need to enter the following code in the box at the bottom of the Mechanical Turk page where you started once you close this survey.<br><br>Please write this down so you don't forget: <br><br>${e://Field/endID}",
+		"QuestionText": msg + "<br><br>In order to get paid for the work you have done on this survey, you need to enter the following code in the box at the bottom of the Mechanical Turk page where you started once you close this survey.<br><br>Please write this down so you don't forget: <br><br>${e://Field/endID}",
 		"QuestionID": qid,
 		"QuestionType": "DB",
 		"Selector": "TB",
@@ -853,7 +859,7 @@ flow_elements.append(set_score)
 eos_block_id = -1000
 training_thresh_num = math.ceil(training_thresh * training_length)
 fl_id = -1
-flow_elements.append(create_branch_logic(branch_logic_template, fl_id, eos_block_id, training_thresh_num))
+flow_elements.append(create_branch_logic(branch_logic_template, fl_id, eos_block_id, training_thresh_num, training = True))
 fl_id -= 2
 eos_block_id -= 1
 
