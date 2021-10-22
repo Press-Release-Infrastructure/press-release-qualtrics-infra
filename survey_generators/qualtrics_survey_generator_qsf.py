@@ -496,9 +496,7 @@ def add_cond_display(student_qid, sids):
 
 eos_payload_blocks = []
 
-def create_branch_logic(branch_logic_template, fl_id, eos_block_id, thresh, training = False):
-	branch_logic_template_copy = copy.deepcopy(branch_logic_template)
-	branch_logic_template_copy["FlowID"] = "FL_{}".format(fl_id)
+def create_end_of_survey_logic(fl_id, eos_block_id, segment = 0):
 	curr_end_survey_display = copy.deepcopy(end_survey_display)
 	curr_end_survey_display["ID"] = curr_end_survey_display["ID"].format(eos_block_id)
 	curr_end_survey_display["FlowID"] = curr_end_survey_display["FlowID"].format(fl_id - 1)
@@ -523,10 +521,12 @@ def create_branch_logic(branch_logic_template, fl_id, eos_block_id, thresh, trai
 	eos_payload_blocks.append(eos_payload)
 
 	msg = "Your score {} wasn't high enough to continue with the survey."
-	if training:
+	if segment == 0:
 		msg = msg.format("on the training questions")
-	else:
+	elif segment == 1:
 		msg = msg.format("in the current block")
+	else:
+		msg = "You have completed the survey."
 
 	elem = {
 		"SurveyID": "SV_eLnpGNWb3hM31cy",
@@ -551,6 +551,12 @@ def create_branch_logic(branch_logic_template, fl_id, eos_block_id, thresh, trai
 	}
 
 	survey_elements.append(elem)
+	return curr_end_survey_display
+
+def create_branch_logic(branch_logic_template, fl_id, eos_block_id, thresh, segment = False):
+	branch_logic_template_copy = copy.deepcopy(branch_logic_template)
+	branch_logic_template_copy["FlowID"] = "FL_{}".format(fl_id)
+	curr_end_survey_display = create_end_of_survey_logic(fl_id, eos_block_id, segment)
 
 	branch_logic_template_copy["Flow"] = [set_end_id, curr_end_survey_display, end_survey]
 	branch_logic_template_copy["BranchLogic"]["0"]["0"]["RightOperand"] = str(thresh * 3)
@@ -846,7 +852,7 @@ flow_elements.append(set_score)
 eos_block_id = -1000
 training_thresh_num = math.ceil(training_thresh * training_length)
 fl_id = -1
-flow_elements.append(create_branch_logic(branch_logic_template, fl_id, eos_block_id, training_thresh_num, training = True))
+flow_elements.append(create_branch_logic(branch_logic_template, fl_id, eos_block_id, training_thresh_num, segment = 0))
 fl_id -= 2
 eos_block_id -= 1
 
@@ -895,7 +901,7 @@ for i in range(num_blocks):
 	flow_elements.append(set_score)
 
 	attention_thresh_num = training_thresh_num + sum(calc_attention_thresh[:i + 1])
-	flow_elements.append(create_branch_logic(branch_logic_template, fl_id, eos_block_id, attention_thresh_num))
+	flow_elements.append(create_branch_logic(branch_logic_template, fl_id, eos_block_id, attention_thresh_num, segment = 1))
 	eos_block_id -= 1
 	fl_id -= 2
 
@@ -909,6 +915,9 @@ for r in remaining_headlines:
 	# special display settings
 	create_question(titles[r], curr, title_to_student[r])
 	curr += 1
+
+curr_end_survey_display = create_end_of_survey_logic(fl_id, eos_block_id, segment = 2)
+flow_elements.append(curr_end_survey_display)
 
 for eos_block in eos_payload_blocks:
 	survey_info["SurveyElements"][0]["Payload"].append(eos_block)

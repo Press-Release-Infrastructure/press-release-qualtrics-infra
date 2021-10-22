@@ -336,6 +336,23 @@
             "RandomizeQuestions": "false",
             "BlockVisibility": "Collapsed"
           }
+        },
+        {
+          "Type": "Standard",
+          "SubType": "",
+          "Description": "Block -1002",
+          "ID": "BL_-1002",
+          "BlockElements": [
+            {
+              "Type": "Question",
+              "QuestionID": "QID-1003"
+            }
+          ],
+          "Options": {
+            "BlockLocking": "false",
+            "RandomizeQuestions": "false",
+            "BlockVisibility": "Collapsed"
+          }
         }
       ]
     },
@@ -525,6 +542,11 @@
             "ID": "BL_8",
             "Type": "Block",
             "FlowID": "FL_8"
+          },
+          {
+            "ID": "BL_-1002",
+            "Type": "Block",
+            "FlowID": "FL_-6"
           }
         ],
         "Properties": {
@@ -1411,14 +1433,14 @@
       "SurveyID": "SV_eLnpGNWb3hM31cy",
       "Element": "SQ",
       "PrimaryAttribute": "QID16",
-      "SecondaryAttribute": "3. Headline: Attention check headline 0, Block 0",
+      "SecondaryAttribute": "3. Headline: Action App Corporation (OTC: ANDI) Buys Another iPhone App Developer",
       "TertiaryAttribute": null,
       "Payload": {
-        "QuestionText": "3. Headline: <br><br>\n<b>Attention check headline 0, Block 0</b>\n",
+        "QuestionText": "3. Headline: <br><br>\n<b>Action App Corporation (OTC: ANDI) Buys Another iPhone App Developer</b>\n",
         "QuestionID": "QID16",
         "QuestionType": "DB",
         "Selector": "TB",
-        "QuestionDescription": "Attention check headline 0, Block 0",
+        "QuestionDescription": "Action App Corporation (OTC: ANDI) Buys Another iPhone App Developer",
         "Validation": {
           "Settings": {
             "Type": "None"
@@ -1435,18 +1457,9 @@
               "LogicType": "EmbeddedField",
               "LeftOperand": "respondentID",
               "Operator": "EqualTo",
-              "RightOperand": "0",
-              "Type": "Expression",
-              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 0 </span>"
-            },
-            "1": {
-              "LogicType": "EmbeddedField",
-              "LeftOperand": "respondentID",
-              "Operator": "EqualTo",
               "RightOperand": "1",
               "Type": "Expression",
-              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 1 </span>",
-              "Conjuction": "Or"
+              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 1 </span>"
             }
           }
         }
@@ -1495,36 +1508,7 @@
             "Type": "None"
           }
         },
-        "GradingData": [
-          {
-            "ChoiceID": "1",
-            "Grades": {
-              "SC_0": 0
-            },
-            "index": 0
-          },
-          {
-            "ChoiceID": "2",
-            "Grades": {
-              "SC_0": 1
-            },
-            "index": 1
-          },
-          {
-            "ChoiceID": "3",
-            "Grades": {
-              "SC_0": 0
-            },
-            "index": 2
-          },
-          {
-            "ChoiceID": "4",
-            "Grades": {
-              "SC_0": 0
-            },
-            "index": 3
-          }
-        ],
+        "GradingData": [],
         "Language": [],
         "NextChoiceId": 5,
         "NextAnswerId": 1,
@@ -1537,18 +1521,9 @@
               "LogicType": "EmbeddedField",
               "LeftOperand": "respondentID",
               "Operator": "EqualTo",
-              "RightOperand": "0",
-              "Type": "Expression",
-              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 0 </span>"
-            },
-            "1": {
-              "LogicType": "EmbeddedField",
-              "LeftOperand": "respondentID",
-              "Operator": "EqualTo",
               "RightOperand": "1",
               "Type": "Expression",
-              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 1 </span>",
-              "Conjuction": "Or"
+              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 1 </span>"
             }
           }
         }
@@ -1576,14 +1551,7 @@
             "Type": "None"
           }
         },
-        "GradingData": [
-          {
-            "TextEntry": "Acquirer",
-            "Grades": {
-              "SC_0": "1"
-            }
-          }
-        ],
+        "GradingData": [],
         "Language": [],
         "NextChoiceId": 4,
         "NextAnswerId": 1,
@@ -1600,18 +1568,9 @@
               "LogicType": "EmbeddedField",
               "LeftOperand": "respondentID",
               "Operator": "EqualTo",
-              "RightOperand": "0",
-              "Type": "Expression",
-              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 0 </span>"
-            },
-            "1": {
-              "LogicType": "EmbeddedField",
-              "LeftOperand": "respondentID",
-              "Operator": "EqualTo",
               "RightOperand": "1",
               "Type": "Expression",
-              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 1 </span>",
-              "Conjuction": "Or"
+              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 1 </span>"
             }
           }
         }
@@ -1639,14 +1598,7 @@
             "Type": "None"
           }
         },
-        "GradingData": [
-          {
-            "TextEntry": "Acquired",
-            "Grades": {
-              "SC_0": "1"
-            }
-          }
-        ],
+        "GradingData": [],
         "Language": [],
         "NextChoiceId": 4,
         "NextAnswerId": 1,
@@ -1663,18 +1615,9 @@
               "LogicType": "EmbeddedField",
               "LeftOperand": "respondentID",
               "Operator": "EqualTo",
-              "RightOperand": "0",
-              "Type": "Expression",
-              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 0 </span>"
-            },
-            "1": {
-              "LogicType": "EmbeddedField",
-              "LeftOperand": "respondentID",
-              "Operator": "EqualTo",
               "RightOperand": "1",
               "Type": "Expression",
-              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 1 </span>",
-              "Conjuction": "Or"
+              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 1 </span>"
             }
           }
         }
@@ -1726,18 +1669,9 @@
               "LogicType": "EmbeddedField",
               "LeftOperand": "respondentID",
               "Operator": "EqualTo",
-              "RightOperand": "0",
-              "Type": "Expression",
-              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 0 </span>"
-            },
-            "1": {
-              "LogicType": "EmbeddedField",
-              "LeftOperand": "respondentID",
-              "Operator": "EqualTo",
               "RightOperand": "1",
               "Type": "Expression",
-              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 1 </span>",
-              "Conjuction": "Or"
+              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 1 </span>"
             }
           }
         }
@@ -1995,14 +1929,14 @@
       "SurveyID": "SV_eLnpGNWb3hM31cy",
       "Element": "SQ",
       "PrimaryAttribute": "QID26",
-      "SecondaryAttribute": "5. Headline: Action App Corporation (OTC: ANDI) Buys Another iPhone App Developer",
+      "SecondaryAttribute": "5. Headline: Attention check headline 1, Block 0",
       "TertiaryAttribute": null,
       "Payload": {
-        "QuestionText": "5. Headline: <br><br>\n<b>Action App Corporation (OTC: ANDI) Buys Another iPhone App Developer</b>\n",
+        "QuestionText": "5. Headline: <br><br>\n<b>Attention check headline 1, Block 0</b>\n",
         "QuestionID": "QID26",
         "QuestionType": "DB",
         "Selector": "TB",
-        "QuestionDescription": "Action App Corporation (OTC: ANDI) Buys Another iPhone App Developer",
+        "QuestionDescription": "Attention check headline 1, Block 0",
         "Validation": {
           "Settings": {
             "Type": "None"
@@ -2019,9 +1953,18 @@
               "LogicType": "EmbeddedField",
               "LeftOperand": "respondentID",
               "Operator": "EqualTo",
+              "RightOperand": "0",
+              "Type": "Expression",
+              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 0 </span>"
+            },
+            "1": {
+              "LogicType": "EmbeddedField",
+              "LeftOperand": "respondentID",
+              "Operator": "EqualTo",
               "RightOperand": "1",
               "Type": "Expression",
-              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 1 </span>"
+              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 1 </span>",
+              "Conjuction": "Or"
             }
           }
         }
@@ -2070,7 +2013,36 @@
             "Type": "None"
           }
         },
-        "GradingData": [],
+        "GradingData": [
+          {
+            "ChoiceID": "1",
+            "Grades": {
+              "SC_0": 1
+            },
+            "index": 0
+          },
+          {
+            "ChoiceID": "2",
+            "Grades": {
+              "SC_0": 0
+            },
+            "index": 1
+          },
+          {
+            "ChoiceID": "3",
+            "Grades": {
+              "SC_0": 0
+            },
+            "index": 2
+          },
+          {
+            "ChoiceID": "4",
+            "Grades": {
+              "SC_0": 0
+            },
+            "index": 3
+          }
+        ],
         "Language": [],
         "NextChoiceId": 5,
         "NextAnswerId": 1,
@@ -2083,9 +2055,18 @@
               "LogicType": "EmbeddedField",
               "LeftOperand": "respondentID",
               "Operator": "EqualTo",
+              "RightOperand": "0",
+              "Type": "Expression",
+              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 0 </span>"
+            },
+            "1": {
+              "LogicType": "EmbeddedField",
+              "LeftOperand": "respondentID",
+              "Operator": "EqualTo",
               "RightOperand": "1",
               "Type": "Expression",
-              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 1 </span>"
+              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 1 </span>",
+              "Conjuction": "Or"
             }
           }
         }
@@ -2113,7 +2094,14 @@
             "Type": "None"
           }
         },
-        "GradingData": [],
+        "GradingData": [
+          {
+            "TextEntry": "Acquirer",
+            "Grades": {
+              "SC_0": "1"
+            }
+          }
+        ],
         "Language": [],
         "NextChoiceId": 4,
         "NextAnswerId": 1,
@@ -2130,9 +2118,18 @@
               "LogicType": "EmbeddedField",
               "LeftOperand": "respondentID",
               "Operator": "EqualTo",
+              "RightOperand": "0",
+              "Type": "Expression",
+              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 0 </span>"
+            },
+            "1": {
+              "LogicType": "EmbeddedField",
+              "LeftOperand": "respondentID",
+              "Operator": "EqualTo",
               "RightOperand": "1",
               "Type": "Expression",
-              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 1 </span>"
+              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 1 </span>",
+              "Conjuction": "Or"
             }
           }
         }
@@ -2160,7 +2157,14 @@
             "Type": "None"
           }
         },
-        "GradingData": [],
+        "GradingData": [
+          {
+            "TextEntry": "Acquired",
+            "Grades": {
+              "SC_0": "1"
+            }
+          }
+        ],
         "Language": [],
         "NextChoiceId": 4,
         "NextAnswerId": 1,
@@ -2177,9 +2181,18 @@
               "LogicType": "EmbeddedField",
               "LeftOperand": "respondentID",
               "Operator": "EqualTo",
+              "RightOperand": "0",
+              "Type": "Expression",
+              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 0 </span>"
+            },
+            "1": {
+              "LogicType": "EmbeddedField",
+              "LeftOperand": "respondentID",
+              "Operator": "EqualTo",
               "RightOperand": "1",
               "Type": "Expression",
-              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 1 </span>"
+              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 1 </span>",
+              "Conjuction": "Or"
             }
           }
         }
@@ -2231,9 +2244,18 @@
               "LogicType": "EmbeddedField",
               "LeftOperand": "respondentID",
               "Operator": "EqualTo",
+              "RightOperand": "0",
+              "Type": "Expression",
+              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 0 </span>"
+            },
+            "1": {
+              "LogicType": "EmbeddedField",
+              "LeftOperand": "respondentID",
+              "Operator": "EqualTo",
               "RightOperand": "1",
               "Type": "Expression",
-              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 1 </span>"
+              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 1 </span>",
+              "Conjuction": "Or"
             }
           }
         }
@@ -2243,14 +2265,14 @@
       "SurveyID": "SV_eLnpGNWb3hM31cy",
       "Element": "SQ",
       "PrimaryAttribute": "QID31",
-      "SecondaryAttribute": "6. Headline: Attention check headline 1, Block 0",
+      "SecondaryAttribute": "6. Headline: Attention check headline 0, Block 0",
       "TertiaryAttribute": null,
       "Payload": {
-        "QuestionText": "6. Headline: <br><br>\n<b>Attention check headline 1, Block 0</b>\n",
+        "QuestionText": "6. Headline: <br><br>\n<b>Attention check headline 0, Block 0</b>\n",
         "QuestionID": "QID31",
         "QuestionType": "DB",
         "Selector": "TB",
-        "QuestionDescription": "Attention check headline 1, Block 0",
+        "QuestionDescription": "Attention check headline 0, Block 0",
         "Validation": {
           "Settings": {
             "Type": "None"
@@ -2331,14 +2353,14 @@
           {
             "ChoiceID": "1",
             "Grades": {
-              "SC_0": 1
+              "SC_0": 0
             },
             "index": 0
           },
           {
             "ChoiceID": "2",
             "Grades": {
-              "SC_0": 0
+              "SC_0": 1
             },
             "index": 1
           },
@@ -2887,6 +2909,27 @@
             }
           }
         }
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID-1003",
+      "SecondaryAttribute": "End of survey",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "You have completed the survey.<br><br>In order to get paid for the work you have done on this survey, you need to enter the following code in the box at the bottom of the Mechanical Turk page where you started once you close this survey.<br><br>Please write this down so you don't forget: <br><br>${e://Field/endID}",
+        "QuestionID": "QID-1003",
+        "QuestionType": "DB",
+        "Selector": "TB",
+        "QuestionDescription": "End of survey",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "DataExportTag": "QID-1003"
       }
     }
   ]
