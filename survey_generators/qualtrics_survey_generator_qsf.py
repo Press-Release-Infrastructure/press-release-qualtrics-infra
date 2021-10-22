@@ -15,7 +15,7 @@ num_students = 2 # number of people taking this survey version
 overlap = 0.2 # percent of headlines assigned to 1 respondent that will be duplicated
 training_length = 2 # number of training titles
 training_headlines = ["Training headline {}".format(i) for i in range(training_length)]
-training_answers = [np.random.randint(4) for i in range(len(training_headlines))]
+training_answers = [[np.random.randint(4), "Acquirer", "Acquired"] for i in range(len(training_headlines))]
 block_size = 3 # number of questions in a block (between attention-check)
 
 training_thresh = 0.5
@@ -451,36 +451,6 @@ block_elements.append({
 	"Type": "Page Break",
 	})
 
-# elem = {
-# 	"QuestionText": "Student ID\n\n",
-# 	"QuestionID": qid,
-# 	"QuestionType": "MC",
-# 	"Selector": "DL",
-# 	"QuestionDescription": "Student ID",
-# 	"Choices": sid_choices,
-# 	"Validation": {
-# 		"Settings": {
-# 			"ForceResponse": "ON",
-# 			"ForceResponseType": "ON",
-# 			"Type":"None"
-# 		}
-# 	},
-# 	"Language": [],
-# 	"DataExportTag": qid,
-# 	"SubSelector": "TX",
-# 	"DataVisibility": {
-# 		"Private": False,
-# 		"Hidden": False
-# 	},
-# 	"Configuration": {
-# 		"QuestionDescriptionOption": "UseText"
-# 	},
-# 	"ChoiceOrder": sort_sid_choices,
-# 	"NextChoiceId": str(int(sort_sid_choices[len(sort_sid_choices) - 1]) + 1),
-# 	"NextAnswerId": 1,
-# }
-# sid_elem["Payload"] = elem
-
 num_subparts = 5
 
 title_to_student = {}
@@ -583,46 +553,59 @@ def create_branch_logic(branch_logic_template, fl_id, eos_block_id, thresh, trai
 	survey_elements.append(elem)
 
 	branch_logic_template_copy["Flow"] = [set_end_id, curr_end_survey_display, end_survey]
-	branch_logic_template_copy["BranchLogic"]["0"]["0"]["RightOperand"] = str(thresh)
-	branch_logic_template_copy["BranchLogic"]["0"]["0"]["Description"] = "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">Score</span> <span class=\"OpDesc\">Is Less Than</span> <span class=\"RightOpDesc\"> {} </span>".format(thresh)
+	branch_logic_template_copy["BranchLogic"]["0"]["0"]["RightOperand"] = str(thresh * 3)
+	branch_logic_template_copy["BranchLogic"]["0"]["0"]["Description"] = "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">Score</span> <span class=\"OpDesc\">Is Less Than</span> <span class=\"RightOpDesc\"> {} </span>".format(thresh * 3)
 	return branch_logic_template_copy
 
-def add_score(elem, train_ans = -1):
+def add_score(elem, q_type = "MC", train_ans = -1):
 	if train_ans != -1:
-		elem["Payload"]["GradingData"] = [
-			{
-				"ChoiceID": "1",
-				"Grades": {
-					"SC_0": 0
+		if q_type == "MC":
+			elem["Payload"]["GradingData"] = [
+				{
+					"ChoiceID": "1",
+					"Grades": {
+						"SC_0": 0
+					},
+					"index": 0
 				},
-				"index": 0
-			},
-			{
-				"ChoiceID": "2",
-				"Grades": {
-					"SC_0": 0
+				{
+					"ChoiceID": "2",
+					"Grades": {
+						"SC_0": 0
+					},
+					"index": 1
 				},
-				"index": 1
-			},
-			{
-				"ChoiceID": "3",
-				"Grades": {
-					"SC_0": 0
+				{
+					"ChoiceID": "3",
+					"Grades": {
+						"SC_0": 0
+					},
+					"index": 2
 				},
-				"index": 2
-			},
-			{
-				"ChoiceID": "4",
+				{
+					"ChoiceID": "4",
+					"Grades": {
+						"SC_0": 0
+					},
+					"index": 3
+				}
+			]
+			elem["Payload"]["GradingData"][train_ans]["Grades"]["SC_0"] = 1
+		elif q_type == "TE":
+			elem["Payload"]["GradingData"] = [{
+				"TextEntry": train_ans,
 				"Grades": {
-					"SC_0": 0
-				},
-				"index": 3
-			}
-		]
-		elem["Payload"]["GradingData"][train_ans]["Grades"]["SC_0"] = 1
+					"SC_0": "1"
+				}
+          	}]
 
-def create_question(curr_title, curr, disp_settings = [], train_ans = -1):
+def create_question(curr_title, curr, disp_settings = [], train_ans_lst = []):
 	qid = "QID{}".format(curr)
+
+	if len(train_ans_lst):
+		train_ans, train_ans_acquirer, train_ans_acquired = train_ans_lst
+	else:
+		train_ans, train_ans_acquirer, train_ans_acquired = -1, -1, -1
 
 	survey_info["SurveyElements"][0]["Payload"].append({
 		"Type": "Standard",
@@ -730,7 +713,7 @@ def create_question(curr_title, curr, disp_settings = [], train_ans = -1):
 				},
 			}
 
-			add_score(elem, train_ans)
+			add_score(elem, "MC", train_ans)
 		elif subpart == 2:
 			elem = {
 				"SurveyID": "SV_eLnpGNWb3hM31cy",
@@ -764,6 +747,8 @@ def create_question(curr_title, curr, disp_settings = [], train_ans = -1):
 					"DataExportTag": qid,
 				}
 		    }
+
+			add_score(elem, "TE", train_ans_acquirer)
 		elif subpart == 3:
 			elem = {
 				"SurveyID": "SV_eLnpGNWb3hM31cy",
@@ -797,6 +782,8 @@ def create_question(curr_title, curr, disp_settings = [], train_ans = -1):
 					"DataExportTag": qid,
 				}
 		    }
+
+			add_score(elem, "TE", train_ans_acquired)
 		elif subpart == 4:
 			elem = {
 		      "SurveyID": "SV_eLnpGNWb3hM31cy",
@@ -898,7 +885,7 @@ for i in range(num_blocks):
 			# special display settings
 			create_question(c, curr, regular_headline_to_student[c])
 		else:
-			create_question(c, curr, list(range(num_students)), attention_check_answers[c][0])
+			create_question(c, curr, list(range(num_students)), attention_check_answers[c])
 		curr += 1
 
 	# set score embedded data
