@@ -41,6 +41,7 @@ uniques_per_student = math.floor(num_headlines / num_students)
 
 attention_check_length = 2 # number of questions in an attention-check block
 attention_check_headlines = [["Attention check headline {}, Block {}".format(i, j) for i in range(attention_check_length)] for j in range(math.ceil(titles_per_student / block_size))]
+
 calc_attention_thresh = [math.ceil(len(i) * attention_thresh) for i in attention_check_headlines]
 
 attention_check_answers = {}
@@ -107,9 +108,9 @@ branch_logic_template = {
 }
 
 end_survey_display = {
-		"ID": "BL_{}",
-		"Type": "Block",
-		"FlowID": "FL_{}"
+	"ID": "BL_{}",
+	"Type": "Block",
+	"FlowID": "FL_{}"
 }
 end_survey = {
 	"Type": "EndSurvey",
@@ -118,7 +119,7 @@ end_survey = {
 
 set_score = {
 	"Type": "EmbeddedData",
-	"FlowID": "FL_0",
+	"FlowID": "FL_-1",
 	"EmbeddedData": [
 		{
 		"Description": "Score",
@@ -128,6 +129,22 @@ set_score = {
 		"DataVisibility": [],
 		"AnalyzeText": False,
 		"Value": "${gr://SC_0/Score}"
+		}
+	]
+}
+
+set_end_id = {
+	"Type": "EmbeddedData",
+	"FlowID": "FL_0",
+	"EmbeddedData": [
+		{
+		"Description": "endID",
+		"Type": "Custom",
+		"Field": "endID",
+		"VariableType": "String",
+		"DataVisibility": [],
+		"AnalyzeText": False,
+		"Value": "$e{${gr://SC_0/Score} * 100000000 * 1/0.9}${rand://int/100000:1000000}"
 		}
 	]
 }
@@ -513,44 +530,65 @@ def add_cond_display(student_qid, sids):
 			"RightOperand": str(sid),
 			"Type": "Expression",
 			"Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> {} </span>".format(sid)
-			# "QuestionID": student_qid,
-			# "QuestionIsInLoop": "no",
-			# "ChoiceLocator": "q://{}/SelectableChoice/{}".format(student_qid, sid),
-			# "Operator": "Selected",
-			# "QuestionIDFromLocator": student_qid,
-			# "LeftOperand": "q://{}/SelectableChoice/{}".format(student_qid, sid),
-			# "Type": "Expression",
-			# "Description": "<span class=\"ConjDesc\">{}</span> <span class=\"QuestionDesc\">Student ID</span> <span class=\"LeftOpDesc\">{}</span> <span class=\"OpDesc\">Is Selected</span> ".format(conj, sid)
 		}
 		if s > 0:
 			q_cond_display["0"][str(s)]["Conjuction"] = "Or"
 		conj = "Or"
 	return q_cond_display
 
-def create_branch_logic(branch_logic_template, fl_id, thresh):
+eos_payload_blocks = []
+
+def create_branch_logic(branch_logic_template, fl_id, eos_block_id, thresh):
 	branch_logic_template_copy = copy.deepcopy(branch_logic_template)
 	branch_logic_template_copy["FlowID"] = "FL_{}".format(fl_id)
-	# curr_end_survey_display = copy.deepcopy(end_survey_display)
-	# curr_end_survey_display["Block"] = curr_end_survey_display["Block"].format(block_id)
-	# curr_end_survey_display["FlowID"] = curr_end_survey_display["FlowID"].format(fl_id - 1)
-	# survey_info["SurveyElements"][0]["Payload"].append({
-	# 	"Type": "Standard",
-	# 	"SubType": "",
-	# 	"Description": "Block {}".format(block_id),
-	# 	"ID": "BL_{}".format(block_id),
-	# 	"BlockElements": [
-	# 		{
-	# 			"Type": "Question",
-	# 			"QuestionID": "QID{}".format(block_id - 1),
-	# 		}
-	# 	],
-	# 	"Options": {
-	# 		"BlockLocking": "false",
-	# 		"RandomizeQuestions": "false",
-	# 		"BlockVisibility": "Collapsed",
-	# 	}
-	# })
-	branch_logic_template_copy["Flow"] = [end_survey]
+	curr_end_survey_display = copy.deepcopy(end_survey_display)
+	curr_end_survey_display["ID"] = curr_end_survey_display["ID"].format(eos_block_id)
+	curr_end_survey_display["FlowID"] = curr_end_survey_display["FlowID"].format(fl_id - 1)
+	qid = "QID{}".format(eos_block_id - 1)
+	eos_payload = {
+		"Type": "Standard",
+		"SubType": "",
+		"Description": "Block {}".format(eos_block_id),
+		"ID": "BL_{}".format(eos_block_id),
+		"BlockElements": [
+			{
+				"Type": "Question",
+				"QuestionID": "QID{}".format(eos_block_id - 1),
+			}
+		],
+		"Options": {
+			"BlockLocking": "false",
+			"RandomizeQuestions": "false",
+			"BlockVisibility": "Collapsed",
+		}
+	}
+	eos_payload_blocks.append(eos_payload)
+
+	elem = {
+		"SurveyID": "SV_eLnpGNWb3hM31cy",
+		"Element": "SQ",
+		"PrimaryAttribute": qid,
+		"SecondaryAttribute": "End of survey",
+		"TertiaryAttribute": None,
+		"Payload": {
+		"QuestionText": "In order to get paid for the work you have done on this survey, you need to enter the following code in the box at the bottom of the Mechanical Turk page where you started once you close this survey.<br><br>Please write this down so you don't forget: <br><br>${e://Field/endID}",
+		"QuestionID": qid,
+		"QuestionType": "DB",
+		"Selector": "TB",
+		"QuestionDescription": "End of survey",
+		"Validation": {
+			"Settings": {
+			"Type": "None"
+			}
+		},
+		"Language": [],
+		"DataExportTag": qid
+		}
+	}
+
+	survey_elements.append(elem)
+
+	branch_logic_template_copy["Flow"] = [set_end_id, curr_end_survey_display, end_survey]
 	branch_logic_template_copy["BranchLogic"]["0"]["0"]["RightOperand"] = str(thresh)
 	branch_logic_template_copy["BranchLogic"]["0"]["0"]["Description"] = "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">Score</span> <span class=\"OpDesc\">Is Less Than</span> <span class=\"RightOpDesc\"> {} </span>".format(thresh)
 	return branch_logic_template_copy
@@ -824,10 +862,12 @@ flow_elements = survey_elements[1]["Payload"]["Flow"]
 flow_elements.append(set_score)
 
 # add branch logic to kick respondent out of survey after training q's
+eos_block_id = -1000
 training_thresh_num = math.ceil(training_thresh * training_length)
 fl_id = -1
-flow_elements.append(create_branch_logic(branch_logic_template, fl_id, training_thresh_num))
+flow_elements.append(create_branch_logic(branch_logic_template, fl_id, eos_block_id, training_thresh_num))
 fl_id -= 2
+eos_block_id -= 1
 
 num_blocks = len(attention_check_headlines)
 
@@ -871,7 +911,8 @@ for i in range(num_blocks):
 	flow_elements.append(set_score)
 
 	attention_thresh_num = training_thresh_num + sum(calc_attention_thresh[:i + 1])
-	flow_elements.append(create_branch_logic(branch_logic_template, fl_id, attention_thresh_num))
+	flow_elements.append(create_branch_logic(branch_logic_template, fl_id, eos_block_id, attention_thresh_num))
+	eos_block_id -= 1
 	fl_id -= 2
 
 # create the rest of the questions for the remaining regular headlines
@@ -880,6 +921,9 @@ for student, remaining in student_assignments.items():
 		# special display settings
 		create_question(titles[r], curr, title_to_student[r])
 		curr += 1
+
+for eos_block in eos_payload_blocks:
+	survey_info["SurveyElements"][0]["Payload"].append(eos_block)
 
 with open(qsf_name, 'w') as f:
 	json.dump(survey_info, f, ensure_ascii = False, indent = 2)
@@ -890,7 +934,7 @@ mturk_survey_q_dump = survey_elements[9:]
 headlines_displayed = {}
 while curr_idx < len(mturk_survey_q_dump):
 	curr_headline = mturk_survey_q_dump[curr_idx]["Payload"]["QuestionDescription"]
-	curr_idx += num_subparts
+	curr_idx += num_subparts + 1
 	if curr_headline in headlines_displayed:
 		headlines_displayed[curr_headline] += 1
 	else:

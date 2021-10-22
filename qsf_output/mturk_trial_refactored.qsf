@@ -282,6 +282,40 @@
             "RandomizeQuestions": "false",
             "BlockVisibility": "Collapsed"
           }
+        },
+        {
+          "Type": "Standard",
+          "SubType": "",
+          "Description": "Block -1000",
+          "ID": "BL_-1000",
+          "BlockElements": [
+            {
+              "Type": "Question",
+              "QuestionID": "QID-1001"
+            }
+          ],
+          "Options": {
+            "BlockLocking": "false",
+            "RandomizeQuestions": "false",
+            "BlockVisibility": "Collapsed"
+          }
+        },
+        {
+          "Type": "Standard",
+          "SubType": "",
+          "Description": "Block -1001",
+          "ID": "BL_-1001",
+          "BlockElements": [
+            {
+              "Type": "Question",
+              "QuestionID": "QID-1002"
+            }
+          ],
+          "Options": {
+            "BlockLocking": "false",
+            "RandomizeQuestions": "false",
+            "BlockVisibility": "Collapsed"
+          }
         }
       ]
     },
@@ -317,7 +351,7 @@
           },
           {
             "Type": "EmbeddedData",
-            "FlowID": "FL_0",
+            "FlowID": "FL_-1",
             "EmbeddedData": [
               {
                 "Description": "Score",
@@ -351,6 +385,26 @@
             },
             "Flow": [
               {
+                "Type": "EmbeddedData",
+                "FlowID": "FL_0",
+                "EmbeddedData": [
+                  {
+                    "Description": "endID",
+                    "Type": "Custom",
+                    "Field": "endID",
+                    "VariableType": "String",
+                    "DataVisibility": [],
+                    "AnalyzeText": false,
+                    "Value": "$e{${gr://SC_0/Score} * 100000000 * 1/0.9}${rand://int/100000:1000000}"
+                  }
+                ]
+              },
+              {
+                "ID": "BL_-1000",
+                "Type": "Block",
+                "FlowID": "FL_-2"
+              },
+              {
                 "Type": "EndSurvey",
                 "FlowID": "FL_-500"
               }
@@ -378,7 +432,7 @@
           },
           {
             "Type": "EmbeddedData",
-            "FlowID": "FL_0",
+            "FlowID": "FL_-1",
             "EmbeddedData": [
               {
                 "Description": "Score",
@@ -411,6 +465,26 @@
               "Type": "BooleanExpression"
             },
             "Flow": [
+              {
+                "Type": "EmbeddedData",
+                "FlowID": "FL_0",
+                "EmbeddedData": [
+                  {
+                    "Description": "endID",
+                    "Type": "Custom",
+                    "Field": "endID",
+                    "VariableType": "String",
+                    "DataVisibility": [],
+                    "AnalyzeText": false,
+                    "Value": "$e{${gr://SC_0/Score} * 100000000 * 1/0.9}${rand://int/100000:1000000}"
+                  }
+                ]
+              },
+              {
+                "ID": "BL_-1001",
+                "Type": "Block",
+                "FlowID": "FL_-4"
+              },
               {
                 "Type": "EndSurvey",
                 "FlowID": "FL_-500"
@@ -919,15 +993,36 @@
     {
       "SurveyID": "SV_eLnpGNWb3hM31cy",
       "Element": "SQ",
-      "PrimaryAttribute": "QID11",
-      "SecondaryAttribute": "1. Headline: Attention check headline 0, Block 0",
+      "PrimaryAttribute": "QID-1001",
+      "SecondaryAttribute": "End of survey",
       "TertiaryAttribute": null,
       "Payload": {
-        "QuestionText": "1. Headline: <br><br>\n<b>Attention check headline 0, Block 0</b>\n",
+        "QuestionText": "In order to get paid for the work you have done on this survey, you need to enter the following code in the box at the bottom of the Mechanical Turk page where you started once you close this survey.<br><br>Please write this down so you don't forget: <br><br>${e://Field/endID}",
+        "QuestionID": "QID-1001",
+        "QuestionType": "DB",
+        "Selector": "TB",
+        "QuestionDescription": "End of survey",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "DataExportTag": "QID-1001"
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID11",
+      "SecondaryAttribute": "1. Headline: Attention check headline 1, Block 0",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "1. Headline: <br><br>\n<b>Attention check headline 1, Block 0</b>\n",
         "QuestionID": "QID11",
         "QuestionType": "DB",
         "Selector": "TB",
-        "QuestionDescription": "Attention check headline 0, Block 0",
+        "QuestionDescription": "Attention check headline 1, Block 0",
         "Validation": {
           "Settings": {
             "Type": "None"
@@ -1015,7 +1110,7 @@
           {
             "ChoiceID": "2",
             "Grades": {
-              "SC_0": 0
+              "SC_0": 1
             },
             "index": 1
           },
@@ -1029,7 +1124,7 @@
           {
             "ChoiceID": "4",
             "Grades": {
-              "SC_0": 1
+              "SC_0": 0
             },
             "index": 3
           }
@@ -1242,14 +1337,14 @@
       "SurveyID": "SV_eLnpGNWb3hM31cy",
       "Element": "SQ",
       "PrimaryAttribute": "QID16",
-      "SecondaryAttribute": "2. Headline: Better Place Sold To Sunrise Group For $12 Million",
+      "SecondaryAttribute": "2. Headline: Docmail Connect for Google Apps launched!",
       "TertiaryAttribute": null,
       "Payload": {
-        "QuestionText": "2. Headline: <br><br>\n<b>Better Place Sold To Sunrise Group For $12 Million</b>\n",
+        "QuestionText": "2. Headline: <br><br>\n<b>Docmail Connect for Google Apps launched!</b>\n",
         "QuestionID": "QID16",
         "QuestionType": "DB",
         "Selector": "TB",
-        "QuestionDescription": "Better Place Sold To Sunrise Group For $12 Million",
+        "QuestionDescription": "Docmail Connect for Google Apps launched!",
         "Validation": {
           "Settings": {
             "Type": "None"
@@ -1266,9 +1361,9 @@
               "LogicType": "EmbeddedField",
               "LeftOperand": "respondentID",
               "Operator": "EqualTo",
-              "RightOperand": "1",
+              "RightOperand": "0",
               "Type": "Expression",
-              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 1 </span>"
+              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 0 </span>"
             }
           }
         }
@@ -1330,9 +1425,9 @@
               "LogicType": "EmbeddedField",
               "LeftOperand": "respondentID",
               "Operator": "EqualTo",
-              "RightOperand": "1",
+              "RightOperand": "0",
               "Type": "Expression",
-              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 1 </span>"
+              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 0 </span>"
             }
           }
         }
@@ -1377,9 +1472,9 @@
               "LogicType": "EmbeddedField",
               "LeftOperand": "respondentID",
               "Operator": "EqualTo",
-              "RightOperand": "1",
+              "RightOperand": "0",
               "Type": "Expression",
-              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 1 </span>"
+              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 0 </span>"
             }
           }
         }
@@ -1424,9 +1519,9 @@
               "LogicType": "EmbeddedField",
               "LeftOperand": "respondentID",
               "Operator": "EqualTo",
-              "RightOperand": "1",
+              "RightOperand": "0",
               "Type": "Expression",
-              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 1 </span>"
+              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 0 </span>"
             }
           }
         }
@@ -1478,9 +1573,9 @@
               "LogicType": "EmbeddedField",
               "LeftOperand": "respondentID",
               "Operator": "EqualTo",
-              "RightOperand": "1",
+              "RightOperand": "0",
               "Type": "Expression",
-              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 1 </span>"
+              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 0 </span>"
             }
           }
         }
@@ -1490,14 +1585,14 @@
       "SurveyID": "SV_eLnpGNWb3hM31cy",
       "Element": "SQ",
       "PrimaryAttribute": "QID21",
-      "SecondaryAttribute": "3. Headline: Attention check headline 1, Block 0",
+      "SecondaryAttribute": "3. Headline: Attention check headline 0, Block 0",
       "TertiaryAttribute": null,
       "Payload": {
-        "QuestionText": "3. Headline: <br><br>\n<b>Attention check headline 1, Block 0</b>\n",
+        "QuestionText": "3. Headline: <br><br>\n<b>Attention check headline 0, Block 0</b>\n",
         "QuestionID": "QID21",
         "QuestionType": "DB",
         "Selector": "TB",
-        "QuestionDescription": "Attention check headline 1, Block 0",
+        "QuestionDescription": "Attention check headline 0, Block 0",
         "Validation": {
           "Settings": {
             "Type": "None"
@@ -1585,7 +1680,7 @@
           {
             "ChoiceID": "2",
             "Grades": {
-              "SC_0": 1
+              "SC_0": 0
             },
             "index": 1
           },
@@ -1599,7 +1694,7 @@
           {
             "ChoiceID": "4",
             "Grades": {
-              "SC_0": 0
+              "SC_0": 1
             },
             "index": 3
           }
@@ -1812,14 +1907,14 @@
       "SurveyID": "SV_eLnpGNWb3hM31cy",
       "Element": "SQ",
       "PrimaryAttribute": "QID26",
-      "SecondaryAttribute": "4. Headline: Docmail Connect for Google Apps launched!",
+      "SecondaryAttribute": "4. Headline: Better Place Sold To Sunrise Group For $12 Million",
       "TertiaryAttribute": null,
       "Payload": {
-        "QuestionText": "4. Headline: <br><br>\n<b>Docmail Connect for Google Apps launched!</b>\n",
+        "QuestionText": "4. Headline: <br><br>\n<b>Better Place Sold To Sunrise Group For $12 Million</b>\n",
         "QuestionID": "QID26",
         "QuestionType": "DB",
         "Selector": "TB",
-        "QuestionDescription": "Docmail Connect for Google Apps launched!",
+        "QuestionDescription": "Better Place Sold To Sunrise Group For $12 Million",
         "Validation": {
           "Settings": {
             "Type": "None"
@@ -1836,9 +1931,9 @@
               "LogicType": "EmbeddedField",
               "LeftOperand": "respondentID",
               "Operator": "EqualTo",
-              "RightOperand": "0",
+              "RightOperand": "1",
               "Type": "Expression",
-              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 0 </span>"
+              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 1 </span>"
             }
           }
         }
@@ -1900,9 +1995,9 @@
               "LogicType": "EmbeddedField",
               "LeftOperand": "respondentID",
               "Operator": "EqualTo",
-              "RightOperand": "0",
+              "RightOperand": "1",
               "Type": "Expression",
-              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 0 </span>"
+              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 1 </span>"
             }
           }
         }
@@ -1947,9 +2042,9 @@
               "LogicType": "EmbeddedField",
               "LeftOperand": "respondentID",
               "Operator": "EqualTo",
-              "RightOperand": "0",
+              "RightOperand": "1",
               "Type": "Expression",
-              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 0 </span>"
+              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 1 </span>"
             }
           }
         }
@@ -1994,9 +2089,9 @@
               "LogicType": "EmbeddedField",
               "LeftOperand": "respondentID",
               "Operator": "EqualTo",
-              "RightOperand": "0",
+              "RightOperand": "1",
               "Type": "Expression",
-              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 0 </span>"
+              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 1 </span>"
             }
           }
         }
@@ -2048,12 +2143,33 @@
               "LogicType": "EmbeddedField",
               "LeftOperand": "respondentID",
               "Operator": "EqualTo",
-              "RightOperand": "0",
+              "RightOperand": "1",
               "Type": "Expression",
-              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 0 </span>"
+              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 1 </span>"
             }
           }
         }
+      }
+    },
+    {
+      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "Element": "SQ",
+      "PrimaryAttribute": "QID-1002",
+      "SecondaryAttribute": "End of survey",
+      "TertiaryAttribute": null,
+      "Payload": {
+        "QuestionText": "In order to get paid for the work you have done on this survey, you need to enter the following code in the box at the bottom of the Mechanical Turk page where you started once you close this survey.<br><br>Please write this down so you don't forget: <br><br>${e://Field/endID}",
+        "QuestionID": "QID-1002",
+        "QuestionType": "DB",
+        "Selector": "TB",
+        "QuestionDescription": "End of survey",
+        "Validation": {
+          "Settings": {
+            "Type": "None"
+          }
+        },
+        "Language": [],
+        "DataExportTag": "QID-1002"
       }
     },
     {
