@@ -1,0 +1,18 @@
+[settings]
+all_titles_filename = ../input_headlines/ra_data.csv
+
+num_headlines = 3
+num_students = 2
+overlap = 0.2
+training_length = 2
+
+block_size = 3
+
+training_thresh = 0.5
+attention_thresh = 0.5
+
+conditional = False
+
+survey_name = MTurk Trial
+assignments_name = ../respondent_assignments/mturk_assignments.json
+qsf_name = ../qsf_output/mturk_trial_refactored.qsf

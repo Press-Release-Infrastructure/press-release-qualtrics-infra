@@ -4,28 +4,31 @@ import math
 import sys
 import numpy as np
 import copy
+import configparser
 
 np.random.seed(0)
 
 # survey settings
-all_titles = list(pd.read_csv("../input_headlines/ra_data.csv", encoding = 'utf8')["Headline"])
+config = configparser.ConfigParser()
+config.read("qualtrics_survey_controls.txt")
 
-num_headlines = 3 # unique titles to be classified
-num_students = 2 # number of people taking this survey version
-overlap = 0.2 # percent of headlines assigned to 1 respondent that will be duplicated
-training_length = 2 # number of training titles
+all_titles = list(pd.read_csv(config["settings"]["all_titles_filename"], encoding = 'utf8')["Headline"])
+
+num_headlines = int(config["settings"]["num_headlines"]) # unique titles to be classified
+num_students = int(config["settings"]["num_students"]) # number of people taking this survey version
+overlap = float(config["settings"]["overlap"]) # percent of headlines assigned to 1 respondent that will be duplicated
+training_length = int(config["settings"]["training_length"]) # number of training titles
+block_size = int(config["settings"]["block_size"]) # number of questions in a block (between attention-check)
+
+training_thresh = float(config["settings"]["training_thresh"])
+attention_thresh = float(config["settings"]["attention_thresh"])
+
+survey_name = config["settings"]["survey_name"]
+assignments_name = config["settings"]["assignments_name"]
+qsf_name = config["settings"]["qsf_name"]
+
 training_headlines = ["Training headline {}".format(i) for i in range(training_length)]
 training_answers = [[np.random.randint(4), "Acquirer", "Acquired"] for i in range(len(training_headlines))]
-block_size = 3 # number of questions in a block (between attention-check)
-
-training_thresh = 0.5
-attention_thresh = 0.5
-
-conditional = False
-
-survey_name = "MTurk Trial"
-assignments_name = "../respondent_assignments/mturk_assignments.json"
-qsf_name = "../qsf_output/mturk_trial_refactored.qsf"
 
 titles = np.array(all_titles)
 
