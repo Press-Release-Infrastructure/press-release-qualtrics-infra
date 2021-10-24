@@ -6,19 +6,21 @@ import numpy as np
 import copy
 import configparser
 
-np.random.seed(0)
+seed = 0
+np.random.seed(seed)
 
 # survey settings
 config = configparser.ConfigParser()
 config.read("qualtrics_survey_controls.txt")
 
-all_titles = list(pd.read_csv(config["settings"]["all_titles_filename"], encoding = 'utf8')["Headline"])
+all_titles = list(pd.read_csv(config["settings"]["all_titles_filename"], encoding = 'utf8')["Headline"].unique())
 
 num_headlines = int(config["settings"]["num_headlines"]) # unique titles to be classified
 num_students = int(config["settings"]["num_students"]) # number of people taking this survey version
 overlap = float(config["settings"]["overlap"]) # percent of headlines assigned to 1 respondent that will be duplicated
 training_length = int(config["settings"]["training_length"]) # number of training titles
 block_size = int(config["settings"]["block_size"]) # number of questions in a block (between attention-check)
+attention_check_length = int(config["settings"]["attention_check_length"]) # number of questions in an attention-check block
 
 training_thresh = float(config["settings"]["training_thresh"])
 attention_thresh = float(config["settings"]["attention_thresh"])
@@ -27,8 +29,10 @@ survey_name = config["settings"]["survey_name"]
 assignments_name = config["settings"]["assignments_name"]
 qsf_name = config["settings"]["qsf_name"]
 
-training_headlines = ["Training headline {}".format(i) for i in range(training_length)]
-training_answers = [[np.random.randint(4), "Acquirer", "Acquired"] for i in range(len(training_headlines))]
+training_headlines_df = pd.read_csv(config["settings"]["training_headlines_filename"], encoding = 'utf8').sample(frac = 1, random_state = seed)
+training_headlines_df = training_headlines_df.where(pd.notnull(training_headlines_df), "")
+training_headlines = list(training_headlines_df["Headline"][:training_length])
+training_answers = training_headlines_df[["Acq Status", "Acquirer", "Acquired"]].to_records(index = False)[:training_length]
 
 titles = np.array(all_titles)
 
@@ -36,15 +40,25 @@ titles = np.array(all_titles)
 titles_per_student = math.ceil(num_headlines / ((1 - overlap) * num_students))
 uniques_per_student = math.floor(num_headlines / num_students)
 
-attention_check_length = 2 # number of questions in an attention-check block
-attention_check_headlines = [["Attention check headline {}, Block {}".format(i, j) for i in range(attention_check_length)] for j in range(math.ceil(titles_per_student / block_size))]
+att_headlines_df = pd.read_csv(config["settings"]["att_headlines_filename"], encoding = 'utf8').sample(frac = 1, random_state = seed)
+att_headlines_df = att_headlines_df.where(pd.notnull(att_headlines_df), "")
+attention_check_headlines = []
+
+# pick groups of att length headlines from att_headlines_df without replacement
+all_att_idxes = set(np.arange(0, len(att_headlines_df)))
+attention_check_answers = {}
+for j in range(math.ceil(titles_per_student / block_size)):
+	curr_idxes = np.random.choice(list(all_att_idxes), size = attention_check_length, replace = False)
+	curr_att = att_headlines_df.iloc[curr_idxes]
+	for c in curr_idxes:
+		all_att_idxes = list(set(all_att_idxes) - set(curr_idxes))
+	curr_att_headlines = []
+	for _, c in curr_att.iterrows():
+		curr_att_headlines.append(str(c["Headline"]))
+		attention_check_answers[str(c["Headline"])] = [int(c["Acq Status"]), str(c["Acquirer"]), str(c["Acquired"])]
+	attention_check_headlines.append(curr_att_headlines)
 
 calc_attention_thresh = [math.ceil(len(i) * attention_thresh) for i in attention_check_headlines]
-
-attention_check_answers = {}
-for i in attention_check_headlines:
-	for j in i:
-		attention_check_answers[j] = [np.random.randint(4), "Acquirer", "Acquired"]
 
 uniques_left = num_headlines - num_students * uniques_per_student
 uniques = [uniques_per_student for i in range(num_students)]
@@ -66,7 +80,6 @@ for i in range(num_students):
 	dup_selection = np.random.choice(list(student_assignments[(i - 1) % num_students]), size = titles_per_student - uniques[i], replace = False)
 	dup_selection_lst.append(list(dup_selection))
 
-x = []
 for i in range(num_students):
 	student_assignments[i].extend(dup_selection_lst[i])
 
@@ -75,6 +88,7 @@ titles_to_classify = []
 for student, assignments in student_assignments.items():
 	student_assignments_json[str(student)] = [titles[a] for a in assignments]
 	titles_to_classify.append(student_assignments_json[str(student)])
+
 titles_to_classify = list(set(np.array(titles_to_classify).flatten()))
 
 with open(assignments_name, 'w') as f:
@@ -930,15 +944,21 @@ with open(qsf_name, 'w') as f:
 
 # test that all headlines in the MTurk dump are displayed to at least one user
 curr_idx = 0
-mturk_survey_q_dump = survey_elements[10:]
+mturk_survey_q_dump = survey_elements[9:]
 headlines_displayed = {}
+count = 0
 while curr_idx < len(mturk_survey_q_dump):
 	curr_headline = mturk_survey_q_dump[curr_idx]["Payload"]["QuestionDescription"]
-	if not sum([i in curr_headline for i in ["End", "Timing", "Do you think", "ACQUIRED", "ACQUIRER"]]):
+	if not sum([i in curr_headline for i in ["End of survey", "Timing", "Do you think", "(leave blank if not indicated or unclear)"]]):
 		if curr_headline in headlines_displayed:
+			count += 1
 			headlines_displayed[curr_headline] += 1
 		else:
 			headlines_displayed[curr_headline] = 1
 	curr_idx += 1
 
-assert(len(set(headlines_displayed.keys())) == num_headlines + training_length + num_blocks * attention_check_length)
+displayed = set(headlines_displayed.keys())
+att_flat = set(np.array(attention_check_headlines).flatten())
+assert(len(displayed.intersection(set(training_headlines))) == len(training_headlines))
+assert(len(displayed.intersection(att_flat)) == num_blocks * attention_check_length)
+assert(len(displayed.intersection(set(titles_to_classify))) == num_headlines)

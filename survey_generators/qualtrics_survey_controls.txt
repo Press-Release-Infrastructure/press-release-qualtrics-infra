@@ -1,17 +1,19 @@
 [settings]
-all_titles_filename = ../input_headlines/ra_data.csv
+all_titles_filename = ../input_headlines/all_headlines.csv
 
-num_headlines = 3
+num_headlines = 200
 num_students = 2
 overlap = 0.2
-training_length = 2
+training_length = 10
+attention_check_length = 2
 
-block_size = 3
+block_size = 10
 
 training_thresh = 0.5
 attention_thresh = 0.5
 
-conditional = False
+training_headlines_filename = ../survey_data/selected_training.csv
+att_headlines_filename = ../survey_data/selected_att.csv
 
 survey_name = MTurk Trial
 assignments_name = ../respondent_assignments/mturk_assignments.json
