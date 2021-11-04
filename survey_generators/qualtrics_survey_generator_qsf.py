@@ -162,7 +162,7 @@ set_end_id = {
 			"VariableType": "String",
 			"DataVisibility": [],
 			"AnalyzeText": False,
-			"Value": "$e{${gr://SC_0/Score} * 100000000 * 1/0.9}${rand://int/100000:1000000}"
+			"Value": "$e{round(${gr://SC_0/Score}) * 100}${rand://int/100000:1000000}"
 		}
 	]
 }
@@ -876,10 +876,10 @@ flow_elements.append(set_score)
 
 # add branch logic to kick respondent out of survey after training q's
 eos_block_id = -1000
-training_thresh_mc_num = math.ceil(training_mc_weight * training_length)
-training_thresh_te_num = math.ceil(training_te_weight * 2 * training_length)
-attention_thresh_mc_num = math.ceil(attention_mc_weight * attention_check_length)
-attention_thresh_te_num = math.ceil(attention_te_weight * 2 * attention_check_length)
+training_thresh_mc_num = math.ceil(training_mc_weight * training_thresh_mc * training_length)
+training_thresh_te_num = math.ceil(training_te_weight * training_thresh_te * 2 * training_length)
+attention_thresh_mc_num = math.ceil(attention_mc_weight * attention_thresh_mc * attention_check_length)
+attention_thresh_te_num = math.ceil(attention_te_weight * attention_thresh_te * 2 * attention_check_length)
 print(training_thresh_mc_num, training_thresh_te_num)
 fl_id = -1
 flow_elements.append(create_branch_logic(branch_logic_template, fl_id, eos_block_id, training_thresh_mc_num, training_thresh_te_num, segment = 0))
