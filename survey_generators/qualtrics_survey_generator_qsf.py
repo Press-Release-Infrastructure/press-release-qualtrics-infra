@@ -742,10 +742,10 @@ def create_question(curr_title, curr, disp_settings = [], train_ans_lst = []):
 				"SurveyID": "SV_eLnpGNWb3hM31cy",
 				"Element": "SQ",
 				"PrimaryAttribute": qid,
-				"SecondaryAttribute": "ACQUIRER (leave blank if not indicated or unclear):",
+				"SecondaryAttribute": "ACQUIRER (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.):",
 				"TertiaryAttribute": None,
 				"Payload": {
-					"QuestionText": "ACQUIRER (leave blank if not indicated or unclear):\n\n",
+					"QuestionText": "ACQUIRER (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.):\n\n",
 					"DefaultChoices": False,
 					"QuestionID": qid,
 					"QuestionType": "TE",
@@ -753,7 +753,7 @@ def create_question(curr_title, curr, disp_settings = [], train_ans_lst = []):
 					"Configuration": {
 						"QuestionDescriptionOption": "UseText"
 					},
-					"QuestionDescription": "ACQUIRER (leave blank if not indicated or unclear):",
+					"QuestionDescription": "ACQUIRER (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.):",
 					"Validation": {
 						"Settings": {
 							"ForceResponse": "OFF",
@@ -777,10 +777,10 @@ def create_question(curr_title, curr, disp_settings = [], train_ans_lst = []):
 				"SurveyID": "SV_eLnpGNWb3hM31cy",
 				"Element": "SQ",
 				"PrimaryAttribute": qid,
-				"SecondaryAttribute": "ACQUIRED (leave blank if not indicated or unclear):",
+				"SecondaryAttribute": "ACQUIRED (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.):",
 				"TertiaryAttribute": None,
 				"Payload": {
-					"QuestionText": "ACQUIRED (leave blank if not indicated or unclear):\n\n",
+					"QuestionText": "Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.):\n\n",
 					"DefaultChoices": False,
 					"QuestionID": qid,
 					"QuestionType": "TE",
@@ -788,7 +788,7 @@ def create_question(curr_title, curr, disp_settings = [], train_ans_lst = []):
 					"Configuration": {
 						"QuestionDescriptionOption": "UseText"
 					},
-					"QuestionDescription": "ACQUIRED (leave blank if not indicated or unclear):",
+					"QuestionDescription": "ACQUIRED (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.):",
 					"Validation": {
 						"Settings": {
 							"ForceResponse": "OFF",

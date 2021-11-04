@@ -1,7 +1,7 @@
 [settings]
-all_titles_filename = ../input_headlines/all_headlines.csv
+all_titles_filename = ../input_headlines/headlines.csv
 
-num_headlines = 200
+num_headlines = 100
 num_students = 2
 overlap = 0.2
 training_length = 10
@@ -9,8 +9,10 @@ attention_check_length = 2
 
 block_size = 10
 
-training_thresh = 0.5
-attention_thresh = 0.5
+training_thresh_mc = 0.7
+training_thresh_te = 0.5
+attention_thresh_mc = 0.7
+attention_thresh_te = 0.5
 
 training_headlines_filename = ../survey_data/selected_training.csv
 att_headlines_filename = ../survey_data/selected_att.csv
