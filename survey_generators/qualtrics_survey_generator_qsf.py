@@ -13,7 +13,7 @@ np.random.seed(seed)
 config = configparser.ConfigParser()
 config.read("qualtrics_survey_controls.txt")
 
-all_titles = list(pd.read_csv(config["settings"]["all_titles_filename"], encoding = 'utf8')["Headline"].unique())
+all_titles = list(pd.read_csv(config["settings"]["all_titles_filename"], encoding = 'utf8')["Headline"].unique())[:100]
 
 num_headlines = int(config["settings"]["num_headlines"]) # unique titles to be classified
 num_students = int(config["settings"]["num_students"]) # number of people taking this survey version
@@ -22,8 +22,15 @@ training_length = int(config["settings"]["training_length"]) # number of trainin
 block_size = int(config["settings"]["block_size"]) # number of questions in a block (between attention-check)
 attention_check_length = int(config["settings"]["attention_check_length"]) # number of questions in an attention-check block
 
-training_thresh = float(config["settings"]["training_thresh"])
-attention_thresh = float(config["settings"]["attention_thresh"])
+training_thresh_mc = float(config["settings"]["training_thresh_mc"])
+training_thresh_te = float(config["settings"]["training_thresh_te"])
+attention_thresh_mc = float(config["settings"]["attention_thresh_mc"])
+attention_thresh_te = float(config["settings"]["attention_thresh_te"])
+
+training_mc_weight = training_thresh_mc / (training_thresh_mc + 2 * training_thresh_te)
+training_te_weight = training_thresh_te / (training_thresh_mc + 2 * training_thresh_te)
+attention_mc_weight = attention_thresh_mc / (attention_thresh_mc + 2 * attention_thresh_te)
+attention_te_weight = attention_thresh_te / (training_thresh_mc + 2 * training_thresh_te)
 
 survey_name = config["settings"]["survey_name"]
 assignments_name = config["settings"]["assignments_name"]
@@ -58,7 +65,7 @@ for j in range(math.ceil(titles_per_student / block_size)):
 		attention_check_answers[str(c["Headline"])] = [int(c["Acq Status"]), str(c["Acquirer"]), str(c["Acquired"])]
 	attention_check_headlines.append(curr_att_headlines)
 
-calc_attention_thresh = [math.ceil(len(i) * attention_thresh) for i in attention_check_headlines]
+# calc_attention_thresh = [math.ceil(len(i) * attention_thresh) for i in attention_check_headlines]
 
 uniques_left = num_headlines - num_students * uniques_per_student
 uniques = [uniques_per_student for i in range(num_students)]
@@ -570,17 +577,17 @@ def create_end_of_survey_logic(fl_id, eos_block_id, segment = 0):
 	survey_elements.append(elem)
 	return curr_end_survey_display
 
-def create_branch_logic(branch_logic_template, fl_id, eos_block_id, thresh, segment = False):
+def create_branch_logic(branch_logic_template, fl_id, eos_block_id, thresh_mc, thresh_te, segment = False):
 	branch_logic_template_copy = copy.deepcopy(branch_logic_template)
 	branch_logic_template_copy["FlowID"] = "FL_{}".format(fl_id)
 	curr_end_survey_display = create_end_of_survey_logic(fl_id, eos_block_id, segment)
 
 	branch_logic_template_copy["Flow"] = [set_end_id, curr_end_survey_display, end_survey]
-	branch_logic_template_copy["BranchLogic"]["0"]["0"]["RightOperand"] = str(thresh * 3)
-	branch_logic_template_copy["BranchLogic"]["0"]["0"]["Description"] = "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">Score</span> <span class=\"OpDesc\">Is Less Than</span> <span class=\"RightOpDesc\"> {} </span>".format(thresh * 3)
+	branch_logic_template_copy["BranchLogic"]["0"]["0"]["RightOperand"] = str(thresh_mc + thresh_te)
+	branch_logic_template_copy["BranchLogic"]["0"]["0"]["Description"] = "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">Score</span> <span class=\"OpDesc\">Is Less Than</span> <span class=\"RightOpDesc\"> {} </span>".format(thresh_mc + thresh_te)
 	return branch_logic_template_copy
 
-def add_score(elem, q_type = "MC", train_ans = -1):
+def add_score(elem, weight = 1, q_type = "MC", train_ans = -1):
 	if train_ans != -1:
 		if q_type == "MC":
 			elem["Payload"]["GradingData"] = [
@@ -613,12 +620,12 @@ def add_score(elem, q_type = "MC", train_ans = -1):
 					"index": 3
 				}
 			]
-			elem["Payload"]["GradingData"][train_ans]["Grades"]["SC_0"] = 1
+			elem["Payload"]["GradingData"][train_ans]["Grades"]["SC_0"] = weight
 		elif q_type == "TE":
 			elem["Payload"]["GradingData"] = [{
 				"TextEntry": train_ans,
 				"Grades": {
-					"SC_0": "1"
+					"SC_0": "{}".format(weight)
 				}
           	}]
 
@@ -627,8 +634,10 @@ def create_question(curr_title, curr, disp_settings = [], train_ans_lst = []):
 
 	if len(train_ans_lst):
 		train_ans, train_ans_acquirer, train_ans_acquired = train_ans_lst
+		mc_weight, te_weight = training_mc_weight, training_te_weight
 	else:
 		train_ans, train_ans_acquirer, train_ans_acquired = -1, -1, -1
+		mc_weight, te_weight = attention_mc_weight, attention_te_weight
 
 	survey_info["SurveyElements"][0]["Payload"].append({
 		"Type": "Standard",
@@ -736,7 +745,7 @@ def create_question(curr_title, curr, disp_settings = [], train_ans_lst = []):
 				},
 			}
 
-			add_score(elem, "MC", train_ans)
+			add_score(elem, mc_weight, "MC", train_ans)
 		elif subpart == 2:
 			elem = {
 				"SurveyID": "SV_eLnpGNWb3hM31cy",
@@ -771,7 +780,7 @@ def create_question(curr_title, curr, disp_settings = [], train_ans_lst = []):
 				}
 		    }
 
-			add_score(elem, "TE", train_ans_acquirer)
+			add_score(elem, te_weight, "TE", train_ans_acquirer)
 		elif subpart == 3:
 			elem = {
 				"SurveyID": "SV_eLnpGNWb3hM31cy",
@@ -806,7 +815,7 @@ def create_question(curr_title, curr, disp_settings = [], train_ans_lst = []):
 				}
 		    }
 
-			add_score(elem, "TE", train_ans_acquired)
+			add_score(elem, te_weight, "TE", train_ans_acquired)
 		elif subpart == 4:
 			elem = {
 		      "SurveyID": "SV_eLnpGNWb3hM31cy",
@@ -867,9 +876,13 @@ flow_elements.append(set_score)
 
 # add branch logic to kick respondent out of survey after training q's
 eos_block_id = -1000
-training_thresh_num = math.ceil(training_thresh * training_length)
+training_thresh_mc_num = math.ceil(training_mc_weight * training_length)
+training_thresh_te_num = math.ceil(training_te_weight * 2 * training_length)
+attention_thresh_mc_num = math.ceil(attention_mc_weight * attention_check_length)
+attention_thresh_te_num = math.ceil(attention_te_weight * 2 * attention_check_length)
+print(training_thresh_mc_num, training_thresh_te_num)
 fl_id = -1
-flow_elements.append(create_branch_logic(branch_logic_template, fl_id, eos_block_id, training_thresh_num, segment = 0))
+flow_elements.append(create_branch_logic(branch_logic_template, fl_id, eos_block_id, training_thresh_mc_num, training_thresh_te_num, segment = 0))
 fl_id -= 2
 eos_block_id -= 1
 
@@ -891,7 +904,6 @@ for i in range(num_blocks):
 			regular_headline_idxes[j] = student_assignments[j]
 		else:
 			continue
-		# student_assignments[j] = list(set(student_assignments[j]) - set(regular_headline_idxes[j])) # remove the chosen headline idxes
 		# remove the chosen headline idxes from all student assignments
 		for sa in student_assignments.keys():
 			student_assignments[sa] = list(set(student_assignments[sa]) - set(regular_headline_idxes[j]))
@@ -917,8 +929,9 @@ for i in range(num_blocks):
 	# set score embedded data
 	flow_elements.append(set_score)
 
-	attention_thresh_num = training_thresh_num + sum(calc_attention_thresh[:i + 1])
-	flow_elements.append(create_branch_logic(branch_logic_template, fl_id, eos_block_id, attention_thresh_num, segment = 1))
+	curr_attention_thresh_mc_num = training_thresh_mc_num + attention_thresh_mc_num * (i + 1) #sum(calc_attention_thresh[:i + 1])
+	curr_attention_thresh_te_num = training_thresh_te_num + attention_thresh_te_num * (i + 1)
+	flow_elements.append(create_branch_logic(branch_logic_template, fl_id, eos_block_id, curr_attention_thresh_mc_num, curr_attention_thresh_te_num, segment = 1))
 	eos_block_id -= 1
 	fl_id -= 2
 
