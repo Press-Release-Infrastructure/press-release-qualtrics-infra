@@ -577,11 +577,15 @@ def create_end_of_survey_logic(fl_id, eos_block_id, segment = 0):
 	survey_elements.append(elem)
 	return curr_end_survey_display
 
+set_end_id_fl_id = -2000
+
 def create_branch_logic(branch_logic_template, fl_id, eos_block_id, thresh_mc, thresh_te, segment = False):
 	branch_logic_template_copy = copy.deepcopy(branch_logic_template)
 	branch_logic_template_copy["FlowID"] = "FL_{}".format(fl_id)
 	curr_end_survey_display = create_end_of_survey_logic(fl_id, eos_block_id, segment)
 
+	set_end_id_copy = copy.deepcopy(set_end_id)
+	set_end_id_copy["FlowID"] = "FL_{}".format(set_end_id_fl_id)
 	branch_logic_template_copy["Flow"] = [set_end_id, curr_end_survey_display, end_survey]
 	branch_logic_template_copy["BranchLogic"]["0"]["0"]["RightOperand"] = str(thresh_mc + thresh_te)
 	branch_logic_template_copy["BranchLogic"]["0"]["0"]["Description"] = "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">Score</span> <span class=\"OpDesc\">Is Less Than</span> <span class=\"RightOpDesc\"> {} </span>".format(thresh_mc + thresh_te)
@@ -676,10 +680,10 @@ def create_question(curr_title, curr, disp_settings = [], train_ans_lst = []):
 		      "SurveyID": "SV_eLnpGNWb3hM31cy",
 		      "Element": "SQ",
 		      "PrimaryAttribute": qid,
-		      "SecondaryAttribute": "{}. Headline: {}".format(curr - 1, curr_title),
+		      "SecondaryAttribute": "Headline: {}".format(curr_title),
 		      "TertiaryAttribute": None,
 		      "Payload": {
-		        "QuestionText": "{}. Headline: <br><br>\n<b>{}</b>\n".format(curr - 1, curr_title),
+		        "QuestionText": "Headline: <br><br>\n<b>{}</b>\n".format(curr_title),
 		        "QuestionID": qid,
 		        "QuestionType": "DB",
 		        "Selector": "TB",
@@ -789,7 +793,7 @@ def create_question(curr_title, curr, disp_settings = [], train_ans_lst = []):
 				"SecondaryAttribute": "ACQUIRED (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.):",
 				"TertiaryAttribute": None,
 				"Payload": {
-					"QuestionText": "Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.):\n\n",
+					"QuestionText": "ACQUIRED (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.):\n\n",
 					"DefaultChoices": False,
 					"QuestionID": qid,
 					"QuestionType": "TE",
@@ -871,8 +875,12 @@ for t in list(training_title_to_student.keys()):
 	curr += 1
 
 # set score embedded data
+set_score_id = -1000
 flow_elements = survey_elements[1]["Payload"]["Flow"]
-flow_elements.append(set_score)
+set_score_copy = copy.deepcopy(set_score)
+set_score_copy["FlowID"] = "FL_{}".format(set_score_id)
+flow_elements.append(set_score_copy)
+set_score_id -= 1
 
 # add branch logic to kick respondent out of survey after training q's
 eos_block_id = -1000
@@ -883,6 +891,7 @@ attention_thresh_te_num = math.ceil(attention_te_weight * attention_thresh_te * 
 print(training_thresh_mc_num, training_thresh_te_num)
 fl_id = -1
 flow_elements.append(create_branch_logic(branch_logic_template, fl_id, eos_block_id, training_thresh_mc_num, training_thresh_te_num, segment = 0))
+set_end_id_fl_id -= 1
 fl_id -= 2
 eos_block_id -= 1
 
@@ -927,11 +936,15 @@ for i in range(num_blocks):
 		curr += 1
 
 	# set score embedded data
-	flow_elements.append(set_score)
+	set_score_copy = copy.deepcopy(set_score)
+	set_score_copy["FlowID"] = "FL_{}".format(set_score_id)
+	flow_elements.append(set_score_copy)
+	set_score_id -= 1
 
 	curr_attention_thresh_mc_num = training_thresh_mc_num + attention_thresh_mc_num * (i + 1) #sum(calc_attention_thresh[:i + 1])
 	curr_attention_thresh_te_num = training_thresh_te_num + attention_thresh_te_num * (i + 1)
 	flow_elements.append(create_branch_logic(branch_logic_template, fl_id, eos_block_id, curr_attention_thresh_mc_num, curr_attention_thresh_te_num, segment = 1))
+	set_end_id_fl_id -= 1
 	eos_block_id -= 1
 	fl_id -= 2
 
