@@ -5,6 +5,7 @@ import sys
 import numpy as np
 import copy
 import configparser
+from survey_flow_directions import pg1, pg2, pg3, pg4, pg5, pg6, pg7, pg8, pg9, pg10, pg11, pg12, pg13, pg14
 
 seed = 0
 np.random.seed(seed)
@@ -400,80 +401,67 @@ survey_info["SurveyElements"][0]["Payload"].append(
 
 survey_elements = survey_info["SurveyElements"]
 
-directions = """For each headline, we want you to: <br><br>
-a) Identify whether the headline is about an acquisition or merger. <br>
-b) if it is, for you to identify and enter (preferably by copy-pasting verbatim) the ACQUIRER and ACQUIRED companies. <br>
-c) If the ACQUIRER or ACQUIRED names are not obvious from the headline, please leave the corresponding box blank. <br>
-d) If there are two company names, but you don't know who acquired whom (as in the case of a merger), please still enter the names in either field. <br>
-e) If you are not sure if the headline refers to an acquisition, or if the text does not look like a headline, please mark "not sure" or "This is not a headline". You can still enter company names if relevant. <br>
-<br><br>
-To increase speed, we suggest using the keyboard to navigate the response: <br><br>
-- "Tab" moves to the next field <br>
-- You can use "Y" or "N" keys to select the corresponding drop-down field <br>
-"""
+# add directions
+directions = [pg1, pg2, pg3, pg4, pg5, pg6, pg7, pg8, pg9, pg10, pg11, pg12, pg13, pg14]
 
-# # add student ID question
 curr = 0
-qid = "QID{}".format(curr)
-student_qid = qid
-survey_elements.append({
-	"SurveyID": "SV_eLnpGNWb3hM31cy",
-	"Element": "SQ",
-	"PrimaryAttribute": qid,
-	"SecondaryAttribute": directions,
-	"TertiaryAttribute": None,
-	"Payload": {
-	"QuestionText": directions,
-	"QuestionID": qid,
-	"QuestionType": "DB",
-	"Selector": "TB",
-	"QuestionDescription": directions,
-	"Validation": {
-	  "Settings": {
-	    "Type": "None"
-	  }
-	},
-	"Language": [],
-	"DataExportTag": qid
-	}
-})
-sid_elem = survey_elements[-1]
+for d in directions:
+	qid = "QID{}".format(curr)
+	student_qid = qid
+	survey_elements.append({
+		"SurveyID": "SV_eLnpGNWb3hM31cy",
+		"Element": "SQ",
+		"PrimaryAttribute": qid,
+		"SecondaryAttribute": d,
+		"TertiaryAttribute": None,
+		"Payload": {
+		"QuestionText": d,
+		"QuestionID": qid,
+		"QuestionType": "DB",
+		"Selector": "TB",
+		"QuestionDescription": d,
+		"Validation": {
+		"Settings": {
+			"Type": "None"
+		}
+		},
+		"Language": [],
+		"DataExportTag": qid
+		}
+	})
 
-sid_choices = {}
-for i in range(num_students):
-	sid_choices[str(i)] = { "Display": str(i) }
-
-sort_sid_choices = list(sid_choices.keys())
-sort_sid_choices.sort()
-survey_info["SurveyElements"][0]["Payload"].append({
-	"Type": "Standard",
-	"SubType": "",
-	"Description": "Block {}".format(curr),
-	"ID": "BL_{}".format(curr),
-	"BlockElements": [],
-	"Options": {
-		"BlockLocking": "false",
-		"RandomizeQuestions": "false",
-		"BlockVisibility": "Collapsed",
-	}
-})
-block_elements = survey_info["SurveyElements"][0]["Payload"][1]["BlockElements"]
-
-survey_info["SurveyElements"][1]["Payload"]["Flow"].append(
-	{
+	survey_info["SurveyElements"][0]["Payload"].append({
+		"Type": "Standard",
+		"SubType": "",
+		"Description": "Block {}".format(curr),
 		"ID": "BL_{}".format(curr),
-		"Type": "Block",
-		"FlowID": "FL_{}".format(curr)
-	}
-)
+		"BlockElements": [],
+		"Options": {
+			"BlockLocking": "false",
+			"RandomizeQuestions": "false",
+			"BlockVisibility": "Collapsed",
+		}
+	})
 
-block_elements.append({
-	"Type": "Question",
-    "QuestionID": "QID0"
-	})
-block_elements.append({
-	"Type": "Page Break",
-	})
+	block_elements = survey_info["SurveyElements"][0]["Payload"][curr + 1]["BlockElements"]
+
+	survey_info["SurveyElements"][1]["Payload"]["Flow"].append(
+		{
+			"ID": "BL_{}".format(curr),
+			"Type": "Block",
+			"FlowID": "FL_{}".format(curr)
+		}
+	)
+
+	block_elements.append({
+		"Type": "Question",
+		"QuestionID": qid
+		})
+	block_elements.append({
+		"Type": "Page Break",
+		})
+
+	curr += 1
 
 num_subparts = 5
 
@@ -655,7 +643,7 @@ def create_question(curr_title, curr, disp_settings = [], train_ans_lst = []):
 			"BlockVisibility": "Collapsed",
 		}
 	})
-	block_elements = survey_info["SurveyElements"][0]["Payload"][curr]["BlockElements"]
+	block_elements = survey_info["SurveyElements"][0]["Payload"][curr + 1]["BlockElements"]
 	
 	# append to flow payload
 	survey_info["SurveyElements"][1]["Payload"]["Flow"].append(
@@ -716,16 +704,16 @@ def create_question(curr_title, curr, disp_settings = [], train_ans_lst = []):
 					"QuestionDescription": "Do you think that this headline refers to an acquisition or merger?",
 					"Choices": {
 						"1": {
-							"Display": "Yes"
+							"Display": "Acquisition"
 						},
 						"2": {
-							"Display": "No"
+							"Display": "Merger"
 						},
 						"3": {
-							"Display": "Not sure"
+							"Display": "Neither"
 						},
 						"4": {
-							"Display": "Not a headline"
+							"Display": "Unclear / Not a headline"
 						}
 					},
 					"ChoiceOrder": [
@@ -869,9 +857,9 @@ def create_question(curr_title, curr, disp_settings = [], train_ans_lst = []):
 	})
 
 # start with all training headlines
-curr = 2
+curr_offset = curr
 for t in list(training_title_to_student.keys()):
-	create_question(t, curr, list(range(num_students)), training_answers[curr - 2])
+	create_question(t, curr, list(range(num_students)), training_answers[curr - curr_offset])
 	curr += 1
 
 # set score embedded data
@@ -888,11 +876,10 @@ training_thresh_mc_num = math.ceil(training_mc_weight * training_thresh_mc * tra
 training_thresh_te_num = math.ceil(training_te_weight * training_thresh_te * 2 * training_length)
 attention_thresh_mc_num = math.ceil(attention_mc_weight * attention_thresh_mc * attention_check_length)
 attention_thresh_te_num = math.ceil(attention_te_weight * attention_thresh_te * 2 * attention_check_length)
-print(training_thresh_mc_num, training_thresh_te_num)
 fl_id = -1
 flow_elements.append(create_branch_logic(branch_logic_template, fl_id, eos_block_id, training_thresh_mc_num, training_thresh_te_num, segment = 0))
 set_end_id_fl_id -= 1
-fl_id -= 2
+fl_id -= curr_offset
 eos_block_id -= 1
 
 num_blocks = len(attention_check_headlines)
