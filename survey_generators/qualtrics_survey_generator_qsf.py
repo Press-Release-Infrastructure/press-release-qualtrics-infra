@@ -38,7 +38,7 @@ assignments_name = config["settings"]["assignments_name"]
 qsf_name = config["settings"]["qsf_name"]
 
 training_headlines_df = pd.read_csv(config["settings"]["training_headlines_filename"], encoding = 'utf8').sample(frac = 1, random_state = seed)
-training_flow_headlines_df = pd.read_csv(config["settings"]["training_flow_headlines_filename"], encoding = 'utf8').sample(frac = 1, random_state = seed)
+training_flow_headlines_df = pd.read_csv(config["settings"]["training_flow_headlines_filename"], encoding = 'utf8')
 training_headlines_df = training_headlines_df.where(pd.notnull(training_headlines_df), "")
 training_headlines = list(training_headlines_df["Title"][:training_length])
 training_answers = training_headlines_df[["Acq_Status", "Company 1", "Company 2"]].to_records(index = False)[:training_length]
@@ -66,8 +66,6 @@ for j in range(math.ceil(titles_per_student / block_size)):
 		curr_att_headlines.append(str(c["Title"]))
 		attention_check_answers[str(c["Title"])] = [int(c["Acq_Status"]), str(c["Company 1"]), str(c["Company 2"])]
 	attention_check_headlines.append(curr_att_headlines)
-
-# calc_attention_thresh = [math.ceil(len(i) * attention_thresh) for i in attention_check_headlines]
 
 uniques_left = num_headlines - num_students * uniques_per_student
 uniques = [uniques_per_student for i in range(num_students)]
@@ -409,11 +407,24 @@ survey_elements = survey_info["SurveyElements"]
 
 # add directions
 directions = [pg1, pg2, pg3, pg4, pg5, pg6, pg7, pg8, pg9, pg10, pg11, pg12, pg13, pg14]
+d_format_elements = [
+	['Title', 'Company 1', 'Company 2'],
+	['Title', 'Company 2', 'Company 1', 'Company 1', 'Company 2'],
+	['Title'],
+	['Title'],
+	['Title', 'Company 1', 'Company 1'],
+	['Title', 'Company 2', 'Company 2'],
+	['Title']
+]
 
 curr = 0
 for d in directions:
 	qid = "QID{}".format(curr)
 	student_qid = qid
+	
+	if 4 <= curr <= 10:
+		d_elems = list(training_flow_headlines_df.iloc[curr - 4][d_format_elements[curr - 4]])
+		d = d % tuple(d_elems)
 	survey_elements.append({
 		"SurveyID": "SV_eLnpGNWb3hM31cy",
 		"Element": "SQ",
