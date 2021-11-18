@@ -38,9 +38,10 @@ assignments_name = config["settings"]["assignments_name"]
 qsf_name = config["settings"]["qsf_name"]
 
 training_headlines_df = pd.read_csv(config["settings"]["training_headlines_filename"], encoding = 'utf8').sample(frac = 1, random_state = seed)
+training_flow_headlines_df = pd.read_csv(config["settings"]["training_flow_headlines_filename"], encoding = 'utf8').sample(frac = 1, random_state = seed)
 training_headlines_df = training_headlines_df.where(pd.notnull(training_headlines_df), "")
-training_headlines = list(training_headlines_df["Headline"][:training_length])
-training_answers = training_headlines_df[["Acq Status", "Acquirer", "Acquired"]].to_records(index = False)[:training_length]
+training_headlines = list(training_headlines_df["Title"][:training_length])
+training_answers = training_headlines_df[["Acq_Status", "Company 1", "Company 2"]].to_records(index = False)[:training_length]
 
 titles = np.array(all_titles)
 
@@ -62,8 +63,8 @@ for j in range(math.ceil(titles_per_student / block_size)):
 		all_att_idxes = list(set(all_att_idxes) - set(curr_idxes))
 	curr_att_headlines = []
 	for _, c in curr_att.iterrows():
-		curr_att_headlines.append(str(c["Headline"]))
-		attention_check_answers[str(c["Headline"])] = [int(c["Acq Status"]), str(c["Acquirer"]), str(c["Acquired"])]
+		curr_att_headlines.append(str(c["Title"]))
+		attention_check_answers[str(c["Title"])] = [int(c["Acq_Status"]), str(c["Company 1"]), str(c["Company 2"])]
 	attention_check_headlines.append(curr_att_headlines)
 
 # calc_attention_thresh = [math.ceil(len(i) * attention_thresh) for i in attention_check_headlines]
@@ -126,16 +127,20 @@ branch_logic_template = {
 	}
 }
 
+end_survey_display_flow_id = -600
 end_survey_display = {
 	"ID": "BL_{}",
 	"Type": "Block",
 	"FlowID": "FL_{}"
 }
+
+end_survey_flow_id = -500
 end_survey = {
 	"Type": "EndSurvey",
-	"FlowID": "FL_-500"
+	"FlowID": "FL_{}"
 }
 
+set_score_flow_id = -300
 set_score = {
 	"Type": "EmbeddedData",
 	"FlowID": "FL_-1",
@@ -152,9 +157,10 @@ set_score = {
 	]
 }
 
+set_end_id_flow_id = -400
 set_end_id = {
 	"Type": "EmbeddedData",
-	"FlowID": "FL_0",
+	"FlowID": "FL_{}",
 	"EmbeddedData": [
 		{
 			"Description": "endID",
@@ -205,11 +211,11 @@ survey_info["SurveyElements"] = [
       "TertiaryAttribute": None,
       "Payload": {
       	"Type": "Root",
-      	"FlowID": "FL_1",
+      	"FlowID": "FL_-1000000",
         "Flow": [
 			{
 				"Type": "EmbeddedData",
-				"FlowID": "FL_13",
+				"FlowID": "FL_-2000000",
 				"EmbeddedData": [
 					{
 						"Description": "respondentID",
@@ -511,7 +517,7 @@ eos_payload_blocks = []
 def create_end_of_survey_logic(fl_id, eos_block_id, segment = 0):
 	curr_end_survey_display = copy.deepcopy(end_survey_display)
 	curr_end_survey_display["ID"] = curr_end_survey_display["ID"].format(eos_block_id)
-	curr_end_survey_display["FlowID"] = curr_end_survey_display["FlowID"].format(fl_id - 1)
+	curr_end_survey_display["FlowID"] = curr_end_survey_display["FlowID"].format(end_survey_display_flow_id)
 	qid = "QID{}".format(eos_block_id - 1)
 	eos_payload = {
 		"Type": "Standard",
@@ -565,16 +571,16 @@ def create_end_of_survey_logic(fl_id, eos_block_id, segment = 0):
 	survey_elements.append(elem)
 	return curr_end_survey_display
 
-set_end_id_fl_id = -2000
-
 def create_branch_logic(branch_logic_template, fl_id, eos_block_id, thresh_mc, thresh_te, segment = False):
 	branch_logic_template_copy = copy.deepcopy(branch_logic_template)
 	branch_logic_template_copy["FlowID"] = "FL_{}".format(fl_id)
 	curr_end_survey_display = create_end_of_survey_logic(fl_id, eos_block_id, segment)
 
 	set_end_id_copy = copy.deepcopy(set_end_id)
-	set_end_id_copy["FlowID"] = "FL_{}".format(set_end_id_fl_id)
-	branch_logic_template_copy["Flow"] = [set_end_id, curr_end_survey_display, end_survey]
+	end_survey_copy = copy.deepcopy(end_survey)
+	set_end_id_copy["FlowID"] = "FL_{}".format(set_end_id_flow_id)
+	end_survey_copy["FlowID"] = "FL_{}".format(end_survey_flow_id)
+	branch_logic_template_copy["Flow"] = [set_end_id_copy, curr_end_survey_display, end_survey_copy]
 	branch_logic_template_copy["BranchLogic"]["0"]["0"]["RightOperand"] = str(thresh_mc + thresh_te)
 	branch_logic_template_copy["BranchLogic"]["0"]["0"]["Description"] = "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">Score</span> <span class=\"OpDesc\">Is Less Than</span> <span class=\"RightOpDesc\"> {} </span>".format(thresh_mc + thresh_te)
 	return branch_logic_template_copy
@@ -863,7 +869,7 @@ for t in list(training_title_to_student.keys()):
 	curr += 1
 
 # set score embedded data
-set_score_id = -1000
+set_score_id = -200
 flow_elements = survey_elements[1]["Payload"]["Flow"]
 set_score_copy = copy.deepcopy(set_score)
 set_score_copy["FlowID"] = "FL_{}".format(set_score_id)
@@ -878,7 +884,9 @@ attention_thresh_mc_num = math.ceil(attention_mc_weight * attention_thresh_mc * 
 attention_thresh_te_num = math.ceil(attention_te_weight * attention_thresh_te * 2 * attention_check_length)
 fl_id = -1
 flow_elements.append(create_branch_logic(branch_logic_template, fl_id, eos_block_id, training_thresh_mc_num, training_thresh_te_num, segment = 0))
-set_end_id_fl_id -= 1
+end_survey_display_flow_id -= 1
+end_survey_flow_id -= 1
+set_end_id_flow_id -= 1
 fl_id -= curr_offset
 eos_block_id -= 1
 
@@ -931,7 +939,9 @@ for i in range(num_blocks):
 	curr_attention_thresh_mc_num = training_thresh_mc_num + attention_thresh_mc_num * (i + 1) #sum(calc_attention_thresh[:i + 1])
 	curr_attention_thresh_te_num = training_thresh_te_num + attention_thresh_te_num * (i + 1)
 	flow_elements.append(create_branch_logic(branch_logic_template, fl_id, eos_block_id, curr_attention_thresh_mc_num, curr_attention_thresh_te_num, segment = 1))
-	set_end_id_fl_id -= 1
+	end_survey_display_flow_id -= 1
+	end_survey_flow_id -= 1
+	set_end_id_flow_id -= 1
 	eos_block_id -= 1
 	fl_id -= 2
 
@@ -947,6 +957,8 @@ for r in remaining_headlines:
 	curr += 1
 
 curr_end_survey_display = create_end_of_survey_logic(fl_id, eos_block_id, segment = 2)
+end_survey_display_flow_id -= 1
+end_survey_flow_id -= 1
 flow_elements.append(curr_end_survey_display)
 
 for eos_block in eos_payload_blocks:

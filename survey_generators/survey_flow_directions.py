@@ -92,7 +92,7 @@ We COPY and PASTE COMPANY2 in the acquiree box, and leave the "acquirer" box bla
 """
 
 pg11 = """
-Test headline 6. 
+<b>{}</b>
 <br><br>
 It is unclear if this headline is about an acquisition. So we click "Unclear" in the drop-down box.
 """
