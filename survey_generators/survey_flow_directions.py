@@ -36,27 +36,27 @@ Third, you will start the work of reading headlines and recording acquisitions. 
 """
 
 pg5 = """
-Test headline 1. 
+<b>{}</b>
 <br><br>
 This headline is about an <b>acquisition</b>. We click "Acquisition" in the drop-down box.
 <br><br>
-In this headline, COMPANY1 acquires COMPANY2. 
+In this headline, {} acquires {}. 
 <br><br>
 We COPY and PASTE the names of the company that was the acquirer (the buyer) and the aquiree (the company purchased).
 """
 
 pg6 = """
-Test headline 2. 
+<b>{}</b>
 <br><br>
 This headline is about an acquisition. We click "Acquisition" in the drop-down box.
 <br><br>
-This headline uses the passive voice: COMPANY1 was <b>acquired by</b> COMPANY2. For this headline, COMPANY2 is the acquirer and COMPANY1 the acquiree.
+This headline uses the passive voice: {} was <b>acquired by</b> {}. For this headline, COMPANY2 is the acquirer and COMPANY1 the acquiree.
 <br><br>
 We COPY and PASTE the correct names into the text boxes.
 """
 
 pg7 = """
-Test headline 3.
+<b>{}</b>
 <br><br>
 This headline is about a <b>merger</b>. We click "Merger" in the drop-down box.
 <br><br>
@@ -66,27 +66,27 @@ We COPY and PASTE the names into the text boxes, in either order.
 """
 
 pg8 = """
-Test headline 4. 
+<b>{}</b>
 <br><br>
 This headline is not about an acquisition or merger. We click "Not merger or acquisition" in the drop-down box
 """
 
 pg9 = """
-Test headline 5. 
+<b>{}</b>
 <br><br>
 This headline is about an <b>acquisition</b>. It talks about a company being "bought," which is another way of saying acquired. We click "Acquisition" in the drop-down box.
 <br><br>
-This headline writes that COMPANY1 was the acquirer. But it does not say who the acquired company was. 
+This headline writes that {} was the acquirer. But it does not say who the acquired company was. 
 <br><br>
-We COPY and PASTE COMPANY1 in the acquirer box, and leave the "acquiree" box blank, and move to the next, clicking the forward arrow.
+We COPY and PASTE {} in the acquirer box, and leave the "acquiree" box blank, and move to the next, clicking the forward arrow.
 """
 
 pg10 = """
-Test headline 6. 
+<b>{}</b>
 <br><br>
 This headline is about an <b>acquisition</b>. It talks about a company being "purchased," which is another way of saying acquired. We click "Acquisition" in the drop-down box.
 <br><br>
-This headline writes that COMPANY2 was acquired. But it does not say what company was the acquirer.
+This headline writes that {} was acquired. But it does not say what company was the acquirer.
 <br><br>
 We COPY and PASTE COMPANY2 in the acquiree box, and leave the "acquirer" box blank, and move to the next, clicking the forward arrow.
 """
