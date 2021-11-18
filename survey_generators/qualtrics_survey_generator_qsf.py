@@ -9,6 +9,7 @@ from survey_flow_directions import pg1, pg2, pg3, pg4, pg5, pg6, pg7, pg8, pg9, 
 
 seed = 0
 np.random.seed(seed)
+rate = 45 # expected rate of problem solving per hour
 
 # survey settings
 config = configparser.ConfigParser()
@@ -422,9 +423,12 @@ for d in directions:
 	qid = "QID{}".format(curr)
 	student_qid = qid
 	
-	if 4 <= curr <= 10:
+	if curr == 3:
+		d = d % (num_headlines, round(titles_per_student / rate, 2))
+	elif 4 <= curr <= 10:
 		d_elems = list(training_flow_headlines_df.iloc[curr - 4][d_format_elements[curr - 4]])
 		d = d % tuple(d_elems)
+
 	survey_elements.append({
 		"SurveyID": "SV_eLnpGNWb3hM31cy",
 		"Element": "SQ",
@@ -596,7 +600,7 @@ def create_branch_logic(branch_logic_template, fl_id, eos_block_id, thresh_mc, t
 	branch_logic_template_copy["BranchLogic"]["0"]["0"]["Description"] = "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">Score</span> <span class=\"OpDesc\">Is Less Than</span> <span class=\"RightOpDesc\"> {} </span>".format(thresh_mc + thresh_te)
 	return branch_logic_template_copy
 
-def add_score(elem, weight = 1, q_type = "MC", train_ans = -1):
+def add_score(elem, weight = 1, q_type = "MC", train_ans = -1, merger = False):
 	if train_ans != -1:
 		if q_type == "MC":
 			elem["Payload"]["GradingData"] = [
@@ -631,12 +635,20 @@ def add_score(elem, weight = 1, q_type = "MC", train_ans = -1):
 			]
 			elem["Payload"]["GradingData"][train_ans]["Grades"]["SC_0"] = weight
 		elif q_type == "TE":
-			elem["Payload"]["GradingData"] = [{
-				"TextEntry": train_ans,
-				"Grades": {
-					"SC_0": "{}".format(weight)
-				}
-          	}]
+			if merger:
+				elem["Payload"]["GradingData"] = [{
+					"TextEntry": t,
+					"Grades": {
+						"SC_0": "{}".format(weight)
+					}
+				} for t in train_ans]
+			else:
+				elem["Payload"]["GradingData"] = [{
+					"TextEntry": train_ans,
+					"Grades": {
+						"SC_0": "{}".format(weight)
+					}
+				}]
 
 def create_question(curr_title, curr, disp_settings = [], train_ans_lst = []):
 	qid = "QID{}".format(curr)
@@ -789,7 +801,10 @@ def create_question(curr_title, curr, disp_settings = [], train_ans_lst = []):
 				}
 		    }
 
-			add_score(elem, te_weight, "TE", train_ans_acquirer)
+			merger = train_ans == 1
+			if merger: train_ans_arg = [train_ans_acquirer, train_ans_acquired]
+			else: train_ans_arg = train_ans_acquirer
+			add_score(elem, te_weight, "TE", train_ans_arg, merger = merger)
 		elif subpart == 3:
 			elem = {
 				"SurveyID": "SV_eLnpGNWb3hM31cy",
@@ -824,7 +839,10 @@ def create_question(curr_title, curr, disp_settings = [], train_ans_lst = []):
 				}
 		    }
 
-			add_score(elem, te_weight, "TE", train_ans_acquired)
+			merger = train_ans == 1
+			if merger: train_ans_arg = [train_ans_acquired, train_ans_acquirer]
+			else: train_ans_arg = train_ans_acquired
+			add_score(elem, te_weight, "TE", train_ans_arg, merger = merger)
 		elif subpart == 4:
 			elem = {
 		      "SurveyID": "SV_eLnpGNWb3hM31cy",

@@ -26,7 +26,7 @@ Sometimes, you will <b>not be sure</b> about the answers.
 """
 
 pg4 = """
-Your task is to review a maximum of XXX headlines, which will take about XX hours.
+Your task is to review a maximum of %s headlines, which will take about %s hours.
 <br><br>
 First, we will provide training. We will show you examples of headlines and how they should be classified.
 <br><br>
