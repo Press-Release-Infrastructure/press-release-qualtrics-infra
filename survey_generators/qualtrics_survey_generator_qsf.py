@@ -695,7 +695,7 @@ def add_score(elem, weight = 1, q_type = "MC", train_ans = -1, merger = False):
 					}
 				}]
 
-def create_question(curr_title, curr, disp_settings = [], train_ans_lst = []):
+def create_question(curr_title, curr, disp_settings = [], train_ans_lst = [], training = False):
 	qid = "QID{}".format(curr)
 
 	if len(train_ans_lst):
@@ -738,6 +738,11 @@ def create_question(curr_title, curr, disp_settings = [], train_ans_lst = []):
 		})
 
 		if subpart == 0:
+			displayed_headline = "Headline: <br><br>\n<b>{}</b>\n".format(curr_title)
+			
+			if training:
+				displayed_headline = "<b>TRAINING TEST IN PROGRESS</b><br><br>Headline: <br><br>\n<b>{}</b>\n".format(curr_title)
+			
 			elem = {
 		      "SurveyID": "SV_eLnpGNWb3hM31cy",
 		      "Element": "SQ",
@@ -745,7 +750,7 @@ def create_question(curr_title, curr, disp_settings = [], train_ans_lst = []):
 		      "SecondaryAttribute": "Headline: {}".format(curr_title),
 		      "TertiaryAttribute": None,
 		      "Payload": {
-		        "QuestionText": "Headline: <br><br>\n<b>{}</b>\n".format(curr_title),
+		        "QuestionText": displayed_headline,
 		        "QuestionID": qid,
 		        "QuestionType": "DB",
 		        "Selector": "TB",
@@ -939,7 +944,7 @@ def create_question(curr_title, curr, disp_settings = [], train_ans_lst = []):
 # start with all training headlines
 curr_offset = curr
 for t in list(training_title_to_student.keys()):
-	create_question(t, curr, list(range(num_students)), training_answers[curr - curr_offset])
+	create_question(t, curr, list(range(num_students)), training_answers[curr - curr_offset], training = True)
 	curr += 1
 
 # set score embedded data
