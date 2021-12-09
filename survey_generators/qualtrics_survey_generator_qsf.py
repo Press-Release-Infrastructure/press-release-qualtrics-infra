@@ -419,9 +419,12 @@ d_format_elements = [
 ]
 
 curr = 0
+image_curr = -5000
+image_ids = ["IM_6FMTR942RwQQY9o", "IM_bmExnuYJtFsybLU", "IM_7VP3eoDzWuJahJI", "IM_7X8z5FlGfFHQ5X8", "IM_bvHaC7NfpV9szKm", "IM_bqjpObcdQd2EVTw", "IM_5cnNP89y48xstXE"]
 for d in directions:
-	qid = "QID{}".format(curr)
-	student_qid = qid
+	qid1 = "QID{}".format(curr)
+	qid2 = "QID{}".format(image_curr)
+	# student_qid = qid
 	
 	if curr == 3:
 		d = d % (num_headlines, round(titles_per_student / rate, 2))
@@ -432,12 +435,12 @@ for d in directions:
 	survey_elements.append({
 		"SurveyID": "SV_eLnpGNWb3hM31cy",
 		"Element": "SQ",
-		"PrimaryAttribute": qid,
+		"PrimaryAttribute": qid1,
 		"SecondaryAttribute": d,
 		"TertiaryAttribute": None,
 		"Payload": {
 		"QuestionText": d,
-		"QuestionID": qid,
+		"QuestionID": qid1,
 		"QuestionType": "DB",
 		"Selector": "TB",
 		"QuestionDescription": d,
@@ -447,9 +450,43 @@ for d in directions:
 		}
 		},
 		"Language": [],
-		"DataExportTag": qid
+		"DataExportTag": qid1
 		}
 	})
+
+	if 4 <= curr <= 10:
+		survey_elements.append({
+			"SurveyID": "SV_eLnpGNWb3hM31cy",
+			"Element": "SQ",
+			"PrimaryAttribute": qid2,
+			"SecondaryAttribute": " ",
+			"TertiaryAttribute": None,
+			"Payload": {
+			"QuestionText": "&nbsp;",
+			"DefaultChoices": False,
+			"DataExportTag": qid2,
+			"QuestionType": "DB",
+			"Selector": "GRB",
+			"Configuration": {
+				"QuestionDescriptionOption": "UseText"
+			},
+			"QuestionDescription": " ",
+			"ChoiceOrder": [],
+			"Validation": {
+				"Settings": {
+				"Type": "None"
+				}
+			},
+			"GradingData": [],
+			"Language": [],
+			"NextChoiceId": 4,
+			"NextAnswerId": 1,
+			"QuestionID": qid2,
+			"SubSelector": "WTXB",
+			"GraphicsDescription": str(curr - 4),
+			"Graphics": image_ids[curr - 4]
+			}
+		})
 
 	survey_info["SurveyElements"][0]["Payload"].append({
 		"Type": "Standard",
@@ -476,13 +513,21 @@ for d in directions:
 
 	block_elements.append({
 		"Type": "Question",
-		"QuestionID": qid
+		"QuestionID": qid1
 		})
+
+	if 4 <= curr <= 10:
+		block_elements.append({
+			"Type": "Question",
+			"QuestionID": qid2
+			})
+		
 	block_elements.append({
 		"Type": "Page Break",
 		})
 
 	curr += 1
+	image_curr -= 1
 
 num_subparts = 5
 
