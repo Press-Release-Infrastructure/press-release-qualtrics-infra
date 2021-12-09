@@ -462,15 +462,15 @@ for d in directions:
 			"SecondaryAttribute": " ",
 			"TertiaryAttribute": None,
 			"Payload": {
-			"QuestionText": "&nbsp;",
+			"QuestionText": "",
 			"DefaultChoices": False,
 			"DataExportTag": qid2,
 			"QuestionType": "DB",
 			"Selector": "GRB",
 			"Configuration": {
-				"QuestionDescriptionOption": "UseText"
+				"QuestionDescriptionOption": None
 			},
-			"QuestionDescription": " ",
+			"QuestionDescription": "",
 			"ChoiceOrder": [],
 			"Validation": {
 				"Settings": {
