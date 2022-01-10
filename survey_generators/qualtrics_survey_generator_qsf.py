@@ -789,17 +789,13 @@ def create_question(curr_title, curr, disp_settings = [], train_ans_lst = [], tr
 							"Display": "Merger"
 						},
 						"3": {
-							"Display": "Neither"
+							"Display": "Neither / Not sure / Unclear"
 						},
-						"4": {
-							"Display": "Unclear / Not a headline"
-						}
 					},
 					"ChoiceOrder": [
 						"1",
 						"2",
 						"3",
-						"4",
 					],
 					"Validation": {
 						"Settings": {
@@ -810,7 +806,7 @@ def create_question(curr_title, curr, disp_settings = [], train_ans_lst = [], tr
 					},
 					"GradingData": [],
 					"Language": [],
-					"NextChoiceId": 5,
+					"NextChoiceId": 4,
         			"NextAnswerId": 1,
 					"QuestionID": qid
 				},
