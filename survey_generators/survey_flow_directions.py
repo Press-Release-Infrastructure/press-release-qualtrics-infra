@@ -19,7 +19,7 @@ pg3 = """
 Sometimes, you will <b>not be sure</b> about the answers. 
 <br><br>
 <ul>
-<li>If you are not sure if the headline is an acquisition, you can enter "unclear."</li>
+<li>If you are not sure if the headline is an acquisition, you can enter "Neither / Not sure / Unclear."</li>
 <li>If the headline does not say, or you are not sure who is the acquirer or acquired company, leave one or both text boxes blank.</li>
 <li>For mergers, the companies join as equals. Order does not matter. Enter the <b>name of each company</b> in the text boxes.</li>
 </ul>
@@ -68,7 +68,7 @@ We COPY and PASTE the names into the text boxes, in either order.
 pg8 = """
 <b>%s</b>
 <br><br>
-This headline is not about an acquisition or merger. We click "Not merger or acquisition" in the drop-down box
+This headline is not about an acquisition or merger. We click "Neither / Not sure / Unclear" in the drop-down box
 """
 
 pg9 = """
@@ -94,7 +94,7 @@ We COPY and PASTE %s in the acquiree box, and leave the "acquirer" box blank, an
 pg11 = """
 <b>%s</b>
 <br><br>
-This text is not a headline. So we click "Unclear / Not a headline" in the drop-down box.
+This text is not a headline. So we click "Neither / Not sure / Unclear" in the drop-down box.
 """
 
 pg12 = """
@@ -103,8 +103,8 @@ Training is complete! Remember, your task is to:
 <ol>
 <li>Decide if you think the headline refers to an acquisition or merger. Some other words used are purchased or bought.</li>
 <li>If you think the headline is about an acquisition or merger, enter that in the drop-down box.</li>
-<li>If the headline is not about an acquisition or merger, click “Not about an acquisition or merger” in the drop-down box.</li>
-<li>If you are not sure, click “Unclear.” It is better to be conservative. If you are at all unsure, click “unclear.” Don’t spend too long deciding.</li>
+<li>If the headline is not about an acquisition or merger, click "Neither / Not sure / Unclear" in the drop-down box.</li>
+<li>If you are not sure, click "Neither / Not sure / Unclear." It is better to be conservative. If you are at all unsure, click "Neither / Not sure / Unclear." Don’t spend too long deciding.</li>
 <li>For headlines that are an acquisition or merger, the next step is to fill out the text boxes. COPY and PASTE the name of the acquirer company and the acquired company.</li>
 <li>If you are not sure the names of the companies, leave one or both text boxes blank.</li>
 </ol>
@@ -114,7 +114,7 @@ pg13 = """
 Some tips before you start:
 <br><br>
 <ol>
-<li>It is faster to use your keyboard (not your mouse) to move to different fields. If you TAB, you will move to the next field. You can select the drop-down box response with the first letter: “A”, “M”, “N” or “U”</li>
+<li>It is faster to use your keyboard (not your mouse) to move to different fields. If you TAB, you will move to the next field. You can select the drop-down box response with the first letter: "A", "M", or "N."</li>
 <li>To enter the names of the companies, you will need to use your mouse to highlight the name to COPY and PASTE.</li>
 </ol>
 """
@@ -122,7 +122,7 @@ Some tips before you start:
 pg14 = """
 REMEMBER: it is most important to be accurate. DO NOT RUSH. 
 <br><br>
-<b><i>We will be including “test” headlines in random places to check your work.</i></b>
+<b><i>We will be including "test" headlines in random places to check your work.</i></b>
 <br><br>
 Once the task is complete, we will assign you a code for you to enter. IT IS IMPORTANT YOU ENTER THE CORRECT CODE. We will use this code to issue payment for the work you have done.
 <br><br>

@@ -420,7 +420,7 @@ d_format_elements = [
 
 curr = 0
 image_curr = -5000
-image_ids = ["IM_6FMTR942RwQQY9o", "IM_bmExnuYJtFsybLU", "IM_7VP3eoDzWuJahJI", "IM_7X8z5FlGfFHQ5X8", "IM_bvHaC7NfpV9szKm", "IM_bqjpObcdQd2EVTw", "IM_5cnNP89y48xstXE"]
+image_ids = ["IM_9B5dS6U26s0YYRM", "IM_0OMSPpaZ6IPdKtg", "IM_bwqhodFXsvLLnj8", "IM_0AL9PxBO1HSum5U", "IM_0jpOZB2TB4XXIhM", "IM_bQuvbckdHqNZxie", "IM_51OYNiheRmKoVYa"]
 for d in directions:
 	qid1 = "QID{}".format(curr)
 	qid2 = "QID{}".format(image_curr)
