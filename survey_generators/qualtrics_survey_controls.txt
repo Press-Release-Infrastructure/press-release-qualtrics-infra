@@ -20,4 +20,4 @@ att_headlines_filename = ../survey_data/selected_att.csv
 
 survey_name = MTurk Trial
 assignments_name = ../respondent_assignments/mturk_assignments.json
-qsf_name = ../qsf_output/mturk_trial_refactored.qsf
+qsf_name = ../qsf_output/mturk_trial/mturk_trial.qsf
