@@ -1,11 +1,11 @@
 [settings]
 all_titles_filename = ../input_headlines/headlines.csv
 
-num_headlines = 100
-num_students = 2
-overlap = 0.2
+num_headlines = 200
+num_students = 20
+overlap = 0.5
 training_length = 10
-attention_check_length = 2
+attention_check_length = 0
 
 block_size = 10
 
@@ -18,6 +18,6 @@ training_flow_headlines_filename = ../survey_data/selected_training.csv
 training_headlines_filename = ../survey_data/selected_training_test.csv
 att_headlines_filename = ../survey_data/selected_att.csv
 
-survey_name = MTurk Trial
-assignments_name = ../respondent_assignments/mturk_assignments.json
-qsf_name = ../qsf_output/mturk_trial/mturk_trial.qsf
+survey_name = MTurk Trial Deployment #2
+assignments_name = ../respondent_assignments/mturk_trial_deployment_2_assignments.json
+qsf_name = ../qsf_output/mturk_trial/mturk_trial_deployment_2.qsf

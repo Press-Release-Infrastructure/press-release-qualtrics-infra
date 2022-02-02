@@ -15,7 +15,7 @@ rate = 45 # expected rate of problem solving per hour
 config = configparser.ConfigParser()
 config.read("qualtrics_survey_controls.txt")
 
-all_titles = list(pd.read_csv(config["settings"]["all_titles_filename"], encoding = 'utf8')["Headline"].unique())[:100]
+all_titles = list(pd.read_csv(config["settings"]["all_titles_filename"], encoding = 'utf8')["Headline"].unique())
 
 num_headlines = int(config["settings"]["num_headlines"]) # unique titles to be classified
 num_students = int(config["settings"]["num_students"]) # number of people taking this survey version
@@ -48,6 +48,8 @@ titles = np.array(all_titles)
 
 # determine indices for headlines assigned to each student
 titles_per_student = math.ceil(num_headlines / ((1 - overlap) * num_students))
+print(titles_per_student)
+# titles_per_student = math.ceil(num_headlines * 2 / num_students)
 uniques_per_student = math.floor(num_headlines / num_students)
 
 att_headlines_df = pd.read_csv(config["settings"]["att_headlines_filename"], encoding = 'utf8').sample(frac = 1, random_state = seed)
@@ -77,19 +79,37 @@ while uniques_left:
 	uniques_left -= 1
 
 student_assignments = {}
-idx_set = set(range(num_headlines))
+curr_idx = 0
+idx_set = range(num_headlines)
 for i in range(num_students):
-	unique_selection = np.random.choice(list(idx_set), size = uniques[i], replace = False)
-	idx_set = idx_set - set(unique_selection)
+	unique_selection = idx_set[curr_idx:(curr_idx + uniques[i])]
 	student_assignments[i] = list(unique_selection)
+	curr_idx += len(unique_selection)
 
-dup_selection_lst = []
+used_headlines = set()
+prev_student_headlines = student_assignments[num_students - 1]
 for i in range(num_students):
-	dup_selection = np.random.choice(list(student_assignments[(i - 1) % num_students]), size = titles_per_student - uniques[i], replace = False)
-	dup_selection_lst.append(list(dup_selection))
+	curr_student_headlines = student_assignments[i]
+	dup_headlines = prev_student_headlines[-int(max(len(curr_student_headlines), len(prev_student_headlines))):].copy()
+	prev_student_headlines = student_assignments[i].copy()
+	student_assignments[i] = list(set(np.concatenate([student_assignments[i], dup_headlines])))
 
-for i in range(num_students):
-	student_assignments[i].extend(dup_selection_lst[i])
+# check that each headline is assigned twice
+headline_dict = {}
+for k, v in student_assignments.items():
+	for h in v:
+		if h in headline_dict:
+			headline_dict[h] += 1
+		else:
+			headline_dict[h] = 1
+
+print(len(list(headline_dict.keys())))
+print(headline_dict)
+
+for v in headline_dict.values():
+	assert(v == 2)
+
+print(student_assignments)
 
 student_assignments_json = {}
 titles_to_classify = []
@@ -427,7 +447,7 @@ for d in directions:
 	# student_qid = qid
 	
 	if curr == 3:
-		d = d % (num_headlines, round(titles_per_student / rate, 2))
+		d = d % (titles_per_student, round(titles_per_student / rate, 2))
 	elif 4 <= curr <= 10:
 		d_elems = list(training_flow_headlines_df.iloc[curr - 4][d_format_elements[curr - 4]])
 		d = d % tuple(d_elems)
@@ -631,12 +651,13 @@ def create_end_of_survey_logic(fl_id, eos_block_id, segment = 0):
 	survey_elements.append(elem)
 	return curr_end_survey_display
 
-def create_branch_logic(branch_logic_template, fl_id, eos_block_id, thresh_mc, thresh_te, segment = False):
+def create_branch_logic(branch_logic_template, fl_id, eos_block_id, thresh_mc, thresh_te, total_questions_done, segment = False):
 	branch_logic_template_copy = copy.deepcopy(branch_logic_template)
 	branch_logic_template_copy["FlowID"] = "FL_{}".format(fl_id)
 	curr_end_survey_display = create_end_of_survey_logic(fl_id, eos_block_id, segment)
 
 	set_end_id_copy = copy.deepcopy(set_end_id)
+	set_end_id_copy["EmbeddedData"][0]["Value"] = "$e{" + str(total_questions_done) + " * 100}${rand://int/100000:1000000}"
 	end_survey_copy = copy.deepcopy(end_survey)
 	set_end_id_copy["FlowID"] = "FL_{}".format(set_end_id_flow_id)
 	end_survey_copy["FlowID"] = "FL_{}".format(end_survey_flow_id)
@@ -939,9 +960,11 @@ def create_question(curr_title, curr, disp_settings = [], train_ans_lst = [], tr
 
 # start with all training headlines
 curr_offset = curr
+total_questions_done = 0
 for t in list(training_title_to_student.keys()):
 	create_question(t, curr, list(range(num_students)), training_answers[curr - curr_offset], training = True)
 	curr += 1
+	total_questions_done += 1
 
 # set score embedded data
 set_score_id = -200
@@ -958,7 +981,7 @@ training_thresh_te_num = math.ceil(training_te_weight * training_thresh_te * 2 *
 attention_thresh_mc_num = math.ceil(attention_mc_weight * attention_thresh_mc * attention_check_length)
 attention_thresh_te_num = math.ceil(attention_te_weight * attention_thresh_te * 2 * attention_check_length)
 fl_id = -1
-flow_elements.append(create_branch_logic(branch_logic_template, fl_id, eos_block_id, training_thresh_mc_num, training_thresh_te_num, segment = 0))
+flow_elements.append(create_branch_logic(branch_logic_template, fl_id, eos_block_id, training_thresh_mc_num, training_thresh_te_num, total_questions_done, segment = 0))
 end_survey_display_flow_id -= 1
 end_survey_flow_id -= 1
 set_end_id_flow_id -= 1
@@ -968,6 +991,7 @@ eos_block_id -= 1
 num_blocks = len(attention_check_headlines)
 
 for i in range(num_blocks):
+	print('block', i)
 	# in every iteration
 	# pick attention check number of attention check headlines
 	curr_at_check = attention_check_headlines[i]
@@ -976,6 +1000,7 @@ for i in range(num_blocks):
 	regular_headline_idxes = {}
 	regular_headline_to_student = {}
 	curr_headlines = set(curr_at_check)
+	print('iter', student_assignments, '\n')
 	for j in range(num_students):
 		if len(student_assignments[j]) >= block_size - len(curr_at_check):
 			regular_headline_idxes[j] = np.random.choice(student_assignments[j], size = block_size - len(curr_at_check), replace = False)
@@ -983,9 +1008,12 @@ for i in range(num_blocks):
 			regular_headline_idxes[j] = student_assignments[j]
 		else:
 			continue
+		
 		# remove the chosen headline idxes from all student assignments
-		for sa in student_assignments.keys():
-			student_assignments[sa] = list(set(student_assignments[sa]) - set(regular_headline_idxes[j]))
+		student_assignments[j] = list(set(student_assignments[j]) - set(regular_headline_idxes[j]))
+		# for sa in student_assignments.keys():
+		# 	print('x', sa, student_assignments[sa], regular_headline_idxes[j])
+		# 	student_assignments[sa] = list(set(student_assignments[sa]) - set(regular_headline_idxes[j]))
 		regular_headlines = titles[np.array(regular_headline_idxes[j])]
 		curr_headlines = curr_headlines.union(set(regular_headlines))
 		for r in regular_headlines:
@@ -993,9 +1021,15 @@ for i in range(num_blocks):
 				regular_headline_to_student[r].append(j)
 			else:
 				regular_headline_to_student[r] = [j]
+
+		print(j, 'regular headline to student', regular_headline_to_student, '\n')
+
+		if j == 0:
+			total_questions_done += block_size
 	
 	# shuffle attention check and regular headlines in a block
 	np.random.shuffle(np.array(list(curr_headlines)))
+	print(curr_headlines)
 
 	for c in curr_headlines:
 		if c in regular_headline_to_student:
@@ -1013,7 +1047,7 @@ for i in range(num_blocks):
 
 	curr_attention_thresh_mc_num = training_thresh_mc_num + attention_thresh_mc_num * (i + 1) #sum(calc_attention_thresh[:i + 1])
 	curr_attention_thresh_te_num = training_thresh_te_num + attention_thresh_te_num * (i + 1)
-	flow_elements.append(create_branch_logic(branch_logic_template, fl_id, eos_block_id, curr_attention_thresh_mc_num, curr_attention_thresh_te_num, segment = 1))
+	flow_elements.append(create_branch_logic(branch_logic_template, fl_id, eos_block_id, curr_attention_thresh_mc_num, curr_attention_thresh_te_num, total_questions_done, segment = 1))
 	end_survey_display_flow_id -= 1
 	end_survey_flow_id -= 1
 	set_end_id_flow_id -= 1
@@ -1024,12 +1058,20 @@ for i in range(num_blocks):
 remaining_headlines = []
 for student, remaining in student_assignments.items():
 	remaining_headlines.extend(remaining)
+	print(student, remaining)
 remaining_headlines = list(set(remaining_headlines))
 	
 for r in remaining_headlines:
 	# special display settings
 	create_question(titles[r], curr, title_to_student[r])
+	total_questions_done += 1
 	curr += 1
+
+set_end_id_copy = copy.deepcopy(set_end_id)
+set_end_id_copy["EmbeddedData"][0]["Value"] = "$e{" + str(total_questions_done) + " * 100}${rand://int/100000:1000000}"
+set_end_id_copy["FlowID"] = "FL_{}".format(set_end_id_flow_id)
+flow_elements.append(set_end_id_copy)
+set_end_id_flow_id -= 1
 
 curr_end_survey_display = create_end_of_survey_logic(fl_id, eos_block_id, segment = 2)
 end_survey_display_flow_id -= 1
