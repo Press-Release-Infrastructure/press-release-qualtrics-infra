@@ -1,8 +1,8 @@
 [settings]
 all_titles_filename = ../input_headlines/headlines.csv
 
-num_headlines = 200
-num_students = 20
+num_headlines = 90
+num_students = 9
 overlap = 0.5
 training_length = 10
 attention_check_length = 0
