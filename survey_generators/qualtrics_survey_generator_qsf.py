@@ -9,7 +9,7 @@ from survey_flow_directions import pg1, pg2, pg3, pg4, pg5, pg6, pg7, pg8, pg9, 
 
 seed = 0
 np.random.seed(seed)
-rate = 45 # expected rate of problem solving per hour
+rate = 120 # expected rate of problem solving per hour
 
 # survey settings
 config = configparser.ConfigParser()
@@ -447,7 +447,7 @@ for d in directions:
 	# student_qid = qid
 	
 	if curr == 3:
-		d = d % (titles_per_student, round(titles_per_student / rate, 2))
+		d = d % (titles_per_student, round(titles_per_student / rate * 60))
 	elif 4 <= curr <= 10:
 		d_elems = list(training_flow_headlines_df.iloc[curr - 4][d_format_elements[curr - 4]])
 		d = d % tuple(d_elems)
