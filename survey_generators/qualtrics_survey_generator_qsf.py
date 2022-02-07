@@ -958,9 +958,80 @@ def create_question(curr_title, curr, disp_settings = [], train_ans_lst = [], tr
 		"Type": "Page Break"
 	})
 
-# start with all training headlines
+# start by asking respondent to enter MTurk worker id, add pagebreak
+mturk_worker_id = -10000
+qid = "QID{}".format(mturk_worker_id)
+
+survey_info["SurveyElements"][0]["Payload"].append({
+	"Type": "Standard",
+	"SubType": "",
+	"Description": "Block {}".format(mturk_worker_id),
+	"ID": "BL_{}".format(mturk_worker_id),
+	"BlockElements": [],
+	"Options": {
+		"BlockLocking": "false",
+		"RandomizeQuestions": "false",
+		"BlockVisibility": "Collapsed",
+	}
+})
+block_elements = survey_info["SurveyElements"][0]["Payload"][curr + 1]["BlockElements"]
+
+# append to flow payload
+survey_info["SurveyElements"][1]["Payload"]["Flow"].append(
+	{
+		"ID": "BL_{}".format(mturk_worker_id),
+		"Type": "Block",
+		"FlowID": "FL_{}".format(mturk_worker_id)
+	}
+)
+
+block_elements.append({
+	"Type": "Question",
+	"QuestionID": qid,
+})
+
+elem = {
+	"SurveyID": "SV_eLnpGNWb3hM31cy",
+	"Element": "SQ",
+	"PrimaryAttribute": qid,
+	"SecondaryAttribute": "Enter your MTurk worker ID:",
+	"TertiaryAttribute": None,
+	"Payload": {
+		"QuestionText": "Enter your MTurk worker ID:\n\n",
+		"DefaultChoices": False,
+		"QuestionID": qid,
+		"QuestionType": "TE",
+		"Selector": "SL",
+		"Configuration": {
+			"QuestionDescriptionOption": "UseText"
+		},
+		"QuestionDescription": "Enter your MTurk worker ID:",
+		"Validation": {
+			"Settings": {
+				"ForceResponse": "OFF",
+				"Type": "None"
+			}
+		},
+		"GradingData": [],
+		"Language": [],
+		"NextChoiceId": 4,
+		"NextAnswerId": 1,
+		"SearchSource": {
+			"AllowFreeResponse": "false"
+		},
+		"DataExportTag": qid,
+	}
+}
+
+survey_elements.append(elem)
+block_elements.append({
+	"Type": "Page Break"
+})
+curr += 1
+
 curr_offset = curr
 total_questions_done = 0
+# start with all training headlines
 for t in list(training_title_to_student.keys()):
 	create_question(t, curr, list(range(num_students)), training_answers[curr - curr_offset], training = True)
 	curr += 1
