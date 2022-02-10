@@ -1,0 +1,564 @@
+
+<QuestionForm xmlns='http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2005-10-01/QuestionForm.xsd'>
+    
+<Question>
+    <QuestionIdentifier>q_0</QuestionIdentifier>
+    <DisplayName>Q_0</DisplayName>
+    <IsRequired>true</IsRequired>
+    <QuestionContent>
+    <Text> Headline: Nokia to acquire leading consumer email and instant messaging provider OZ Communications 
+
+Do you think that this headline refers to an acquisition or merger? </Text>
+    </QuestionContent>
+    <AnswerSpecification>
+    <SelectionAnswer>
+        <StyleSuggestion>radiobutton</StyleSuggestion>
+        <Selections>
+        <Selection>
+            <SelectionIdentifier>rg</SelectionIdentifier>
+            <Text>Acquisition</Text>
+        </Selection>
+        <Selection>
+            <SelectionIdentifier>by</SelectionIdentifier>
+            <Text>Merger</Text>
+        </Selection>
+        <Selection>
+            <SelectionIdentifier>other</SelectionIdentifier>
+            <Text>Neither / Not sure / Unclear</Text>
+        </Selection>
+        </Selections>
+    </SelectionAnswer>
+    </AnswerSpecification>
+</Question>
+
+<Question>
+    <QuestionIdentifier>q_1</QuestionIdentifier>
+    <DisplayName>Q_1</DisplayName>
+    <IsRequired>true</IsRequired>
+    <QuestionContent>
+    <Text> ACQUIRER (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.): </Text>
+    </QuestionContent>
+    <AnswerSpecification>
+    <FreeTextAnswer>
+    </FreeTextAnswer>
+    </AnswerSpecification>
+</Question>
+
+<Question>
+    <QuestionIdentifier>q_2</QuestionIdentifier>
+    <DisplayName>Q_2</DisplayName>
+    <IsRequired>true</IsRequired>
+    <QuestionContent>
+    <Text> ACQUIRED (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.): </Text>
+    </QuestionContent>
+    <AnswerSpecification>
+    <FreeTextAnswer>
+    </FreeTextAnswer>
+    </AnswerSpecification>
+</Question>
+
+<Question>
+    <QuestionIdentifier>q_3</QuestionIdentifier>
+    <DisplayName>Q_3</DisplayName>
+    <IsRequired>true</IsRequired>
+    <QuestionContent>
+    <Text> Headline: Haemonetics concludes successful tender for Global Med Technologies 
+
+Do you think that this headline refers to an acquisition or merger? </Text>
+    </QuestionContent>
+    <AnswerSpecification>
+    <SelectionAnswer>
+        <StyleSuggestion>radiobutton</StyleSuggestion>
+        <Selections>
+        <Selection>
+            <SelectionIdentifier>rg</SelectionIdentifier>
+            <Text>Acquisition</Text>
+        </Selection>
+        <Selection>
+            <SelectionIdentifier>by</SelectionIdentifier>
+            <Text>Merger</Text>
+        </Selection>
+        <Selection>
+            <SelectionIdentifier>other</SelectionIdentifier>
+            <Text>Neither / Not sure / Unclear</Text>
+        </Selection>
+        </Selections>
+    </SelectionAnswer>
+    </AnswerSpecification>
+</Question>
+
+<Question>
+    <QuestionIdentifier>q_4</QuestionIdentifier>
+    <DisplayName>Q_4</DisplayName>
+    <IsRequired>true</IsRequired>
+    <QuestionContent>
+    <Text> ACQUIRER (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.): </Text>
+    </QuestionContent>
+    <AnswerSpecification>
+    <FreeTextAnswer>
+    </FreeTextAnswer>
+    </AnswerSpecification>
+</Question>
+
+<Question>
+    <QuestionIdentifier>q_5</QuestionIdentifier>
+    <DisplayName>Q_5</DisplayName>
+    <IsRequired>true</IsRequired>
+    <QuestionContent>
+    <Text> ACQUIRED (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.): </Text>
+    </QuestionContent>
+    <AnswerSpecification>
+    <FreeTextAnswer>
+    </FreeTextAnswer>
+    </AnswerSpecification>
+</Question>
+
+<Question>
+    <QuestionIdentifier>q_6</QuestionIdentifier>
+    <DisplayName>Q_6</DisplayName>
+    <IsRequired>true</IsRequired>
+    <QuestionContent>
+    <Text> Headline: Filmakers Library Joins Forces with Alexander Street Press 
+
+Do you think that this headline refers to an acquisition or merger? </Text>
+    </QuestionContent>
+    <AnswerSpecification>
+    <SelectionAnswer>
+        <StyleSuggestion>radiobutton</StyleSuggestion>
+        <Selections>
+        <Selection>
+            <SelectionIdentifier>rg</SelectionIdentifier>
+            <Text>Acquisition</Text>
+        </Selection>
+        <Selection>
+            <SelectionIdentifier>by</SelectionIdentifier>
+            <Text>Merger</Text>
+        </Selection>
+        <Selection>
+            <SelectionIdentifier>other</SelectionIdentifier>
+            <Text>Neither / Not sure / Unclear</Text>
+        </Selection>
+        </Selections>
+    </SelectionAnswer>
+    </AnswerSpecification>
+</Question>
+
+<Question>
+    <QuestionIdentifier>q_7</QuestionIdentifier>
+    <DisplayName>Q_7</DisplayName>
+    <IsRequired>true</IsRequired>
+    <QuestionContent>
+    <Text> ACQUIRER (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.): </Text>
+    </QuestionContent>
+    <AnswerSpecification>
+    <FreeTextAnswer>
+    </FreeTextAnswer>
+    </AnswerSpecification>
+</Question>
+
+<Question>
+    <QuestionIdentifier>q_8</QuestionIdentifier>
+    <DisplayName>Q_8</DisplayName>
+    <IsRequired>true</IsRequired>
+    <QuestionContent>
+    <Text> ACQUIRED (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.): </Text>
+    </QuestionContent>
+    <AnswerSpecification>
+    <FreeTextAnswer>
+    </FreeTextAnswer>
+    </AnswerSpecification>
+</Question>
+
+<Question>
+    <QuestionIdentifier>q_9</QuestionIdentifier>
+    <DisplayName>Q_9</DisplayName>
+    <IsRequired>true</IsRequired>
+    <QuestionContent>
+    <Text> Headline: Nuance Closes Acquisition of BeVocal 
+
+Do you think that this headline refers to an acquisition or merger? </Text>
+    </QuestionContent>
+    <AnswerSpecification>
+    <SelectionAnswer>
+        <StyleSuggestion>radiobutton</StyleSuggestion>
+        <Selections>
+        <Selection>
+            <SelectionIdentifier>rg</SelectionIdentifier>
+            <Text>Acquisition</Text>
+        </Selection>
+        <Selection>
+            <SelectionIdentifier>by</SelectionIdentifier>
+            <Text>Merger</Text>
+        </Selection>
+        <Selection>
+            <SelectionIdentifier>other</SelectionIdentifier>
+            <Text>Neither / Not sure / Unclear</Text>
+        </Selection>
+        </Selections>
+    </SelectionAnswer>
+    </AnswerSpecification>
+</Question>
+
+<Question>
+    <QuestionIdentifier>q_10</QuestionIdentifier>
+    <DisplayName>Q_10</DisplayName>
+    <IsRequired>true</IsRequired>
+    <QuestionContent>
+    <Text> ACQUIRER (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.): </Text>
+    </QuestionContent>
+    <AnswerSpecification>
+    <FreeTextAnswer>
+    </FreeTextAnswer>
+    </AnswerSpecification>
+</Question>
+
+<Question>
+    <QuestionIdentifier>q_11</QuestionIdentifier>
+    <DisplayName>Q_11</DisplayName>
+    <IsRequired>true</IsRequired>
+    <QuestionContent>
+    <Text> ACQUIRED (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.): </Text>
+    </QuestionContent>
+    <AnswerSpecification>
+    <FreeTextAnswer>
+    </FreeTextAnswer>
+    </AnswerSpecification>
+</Question>
+
+<Question>
+    <QuestionIdentifier>q_12</QuestionIdentifier>
+    <DisplayName>Q_12</DisplayName>
+    <IsRequired>true</IsRequired>
+    <QuestionContent>
+    <Text> Headline: Kensey Nash buys Nerites for $20M 
+
+Do you think that this headline refers to an acquisition or merger? </Text>
+    </QuestionContent>
+    <AnswerSpecification>
+    <SelectionAnswer>
+        <StyleSuggestion>radiobutton</StyleSuggestion>
+        <Selections>
+        <Selection>
+            <SelectionIdentifier>rg</SelectionIdentifier>
+            <Text>Acquisition</Text>
+        </Selection>
+        <Selection>
+            <SelectionIdentifier>by</SelectionIdentifier>
+            <Text>Merger</Text>
+        </Selection>
+        <Selection>
+            <SelectionIdentifier>other</SelectionIdentifier>
+            <Text>Neither / Not sure / Unclear</Text>
+        </Selection>
+        </Selections>
+    </SelectionAnswer>
+    </AnswerSpecification>
+</Question>
+
+<Question>
+    <QuestionIdentifier>q_13</QuestionIdentifier>
+    <DisplayName>Q_13</DisplayName>
+    <IsRequired>true</IsRequired>
+    <QuestionContent>
+    <Text> ACQUIRER (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.): </Text>
+    </QuestionContent>
+    <AnswerSpecification>
+    <FreeTextAnswer>
+    </FreeTextAnswer>
+    </AnswerSpecification>
+</Question>
+
+<Question>
+    <QuestionIdentifier>q_14</QuestionIdentifier>
+    <DisplayName>Q_14</DisplayName>
+    <IsRequired>true</IsRequired>
+    <QuestionContent>
+    <Text> ACQUIRED (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.): </Text>
+    </QuestionContent>
+    <AnswerSpecification>
+    <FreeTextAnswer>
+    </FreeTextAnswer>
+    </AnswerSpecification>
+</Question>
+
+<Question>
+    <QuestionIdentifier>q_15</QuestionIdentifier>
+    <DisplayName>Q_15</DisplayName>
+    <IsRequired>true</IsRequired>
+    <QuestionContent>
+    <Text> Headline: LiveIntent Adds Jason Pressman to Board, Raises $8 million 
+
+Do you think that this headline refers to an acquisition or merger? </Text>
+    </QuestionContent>
+    <AnswerSpecification>
+    <SelectionAnswer>
+        <StyleSuggestion>radiobutton</StyleSuggestion>
+        <Selections>
+        <Selection>
+            <SelectionIdentifier>rg</SelectionIdentifier>
+            <Text>Acquisition</Text>
+        </Selection>
+        <Selection>
+            <SelectionIdentifier>by</SelectionIdentifier>
+            <Text>Merger</Text>
+        </Selection>
+        <Selection>
+            <SelectionIdentifier>other</SelectionIdentifier>
+            <Text>Neither / Not sure / Unclear</Text>
+        </Selection>
+        </Selections>
+    </SelectionAnswer>
+    </AnswerSpecification>
+</Question>
+
+<Question>
+    <QuestionIdentifier>q_16</QuestionIdentifier>
+    <DisplayName>Q_16</DisplayName>
+    <IsRequired>true</IsRequired>
+    <QuestionContent>
+    <Text> ACQUIRER (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.): </Text>
+    </QuestionContent>
+    <AnswerSpecification>
+    <FreeTextAnswer>
+    </FreeTextAnswer>
+    </AnswerSpecification>
+</Question>
+
+<Question>
+    <QuestionIdentifier>q_17</QuestionIdentifier>
+    <DisplayName>Q_17</DisplayName>
+    <IsRequired>true</IsRequired>
+    <QuestionContent>
+    <Text> ACQUIRED (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.): </Text>
+    </QuestionContent>
+    <AnswerSpecification>
+    <FreeTextAnswer>
+    </FreeTextAnswer>
+    </AnswerSpecification>
+</Question>
+
+<Question>
+    <QuestionIdentifier>q_18</QuestionIdentifier>
+    <DisplayName>Q_18</DisplayName>
+    <IsRequired>true</IsRequired>
+    <QuestionContent>
+    <Text> Headline: One year after the incident: was it all worth it? 
+
+Do you think that this headline refers to an acquisition or merger? </Text>
+    </QuestionContent>
+    <AnswerSpecification>
+    <SelectionAnswer>
+        <StyleSuggestion>radiobutton</StyleSuggestion>
+        <Selections>
+        <Selection>
+            <SelectionIdentifier>rg</SelectionIdentifier>
+            <Text>Acquisition</Text>
+        </Selection>
+        <Selection>
+            <SelectionIdentifier>by</SelectionIdentifier>
+            <Text>Merger</Text>
+        </Selection>
+        <Selection>
+            <SelectionIdentifier>other</SelectionIdentifier>
+            <Text>Neither / Not sure / Unclear</Text>
+        </Selection>
+        </Selections>
+    </SelectionAnswer>
+    </AnswerSpecification>
+</Question>
+
+<Question>
+    <QuestionIdentifier>q_19</QuestionIdentifier>
+    <DisplayName>Q_19</DisplayName>
+    <IsRequired>true</IsRequired>
+    <QuestionContent>
+    <Text> ACQUIRER (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.): </Text>
+    </QuestionContent>
+    <AnswerSpecification>
+    <FreeTextAnswer>
+    </FreeTextAnswer>
+    </AnswerSpecification>
+</Question>
+
+<Question>
+    <QuestionIdentifier>q_20</QuestionIdentifier>
+    <DisplayName>Q_20</DisplayName>
+    <IsRequired>true</IsRequired>
+    <QuestionContent>
+    <Text> ACQUIRED (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.): </Text>
+    </QuestionContent>
+    <AnswerSpecification>
+    <FreeTextAnswer>
+    </FreeTextAnswer>
+    </AnswerSpecification>
+</Question>
+
+<Question>
+    <QuestionIdentifier>q_21</QuestionIdentifier>
+    <DisplayName>Q_21</DisplayName>
+    <IsRequired>true</IsRequired>
+    <QuestionContent>
+    <Text> Headline: Follow Reuters      Facebook     Twitter     RSS     YouTube    Pictures Visitors run away from waves from a tidal bore as it surges past a barrier on the banks of Qiantang River, in Hangzhou Zhejiang province, August 25, 2013. REUTERS/Stringer Reuters P 
+
+Do you think that this headline refers to an acquisition or merger? </Text>
+    </QuestionContent>
+    <AnswerSpecification>
+    <SelectionAnswer>
+        <StyleSuggestion>radiobutton</StyleSuggestion>
+        <Selections>
+        <Selection>
+            <SelectionIdentifier>rg</SelectionIdentifier>
+            <Text>Acquisition</Text>
+        </Selection>
+        <Selection>
+            <SelectionIdentifier>by</SelectionIdentifier>
+            <Text>Merger</Text>
+        </Selection>
+        <Selection>
+            <SelectionIdentifier>other</SelectionIdentifier>
+            <Text>Neither / Not sure / Unclear</Text>
+        </Selection>
+        </Selections>
+    </SelectionAnswer>
+    </AnswerSpecification>
+</Question>
+
+<Question>
+    <QuestionIdentifier>q_22</QuestionIdentifier>
+    <DisplayName>Q_22</DisplayName>
+    <IsRequired>true</IsRequired>
+    <QuestionContent>
+    <Text> ACQUIRER (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.): </Text>
+    </QuestionContent>
+    <AnswerSpecification>
+    <FreeTextAnswer>
+    </FreeTextAnswer>
+    </AnswerSpecification>
+</Question>
+
+<Question>
+    <QuestionIdentifier>q_23</QuestionIdentifier>
+    <DisplayName>Q_23</DisplayName>
+    <IsRequired>true</IsRequired>
+    <QuestionContent>
+    <Text> ACQUIRED (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.): </Text>
+    </QuestionContent>
+    <AnswerSpecification>
+    <FreeTextAnswer>
+    </FreeTextAnswer>
+    </AnswerSpecification>
+</Question>
+
+<Question>
+    <QuestionIdentifier>q_24</QuestionIdentifier>
+    <DisplayName>Q_24</DisplayName>
+    <IsRequired>true</IsRequired>
+    <QuestionContent>
+    <Text> Headline: myOpenID Affiliate Blog Post 
+
+Do you think that this headline refers to an acquisition or merger? </Text>
+    </QuestionContent>
+    <AnswerSpecification>
+    <SelectionAnswer>
+        <StyleSuggestion>radiobutton</StyleSuggestion>
+        <Selections>
+        <Selection>
+            <SelectionIdentifier>rg</SelectionIdentifier>
+            <Text>Acquisition</Text>
+        </Selection>
+        <Selection>
+            <SelectionIdentifier>by</SelectionIdentifier>
+            <Text>Merger</Text>
+        </Selection>
+        <Selection>
+            <SelectionIdentifier>other</SelectionIdentifier>
+            <Text>Neither / Not sure / Unclear</Text>
+        </Selection>
+        </Selections>
+    </SelectionAnswer>
+    </AnswerSpecification>
+</Question>
+
+<Question>
+    <QuestionIdentifier>q_25</QuestionIdentifier>
+    <DisplayName>Q_25</DisplayName>
+    <IsRequired>true</IsRequired>
+    <QuestionContent>
+    <Text> ACQUIRER (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.): </Text>
+    </QuestionContent>
+    <AnswerSpecification>
+    <FreeTextAnswer>
+    </FreeTextAnswer>
+    </AnswerSpecification>
+</Question>
+
+<Question>
+    <QuestionIdentifier>q_26</QuestionIdentifier>
+    <DisplayName>Q_26</DisplayName>
+    <IsRequired>true</IsRequired>
+    <QuestionContent>
+    <Text> ACQUIRED (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.): </Text>
+    </QuestionContent>
+    <AnswerSpecification>
+    <FreeTextAnswer>
+    </FreeTextAnswer>
+    </AnswerSpecification>
+</Question>
+
+<Question>
+    <QuestionIdentifier>q_27</QuestionIdentifier>
+    <DisplayName>Q_27</DisplayName>
+    <IsRequired>true</IsRequired>
+    <QuestionContent>
+    <Text> Headline: Mid Penn Bancorp receives approval for merger with Riverview 
+
+Do you think that this headline refers to an acquisition or merger? </Text>
+    </QuestionContent>
+    <AnswerSpecification>
+    <SelectionAnswer>
+        <StyleSuggestion>radiobutton</StyleSuggestion>
+        <Selections>
+        <Selection>
+            <SelectionIdentifier>rg</SelectionIdentifier>
+            <Text>Acquisition</Text>
+        </Selection>
+        <Selection>
+            <SelectionIdentifier>by</SelectionIdentifier>
+            <Text>Merger</Text>
+        </Selection>
+        <Selection>
+            <SelectionIdentifier>other</SelectionIdentifier>
+            <Text>Neither / Not sure / Unclear</Text>
+        </Selection>
+        </Selections>
+    </SelectionAnswer>
+    </AnswerSpecification>
+</Question>
+
+<Question>
+    <QuestionIdentifier>q_28</QuestionIdentifier>
+    <DisplayName>Q_28</DisplayName>
+    <IsRequired>true</IsRequired>
+    <QuestionContent>
+    <Text> ACQUIRER (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.): </Text>
+    </QuestionContent>
+    <AnswerSpecification>
+    <FreeTextAnswer>
+    </FreeTextAnswer>
+    </AnswerSpecification>
+</Question>
+
+<Question>
+    <QuestionIdentifier>q_29</QuestionIdentifier>
+    <DisplayName>Q_29</DisplayName>
+    <IsRequired>true</IsRequired>
+    <QuestionContent>
+    <Text> ACQUIRED (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.): </Text>
+    </QuestionContent>
+    <AnswerSpecification>
+    <FreeTextAnswer>
+    </FreeTextAnswer>
+    </AnswerSpecification>
+</Question>
+
+</QuestionForm>
