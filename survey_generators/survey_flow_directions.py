@@ -6,6 +6,16 @@ An <b>acquisition</b> is when one company buys another company.
 A <b>merger</b> is when two companies join together as equals.
 """
 
+pg1_alt = """
+<b>Congratulations!</b> You were identified as a high-accuracy worker and so have the opportunity for additional work completing a follow-up survey on our research project. If you continue to complete surveys with high accuracy, you will receive opportunities to complete additional surveys.
+<br><br>
+To remind you, we are researchers working on a not for profit project to identify <b>company acquisitions</b> and <b>mergers</b> from a large number of business headlines. 
+<br><br>
+An <b>acquisition</b> is when one company buys another company. 
+<br><br>
+A <b>merger</b> is when two companies join together as equals.
+"""
+
 pg2 = """
 <b>Your role is to read each headline presented and answer three questions:</b>
 <br><br>

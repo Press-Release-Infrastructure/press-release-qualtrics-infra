@@ -5,7 +5,7 @@ import sys
 import numpy as np
 import copy
 import configparser
-from survey_flow_directions import pg1, pg2, pg3, pg4, pg5, pg6, pg7, pg8, pg9, pg10, pg11, pg12, pg13, pg14
+from survey_flow_directions import pg1, pg1_alt, pg2, pg3, pg4, pg5, pg6, pg7, pg8, pg9, pg10, pg11, pg12, pg13, pg14
 
 seed = 0
 np.random.seed(seed)
@@ -23,6 +23,7 @@ overlap = float(config["settings"]["overlap"]) # percent of headlines assigned t
 training_length = int(config["settings"]["training_length"]) # number of training titles
 block_size = int(config["settings"]["block_size"]) # number of questions in a block (between attention-check)
 attention_check_length = int(config["settings"]["attention_check_length"]) # number of questions in an attention-check block
+follow_up_flag = bool(config["settings"]["follow_up_flag"])
 
 training_thresh_mc = float(config["settings"]["training_thresh_mc"])
 training_thresh_te = float(config["settings"]["training_thresh_te"])
@@ -103,21 +104,14 @@ for k, v in student_assignments.items():
 		else:
 			headline_dict[h] = 1
 
-print(len(list(headline_dict.keys())))
-print(headline_dict)
-
 for v in headline_dict.values():
 	assert(v == 2)
-
-print(student_assignments)
 
 student_assignments_json = {}
 titles_to_classify = []
 for student, assignments in student_assignments.items():
 	student_assignments_json[str(student)] = [titles[a] for a in assignments]
-	titles_to_classify.append(student_assignments_json[str(student)])
-
-titles_to_classify = list(set(np.array(titles_to_classify).flatten()))
+	titles_to_classify.extend(student_assignments_json[str(student)])
 
 with open(assignments_name, 'w') as f:
 	json.dump(student_assignments_json, f, ensure_ascii = False, indent = 2)
@@ -428,6 +422,9 @@ survey_elements = survey_info["SurveyElements"]
 
 # add directions
 directions = [pg1, pg2, pg3, pg4, pg5, pg6, pg7, pg8, pg9, pg10, pg11, pg12, pg13, pg14]
+if follow_up_flag:
+	directions[0] = pg1_alt 
+
 d_format_elements = [
 	['Title', 'Company 1', 'Company 2'],
 	['Title', 'Company 2', 'Company 1', 'Company 1', 'Company 2'],
@@ -1062,7 +1059,7 @@ eos_block_id -= 1
 num_blocks = len(attention_check_headlines)
 
 for i in range(num_blocks):
-	print('block', i)
+	# print('block', i)
 	# in every iteration
 	# pick attention check number of attention check headlines
 	curr_at_check = attention_check_headlines[i]
@@ -1071,7 +1068,7 @@ for i in range(num_blocks):
 	regular_headline_idxes = {}
 	regular_headline_to_student = {}
 	curr_headlines = set(curr_at_check)
-	print('iter', student_assignments, '\n')
+	# print('iter', student_assignments, '\n')
 	for j in range(num_students):
 		if len(student_assignments[j]) >= block_size - len(curr_at_check):
 			regular_headline_idxes[j] = np.random.choice(student_assignments[j], size = block_size - len(curr_at_check), replace = False)
@@ -1093,14 +1090,14 @@ for i in range(num_blocks):
 			else:
 				regular_headline_to_student[r] = [j]
 
-		print(j, 'regular headline to student', regular_headline_to_student, '\n')
+		# print(j, 'regular headline to student', regular_headline_to_student, '\n')
 
 		if j == 0:
 			total_questions_done += block_size
 	
 	# shuffle attention check and regular headlines in a block
 	np.random.shuffle(np.array(list(curr_headlines)))
-	print(curr_headlines)
+	# print(curr_headlines)
 
 	for c in curr_headlines:
 		if c in regular_headline_to_student:
