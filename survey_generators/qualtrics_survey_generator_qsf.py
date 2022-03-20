@@ -554,53 +554,53 @@ for d in directions:
 		"QuestionID": qid1
 		})
 
-	if curr == 0:
-		# add prolific id question
-		prolific_q_text = "What is your Prolific ID? Please note that this response should auto-fill with the correct ID."
+	# if curr == 0:
+	# 	# add prolific id question
+	# 	prolific_q_text = "What is your Prolific ID? Please note that this response should auto-fill with the correct ID."
 
-		prolific_q = {
-				"SurveyID": "SV_eLnpGNWb3hM31cy",
-				"Element": "SQ",
-				"PrimaryAttribute": "QID{}".format(prolific_qid),
-				"SecondaryAttribute": prolific_q_text,
-				"TertiaryAttribute": None,
-				"Payload": {
-					"QuestionText": prolific_q_text,
-					"DefaultChoices": {
-						"TEXT": {
-							"Text": "${e://Field/PROLIFIC_PID}"
-						}
-					},
-					"QuestionID": "QID{}".format(prolific_qid),
-					"QuestionType": "TE",
-					"Selector": "SL",
-					"Configuration": {
-						"QuestionDescriptionOption": "UseText"
-					},
-					"QuestionDescription": prolific_q_text,
-					"Validation": {
-						"Settings": {
-							"ForceResponse": "OFF",
-							"Type": "None"
-						}
-					},
-					"GradingData": [],
-					"Language": [],
-					"NextChoiceId": 4,
-        			"NextAnswerId": 1,
-					"SearchSource": {
-						"AllowFreeResponse": "false"
-					},
-					"DataExportTag": "QID{}".format(prolific_qid),
-				}
-		    }
+	# 	prolific_q = {
+	# 			"SurveyID": "SV_eLnpGNWb3hM31cy",
+	# 			"Element": "SQ",
+	# 			"PrimaryAttribute": "QID{}".format(prolific_qid),
+	# 			"SecondaryAttribute": prolific_q_text,
+	# 			"TertiaryAttribute": None,
+	# 			"Payload": {
+	# 				"QuestionText": prolific_q_text,
+	# 				"DefaultChoices": {
+	# 					"TEXT": {
+	# 						"Text": "${e://Field/PROLIFIC_PID}"
+	# 					}
+	# 				},
+	# 				"QuestionID": "QID{}".format(prolific_qid),
+	# 				"QuestionType": "TE",
+	# 				"Selector": "SL",
+	# 				"Configuration": {
+	# 					"QuestionDescriptionOption": "UseText"
+	# 				},
+	# 				"QuestionDescription": prolific_q_text,
+	# 				"Validation": {
+	# 					"Settings": {
+	# 						"ForceResponse": "OFF",
+	# 						"Type": "None"
+	# 					}
+	# 				},
+	# 				"GradingData": [],
+	# 				"Language": [],
+	# 				"NextChoiceId": 4,
+    #     			"NextAnswerId": 1,
+	# 				"SearchSource": {
+	# 					"AllowFreeResponse": "false"
+	# 				},
+	# 				"DataExportTag": "QID{}".format(prolific_qid),
+	# 			}
+	# 	    }
 
-		survey_elements.append(prolific_q)
+	# 	survey_elements.append(prolific_q)
 
-		block_elements.append({
-			"Type": "Question",
-			"QuestionID": "QID{}".format(prolific_qid)
-		})
+	# 	block_elements.append({
+	# 		"Type": "Question",
+	# 		"QuestionID": "QID{}".format(prolific_qid)
+	# 	})
 
 	if 4 <= curr <= 10:
 		block_elements.append({
