@@ -1,11 +1,11 @@
 [settings]
 all_titles_filename = ../input_headlines/headlines.csv
 
-num_headlines = 200
+num_headlines = 20
 num_students = 4
 overlap = 0.5
 training_length = 0
-attention_check_length = 2
+attention_check_length = 0
 
 block_size = 10
 
@@ -14,12 +14,14 @@ training_thresh_te = 0.5
 attention_thresh_mc = 0.7
 attention_thresh_te = 0.5
 
-follow_up_flag = True
+follow_up_flag = 1
 
 training_flow_headlines_filename = ../survey_data/selected_training.csv
 training_headlines_filename = ../survey_data/selected_training_test.csv
 att_headlines_filename = ../survey_data/selected_att.csv
 
-survey_name = MTurk Trial Deployment #3
-assignments_name = ../respondent_assignments/mturk_trial_deployment_3_assignments.json
-qsf_name = ../qsf_output/mturk_trial/mturk_trial_deployment_3.qsf
+survey_name = Prolific Trial (Follow-Up)
+assignments_name = ../respondent_assignments/prolific_trial_followup_assignments.json
+qsf_name = ../qsf_output/prolific/prolific_trial_followup.qsf
+
+eos_redirect_url = https://www.prolific.co

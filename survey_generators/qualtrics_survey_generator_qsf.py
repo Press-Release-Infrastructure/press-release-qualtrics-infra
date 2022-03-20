@@ -23,7 +23,8 @@ overlap = float(config["settings"]["overlap"]) # percent of headlines assigned t
 training_length = int(config["settings"]["training_length"]) # number of training titles
 block_size = int(config["settings"]["block_size"]) # number of questions in a block (between attention-check)
 attention_check_length = int(config["settings"]["attention_check_length"]) # number of questions in an attention-check block
-follow_up_flag = bool(config["settings"]["follow_up_flag"])
+follow_up_flag = bool(int(config["settings"]["follow_up_flag"]))
+print(follow_up_flag)
 
 training_thresh_mc = float(config["settings"]["training_thresh_mc"])
 training_thresh_te = float(config["settings"]["training_thresh_te"])
@@ -39,6 +40,8 @@ survey_name = config["settings"]["survey_name"]
 assignments_name = config["settings"]["assignments_name"]
 qsf_name = config["settings"]["qsf_name"]
 
+eos_redirect_url = config["settings"]["eos_redirect_url"]
+
 training_headlines_df = pd.read_csv(config["settings"]["training_headlines_filename"], encoding = 'utf8').sample(frac = 1, random_state = seed)
 training_flow_headlines_df = pd.read_csv(config["settings"]["training_flow_headlines_filename"], encoding = 'utf8')
 training_headlines_df = training_headlines_df.where(pd.notnull(training_headlines_df), "")
@@ -49,7 +52,6 @@ titles = np.array(all_titles)
 
 # determine indices for headlines assigned to each student
 titles_per_student = math.ceil(num_headlines / ((1 - overlap) * num_students))
-print(titles_per_student)
 # titles_per_student = math.ceil(num_headlines * 2 / num_students)
 uniques_per_student = math.floor(num_headlines / num_students)
 
@@ -419,6 +421,23 @@ survey_info["SurveyElements"][0]["Payload"].append(
 )
 
 survey_elements = survey_info["SurveyElements"]
+flow_elements = survey_elements[1]["Payload"]["Flow"]
+
+prolific_qid = -10000000
+flow_elements.append({
+	"Type": "EmbeddedData",
+	"FlowID": "FL_{}".format(prolific_qid),
+	"EmbeddedData": [
+		{
+		"Description": "PROLIFIC_PID",
+		"Type": "Recipient",
+		"Field": "PROLIFIC_PID",
+		"VariableType": "String",
+		"DataVisibility": [],
+		"AnalyzeText": False
+		}
+	]
+})
 
 # add directions
 directions = [pg1, pg2, pg3, pg4, pg5, pg6, pg7, pg8, pg9, pg10, pg11, pg12, pg13, pg14]
@@ -533,6 +552,54 @@ for d in directions:
 		"QuestionID": qid1
 		})
 
+	if curr == 0:
+		# add prolific id question
+		prolific_q_text = "What is your Prolific ID? Please note that this response should auto-fill with the correct ID."
+
+		prolific_q = {
+				"SurveyID": "SV_eLnpGNWb3hM31cy",
+				"Element": "SQ",
+				"PrimaryAttribute": "QID{}".format(prolific_qid),
+				"SecondaryAttribute": prolific_q_text,
+				"TertiaryAttribute": None,
+				"Payload": {
+					"QuestionText": prolific_q_text,
+					"DefaultChoices": {
+						"TEXT": {
+							"Text": "${e://Field/PROLIFIC_PID}"
+						}
+					},
+					"QuestionID": "QID{}".format(prolific_qid),
+					"QuestionType": "TE",
+					"Selector": "SL",
+					"Configuration": {
+						"QuestionDescriptionOption": "UseText"
+					},
+					"QuestionDescription": prolific_q_text,
+					"Validation": {
+						"Settings": {
+							"ForceResponse": "OFF",
+							"Type": "None"
+						}
+					},
+					"GradingData": [],
+					"Language": [],
+					"NextChoiceId": 4,
+        			"NextAnswerId": 1,
+					"SearchSource": {
+						"AllowFreeResponse": "false"
+					},
+					"DataExportTag": "QID{}".format(prolific_qid),
+				}
+		    }
+
+		survey_elements.append(prolific_q)
+
+		block_elements.append({
+			"Type": "Question",
+			"QuestionID": "QID{}".format(prolific_qid)
+		})
+
 	if 4 <= curr <= 10:
 		block_elements.append({
 			"Type": "Question",
@@ -615,13 +682,14 @@ def create_end_of_survey_logic(fl_id, eos_block_id, segment = 0):
 	}
 	eos_payload_blocks.append(eos_payload)
 
-	msg = "Your score {} wasn't high enough to continue with the survey."
-	if segment == 0:
-		msg = msg.format("on the training questions")
-	elif segment == 1:
-		msg = msg.format("in the current block")
-	else:
-		msg = "You have completed the survey."
+	# msg = "Your score {} wasn't high enough to continue with the survey."
+	# if segment == 0:
+	# 	msg = msg.format("on the training questions")
+	# elif segment == 1:
+	# 	msg = msg.format("in the current block")
+	# else:
+	# 	msg = "You have completed the survey."
+	msg = "You have completed the survey."
 
 	elem = {
 		"SurveyID": "SV_eLnpGNWb3hM31cy",
@@ -955,76 +1023,76 @@ def create_question(curr_title, curr, disp_settings = [], train_ans_lst = [], tr
 		"Type": "Page Break"
 	})
 
-# start by asking respondent to enter MTurk worker id, add pagebreak
-mturk_worker_id = -10000
-qid = "QID{}".format(mturk_worker_id)
+# # start by asking respondent to enter MTurk worker id, add pagebreak
+# mturk_worker_id = -10000
+# qid = "QID{}".format(mturk_worker_id)
 
-survey_info["SurveyElements"][0]["Payload"].append({
-	"Type": "Standard",
-	"SubType": "",
-	"Description": "Block {}".format(mturk_worker_id),
-	"ID": "BL_{}".format(mturk_worker_id),
-	"BlockElements": [],
-	"Options": {
-		"BlockLocking": "false",
-		"RandomizeQuestions": "false",
-		"BlockVisibility": "Collapsed",
-	}
-})
-block_elements = survey_info["SurveyElements"][0]["Payload"][curr + 1]["BlockElements"]
+# survey_info["SurveyElements"][0]["Payload"].append({
+# 	"Type": "Standard",
+# 	"SubType": "",
+# 	"Description": "Block {}".format(mturk_worker_id),
+# 	"ID": "BL_{}".format(mturk_worker_id),
+# 	"BlockElements": [],
+# 	"Options": {
+# 		"BlockLocking": "false",
+# 		"RandomizeQuestions": "false",
+# 		"BlockVisibility": "Collapsed",
+# 	}
+# })
+# block_elements = survey_info["SurveyElements"][0]["Payload"][curr + 1]["BlockElements"]
 
-# append to flow payload
-survey_info["SurveyElements"][1]["Payload"]["Flow"].append(
-	{
-		"ID": "BL_{}".format(mturk_worker_id),
-		"Type": "Block",
-		"FlowID": "FL_{}".format(mturk_worker_id)
-	}
-)
+# # append to flow payload
+# survey_info["SurveyElements"][1]["Payload"]["Flow"].append(
+# 	{
+# 		"ID": "BL_{}".format(mturk_worker_id),
+# 		"Type": "Block",
+# 		"FlowID": "FL_{}".format(mturk_worker_id)
+# 	}
+# )
 
-block_elements.append({
-	"Type": "Question",
-	"QuestionID": qid,
-})
+# block_elements.append({
+# 	"Type": "Question",
+# 	"QuestionID": qid,
+# })
 
-elem = {
-	"SurveyID": "SV_eLnpGNWb3hM31cy",
-	"Element": "SQ",
-	"PrimaryAttribute": qid,
-	"SecondaryAttribute": "Enter your MTurk worker ID:",
-	"TertiaryAttribute": None,
-	"Payload": {
-		"QuestionText": "Enter your MTurk worker ID:\n\n",
-		"DefaultChoices": False,
-		"QuestionID": qid,
-		"QuestionType": "TE",
-		"Selector": "SL",
-		"Configuration": {
-			"QuestionDescriptionOption": "UseText"
-		},
-		"QuestionDescription": "Enter your MTurk worker ID:",
-		"Validation": {
-			"Settings": {
-				"ForceResponse": "OFF",
-				"Type": "None"
-			}
-		},
-		"GradingData": [],
-		"Language": [],
-		"NextChoiceId": 4,
-		"NextAnswerId": 1,
-		"SearchSource": {
-			"AllowFreeResponse": "false"
-		},
-		"DataExportTag": qid,
-	}
-}
+# elem = {
+# 	"SurveyID": "SV_eLnpGNWb3hM31cy",
+# 	"Element": "SQ",
+# 	"PrimaryAttribute": qid,
+# 	"SecondaryAttribute": "Enter your MTurk worker ID:",
+# 	"TertiaryAttribute": None,
+# 	"Payload": {
+# 		"QuestionText": "Enter your MTurk worker ID:\n\n",
+# 		"DefaultChoices": False,
+# 		"QuestionID": qid,
+# 		"QuestionType": "TE",
+# 		"Selector": "SL",
+# 		"Configuration": {
+# 			"QuestionDescriptionOption": "UseText"
+# 		},
+# 		"QuestionDescription": "Enter your MTurk worker ID:",
+# 		"Validation": {
+# 			"Settings": {
+# 				"ForceResponse": "OFF",
+# 				"Type": "None"
+# 			}
+# 		},
+# 		"GradingData": [],
+# 		"Language": [],
+# 		"NextChoiceId": 4,
+# 		"NextAnswerId": 1,
+# 		"SearchSource": {
+# 			"AllowFreeResponse": "false"
+# 		},
+# 		"DataExportTag": qid,
+# 	}
+# }
 
-survey_elements.append(elem)
-block_elements.append({
-	"Type": "Page Break"
-})
-curr += 1
+# survey_elements.append(elem)
+# block_elements.append({
+# 	"Type": "Page Break"
+# })
+# curr += 1
 
 curr_offset = curr
 total_questions_done = 0
@@ -1036,25 +1104,24 @@ for t in list(training_title_to_student.keys()):
 
 # set score embedded data
 set_score_id = -200
-flow_elements = survey_elements[1]["Payload"]["Flow"]
 set_score_copy = copy.deepcopy(set_score)
 set_score_copy["FlowID"] = "FL_{}".format(set_score_id)
 flow_elements.append(set_score_copy)
 set_score_id -= 1
 
-# add branch logic to kick respondent out of survey after training q's
+# # add branch logic to kick respondent out of survey after training q's
 eos_block_id = -1000
-training_thresh_mc_num = math.ceil(training_mc_weight * training_thresh_mc * training_length)
-training_thresh_te_num = math.ceil(training_te_weight * training_thresh_te * 2 * training_length)
-attention_thresh_mc_num = math.ceil(attention_mc_weight * attention_thresh_mc * attention_check_length)
-attention_thresh_te_num = math.ceil(attention_te_weight * attention_thresh_te * 2 * attention_check_length)
+# training_thresh_mc_num = math.ceil(training_mc_weight * training_thresh_mc * training_length)
+# training_thresh_te_num = math.ceil(training_te_weight * training_thresh_te * 2 * training_length)
+# attention_thresh_mc_num = math.ceil(attention_mc_weight * attention_thresh_mc * attention_check_length)
+# attention_thresh_te_num = math.ceil(attention_te_weight * attention_thresh_te * 2 * attention_check_length)
 fl_id = -1
-flow_elements.append(create_branch_logic(branch_logic_template, fl_id, eos_block_id, training_thresh_mc_num, training_thresh_te_num, total_questions_done, segment = 0))
-end_survey_display_flow_id -= 1
-end_survey_flow_id -= 1
-set_end_id_flow_id -= 1
-fl_id -= curr_offset
-eos_block_id -= 1
+# flow_elements.append(create_branch_logic(branch_logic_template, fl_id, eos_block_id, training_thresh_mc_num, training_thresh_te_num, total_questions_done, segment = 0))
+# end_survey_display_flow_id -= 1
+# end_survey_flow_id -= 1
+# set_end_id_flow_id -= 1
+# fl_id -= curr_offset
+# eos_block_id -= 1
 
 num_blocks = len(attention_check_headlines)
 
@@ -1113,20 +1180,19 @@ for i in range(num_blocks):
 	flow_elements.append(set_score_copy)
 	set_score_id -= 1
 
-	curr_attention_thresh_mc_num = training_thresh_mc_num + attention_thresh_mc_num * (i + 1) #sum(calc_attention_thresh[:i + 1])
-	curr_attention_thresh_te_num = training_thresh_te_num + attention_thresh_te_num * (i + 1)
-	flow_elements.append(create_branch_logic(branch_logic_template, fl_id, eos_block_id, curr_attention_thresh_mc_num, curr_attention_thresh_te_num, total_questions_done, segment = 1))
-	end_survey_display_flow_id -= 1
-	end_survey_flow_id -= 1
-	set_end_id_flow_id -= 1
-	eos_block_id -= 1
-	fl_id -= 2
+	# curr_attention_thresh_mc_num = training_thresh_mc_num + attention_thresh_mc_num * (i + 1) #sum(calc_attention_thresh[:i + 1])
+	# curr_attention_thresh_te_num = training_thresh_te_num + attention_thresh_te_num * (i + 1)
+	# flow_elements.append(create_branch_logic(branch_logic_template, fl_id, eos_block_id, curr_attention_thresh_mc_num, curr_attention_thresh_te_num, total_questions_done, segment = 1))
+	# end_survey_display_flow_id -= 1
+	# end_survey_flow_id -= 1
+	# set_end_id_flow_id -= 1
+	# eos_block_id -= 1
+	# fl_id -= 2
 
 # create the rest of the questions for the remaining regular headlines
 remaining_headlines = []
 for student, remaining in student_assignments.items():
 	remaining_headlines.extend(remaining)
-	print(student, remaining)
 remaining_headlines = list(set(remaining_headlines))
 	
 for r in remaining_headlines:
@@ -1145,6 +1211,17 @@ curr_end_survey_display = create_end_of_survey_logic(fl_id, eos_block_id, segmen
 end_survey_display_flow_id -= 1
 end_survey_flow_id -= 1
 flow_elements.append(curr_end_survey_display)
+
+flow_elements.append({
+	"Type": "EndSurvey",
+	"FlowID": "FL_{}".format(end_survey_flow_id),
+	"EndingType": "Advanced",
+	"Options": {
+		"Advanced": "true",
+		"SurveyTermination": "Redirect",
+		"EOSRedirectURL": "{}".format(eos_redirect_url)
+	}
+})
 
 for eos_block in eos_payload_blocks:
 	survey_info["SurveyElements"][0]["Payload"].append(eos_block)
