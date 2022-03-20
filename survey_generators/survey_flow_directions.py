@@ -4,6 +4,8 @@ We are working on a non-profit project for research purposes to identify <b>comp
 An <b>acquisition</b> is when one company buys another company. 
 <br><br>
 A <b>merger</b> is when two companies join together as equals.
+<br><br>
+<b>If you are identified as a high-accuracy worker in this survey, you will have the opportunity to complete additional, paid follow-up surveys.</b>
 """
 
 pg1_alt = """
