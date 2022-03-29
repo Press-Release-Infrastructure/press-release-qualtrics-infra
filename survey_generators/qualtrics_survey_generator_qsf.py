@@ -11,6 +11,9 @@ seed = 0
 np.random.seed(seed)
 rate = 120 # expected rate of problem solving per hour
 
+survey_id = "SV_eLnpGNWb3hM31cy"
+highlight_mode = False
+
 # survey settings
 config = configparser.ConfigParser()
 config.read("qualtrics_survey_controls.txt")
@@ -24,12 +27,16 @@ training_length = int(config["settings"]["training_length"]) # number of trainin
 block_size = int(config["settings"]["block_size"]) # number of questions in a block (between attention-check)
 attention_check_length = int(config["settings"]["attention_check_length"]) # number of questions in an attention-check block
 follow_up_flag = bool(int(config["settings"]["follow_up_flag"]))
-# print(follow_up_flag)
 
 training_thresh_mc = float(config["settings"]["training_thresh_mc"])
 training_thresh_te = float(config["settings"]["training_thresh_te"])
 attention_thresh_mc = float(config["settings"]["attention_thresh_mc"])
 attention_thresh_te = float(config["settings"]["attention_thresh_te"])
+
+# set up question description file: qid | headline | classification (0) / acquirer (1) / acquired (2)
+real_qid_lst = []
+real_headline_lst = []
+real_qtype_lst = []
 
 training_mc_weight = training_thresh_mc / (training_thresh_mc + 2 * training_thresh_te)
 training_te_weight = training_thresh_te / (training_thresh_mc + 2 * training_thresh_te)
@@ -39,6 +46,7 @@ attention_te_weight = attention_thresh_te / (training_thresh_mc + 2 * training_t
 survey_name = config["settings"]["survey_name"]
 assignments_name = config["settings"]["assignments_name"]
 qsf_name = config["settings"]["qsf_name"]
+q_desc_name = config["settings"]["q_desc_name"]
 
 eos_redirect_url = config["settings"]["eos_redirect_url"]
 
@@ -52,7 +60,6 @@ titles = np.array(all_titles)
 
 # determine indices for headlines assigned to each student
 titles_per_student = math.ceil(num_headlines / ((1 - overlap) * num_students))
-# titles_per_student = math.ceil(num_headlines * 2 / num_students)
 uniques_per_student = math.floor(num_headlines / num_students)
 
 att_headlines_df = pd.read_csv(config["settings"]["att_headlines_filename"], encoding = 'utf8').sample(frac = 1, random_state = seed)
@@ -190,7 +197,7 @@ set_end_id = {
 }
 
 survey_info["SurveyEntry"] = {
-	"SurveyID": "SV_eLnpGNWb3hM31cy",
+	"SurveyID": "{}".format(survey_id),
 	"SurveyName": survey_name,
 	"SurveyDescription": None,
 	"SurveyOwnerID": "UR_3WUHDMGK0A1YPvo",
@@ -211,7 +218,7 @@ survey_info["SurveyEntry"] = {
 
 survey_info["SurveyElements"] = [
 	{
-		"SurveyID": "SV_eLnpGNWb3hM31cy",
+		"SurveyID": "{}".format(survey_id),
 		"Element": "BL",
 		"PrimaryAttribute": "Survey Blocks",
 		"SecondaryAttribute": None,
@@ -219,7 +226,7 @@ survey_info["SurveyElements"] = [
 		"Payload": [],
 	},
 	{
-      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "SurveyID": "{}".format(survey_id),
       "Element": "FL",
       "PrimaryAttribute": "Survey Flow",
       "SecondaryAttribute": None,
@@ -250,7 +257,7 @@ survey_info["SurveyElements"] = [
       }
     },
     {
-      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "SurveyID": "{}".format(survey_id),
       "Element": "SO",
       "PrimaryAttribute": "Survey Options",
       "SecondaryAttribute": None,
@@ -293,7 +300,7 @@ survey_info["SurveyElements"] = [
 	  }
 	},
 	{
-      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "SurveyID": "{}".format(survey_id),
       "Element": "SCO",
       "PrimaryAttribute": "Scoring",
       "SecondaryAttribute": None,
@@ -315,7 +322,7 @@ survey_info["SurveyElements"] = [
       }
     },
     {
-      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "SurveyID": "{}".format(survey_id),
       "Element": "PROJ",
       "PrimaryAttribute": "CORE",
       "SecondaryAttribute": None,
@@ -326,7 +333,7 @@ survey_info["SurveyElements"] = [
       }
     },
     {
-      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "SurveyID": "{}".format(survey_id),
       "Element": "STAT",
       "PrimaryAttribute": "Survey Statistics",
       "SecondaryAttribute": None,
@@ -337,7 +344,7 @@ survey_info["SurveyElements"] = [
       }
     },
     {
-      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "SurveyID": "{}".format(survey_id),
       "Element": "QC",
       "PrimaryAttribute": "Survey Question Count",
       "SecondaryAttribute": "3",
@@ -345,7 +352,7 @@ survey_info["SurveyElements"] = [
       "Payload": None
     },
 	{
-      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "SurveyID": "{}".format(survey_id),
       "Element": "QO",
       "PrimaryAttribute": "QO_wsLz1sdn4gxRJxy",
       "SecondaryAttribute": "Number of respondents",
@@ -394,7 +401,7 @@ survey_info["SurveyElements"] = [
       }
     },
 	{
-      "SurveyID": "SV_eLnpGNWb3hM31cy",
+      "SurveyID": "{}".format(survey_id),
       "Element": "QG",
       "PrimaryAttribute": "QG_M8GH3g6zuPBjQgw",
       "SecondaryAttribute": "Default Quota Group",
@@ -471,7 +478,7 @@ for d in directions:
 	if 4 <= curr <= 10:
 		d = "<b style = 'color: #6082B6;'>TRAINING IN PROGRESS</b><br><br><div style = 'font-family: Monaco;'>" + d + "</div>"
 	survey_elements.append({
-		"SurveyID": "SV_eLnpGNWb3hM31cy",
+		"SurveyID": "{}".format(survey_id),
 		"Element": "SQ",
 		"PrimaryAttribute": qid1,
 		"SecondaryAttribute": d,
@@ -494,7 +501,7 @@ for d in directions:
 
 	if 4 <= curr <= 10:
 		survey_elements.append({
-			"SurveyID": "SV_eLnpGNWb3hM31cy",
+			"SurveyID": "{}".format(survey_id),
 			"Element": "SQ",
 			"PrimaryAttribute": qid2,
 			"SecondaryAttribute": " ",
@@ -554,54 +561,6 @@ for d in directions:
 		"QuestionID": qid1
 		})
 
-	# if curr == 0:
-	# 	# add prolific id question
-	# 	prolific_q_text = "What is your Prolific ID? Please note that this response should auto-fill with the correct ID."
-
-	# 	prolific_q = {
-	# 			"SurveyID": "SV_eLnpGNWb3hM31cy",
-	# 			"Element": "SQ",
-	# 			"PrimaryAttribute": "QID{}".format(prolific_qid),
-	# 			"SecondaryAttribute": prolific_q_text,
-	# 			"TertiaryAttribute": None,
-	# 			"Payload": {
-	# 				"QuestionText": prolific_q_text,
-	# 				"DefaultChoices": {
-	# 					"TEXT": {
-	# 						"Text": "${e://Field/PROLIFIC_PID}"
-	# 					}
-	# 				},
-	# 				"QuestionID": "QID{}".format(prolific_qid),
-	# 				"QuestionType": "TE",
-	# 				"Selector": "SL",
-	# 				"Configuration": {
-	# 					"QuestionDescriptionOption": "UseText"
-	# 				},
-	# 				"QuestionDescription": prolific_q_text,
-	# 				"Validation": {
-	# 					"Settings": {
-	# 						"ForceResponse": "OFF",
-	# 						"Type": "None"
-	# 					}
-	# 				},
-	# 				"GradingData": [],
-	# 				"Language": [],
-	# 				"NextChoiceId": 4,
-    #     			"NextAnswerId": 1,
-	# 				"SearchSource": {
-	# 					"AllowFreeResponse": "false"
-	# 				},
-	# 				"DataExportTag": "QID{}".format(prolific_qid),
-	# 			}
-	# 	    }
-
-	# 	survey_elements.append(prolific_q)
-
-	# 	block_elements.append({
-	# 		"Type": "Question",
-	# 		"QuestionID": "QID{}".format(prolific_qid)
-	# 	})
-
 	if 4 <= curr <= 10:
 		block_elements.append({
 			"Type": "Question",
@@ -634,6 +593,117 @@ for a_chunk in attention_check_headlines:
 
 for t in training_headlines:
 	training_title_to_student[t] = list(range(num_students))
+
+def create_highlight_question(qid, mode = "acquirer"):
+	q_text = "Click and drag / press to highlight the {} company name in the headline.".format(mode.upper())
+	q = {
+      "SurveyID": qid,
+      "Element": "SQ",
+      "PrimaryAttribute": qid,
+      "SecondaryAttribute": "Click and drag / press to highlight the ACQUIRED company name in the headline.",
+      "TertiaryAttribute": None,
+      "Payload": {
+        "QuestionText": "Click and drag / press to highlight the <strong>ACQUIRED</strong> company name in the headline.",
+        "DefaultChoices": False,
+        "DataExportTag": qid,
+        "QuestionID": qid,
+        "QuestionType": "HL",
+        "Selector": "Text",
+        "DataVisibility": {
+          "Private": False,
+          "Hidden": False
+        },
+        "Configuration": {
+          "QuestionDescriptionOption": "UseText",
+          "CustomTextSize": False,
+          "AutoStopWords": False
+        },
+        "QuestionDescription": "Click and drag / press to highlight the ACQUIRED company name in the headline.",
+        "Choices": {
+          "298": {
+            "WordIndex": 0,
+            "WordLength": 7,
+            "Word": "Synergy",
+            "Display": "1: Synergy"
+          },
+          "299": {
+            "WordIndex": 8,
+            "WordLength": 4,
+            "Word": "Plus",
+            "Display": "2: Plus"
+          },
+          "300": {
+            "WordIndex": 13,
+            "WordLength": 9,
+            "Word": "Acquiring",
+            "Display": "3: Acquiring"
+          },
+          "301": {
+            "WordIndex": 23,
+            "WordLength": 7,
+            "Word": "AirData",
+            "Display": "4: AirData"
+          }
+        },
+        "DisplayLogic": {
+          "0": {
+            "0": {
+              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 2 </span>",
+              "LeftOperand": "respondentID",
+              "LogicType": "EmbeddedField",
+              "Operator": "EqualTo",
+              "RightOperand": "2",
+              "Type": "Expression"
+            },
+            "1": {
+              "Conjuction": "Or",
+              "Description": "<span class=\"ConjDesc\">If</span>  <span class=\"LeftOpDesc\">respondentID</span> <span class=\"OpDesc\">Is Equal to</span> <span class=\"RightOpDesc\"> 3 </span>",
+              "LeftOperand": "respondentID",
+              "LogicType": "EmbeddedField",
+              "Operator": "EqualTo",
+              "RightOperand": "3",
+              "Type": "Expression"
+            },
+            "Type": "If"
+          },
+          "Type": "BooleanExpression",
+          "inPage": False
+        },
+        "ChoiceOrder": [
+          298,
+          299,
+          300,
+          301
+        ],
+        "Validation": {
+          "Settings": {
+            "ForceResponse": "OFF",
+            "Type": "None"
+          }
+        },
+        "GradingData": [],
+        "Language": [],
+        "NextChoiceId": 302,
+        "NextAnswerId": 4,
+        "Answers": {
+          "1": {
+            "Display": "ACQUIRED",
+            "BGColor": "#1a9641",
+            "TextColor": "#ffffff"
+          }
+        },
+        "ExcludedWords": [],
+        "WordChoiceIds": [
+          298,
+          299,
+          300,
+          301
+        ],
+        "HighlightText": "Synergy Plus Acquiring AirData",
+        "ColorScale": "RdYlGn"
+      }
+    }
+	return q
 
 def add_cond_display(student_qid, sids):
 	q_cond_display = {
@@ -684,23 +754,16 @@ def create_end_of_survey_logic(fl_id, eos_block_id, segment = 0):
 	}
 	eos_payload_blocks.append(eos_payload)
 
-	# msg = "Your score {} wasn't high enough to continue with the survey."
-	# if segment == 0:
-	# 	msg = msg.format("on the training questions")
-	# elif segment == 1:
-	# 	msg = msg.format("in the current block")
-	# else:
-	# 	msg = "You have completed the survey."
 	msg = "You have completed the survey."
 
 	elem = {
-		"SurveyID": "SV_eLnpGNWb3hM31cy",
+		"SurveyID": "{}".format(survey_id),
 		"Element": "SQ",
 		"PrimaryAttribute": qid,
 		"SecondaryAttribute": "End of survey",
 		"TertiaryAttribute": None,
 		"Payload": {
-		"QuestionText": msg + "<br><br>In order to get paid for the work you have done on this survey, you need to enter the following code in the box at the bottom of the Mechanical Turk page where you started once you close this survey.<br><br>Please write this down so you don't forget: <br><br>${e://Field/endID}",
+		"QuestionText": msg + "<br><br>Clicking the 'next' arrow on this page will redirect you back to Prolific and register your submission.",
 		"QuestionID": qid,
 		"QuestionType": "DB",
 		"Selector": "TB",
@@ -820,6 +883,10 @@ def create_question(curr_title, curr, disp_settings = [], train_ans_lst = [], tr
 		curr_sub = (curr - 1) * num_subparts + subpart + 1
 		qid = "QID{}".format(curr_sub)
 
+		if subpart in [1, 2, 3]:
+			real_qid_lst.append(qid)
+			real_headline_lst.append(curr_title)
+
 		block_elements.append({
 			"Type": "Question",
 			"QuestionID": qid,
@@ -832,7 +899,7 @@ def create_question(curr_title, curr, disp_settings = [], train_ans_lst = [], tr
 				displayed_headline = "<b>TRAINING TEST IN PROGRESS</b><br><br>Headline: <br><br>\n<b>{}</b>\n".format(curr_title)
 			
 			elem = {
-		      "SurveyID": "SV_eLnpGNWb3hM31cy",
+		      "SurveyID": "{}".format(survey_id),
 		      "Element": "SQ",
 		      "PrimaryAttribute": qid,
 		      "SecondaryAttribute": "Headline: {}".format(curr_title),
@@ -854,7 +921,7 @@ def create_question(curr_title, curr, disp_settings = [], train_ans_lst = [], tr
 			}
 		elif subpart == 1:
 			elem = {
-				"SurveyID": "SV_eLnpGNWb3hM31cy",
+				"SurveyID": "{}".format(survey_id),
 				"Element": "SQ",
 				"PrimaryAttribute": qid,
 				"SecondaryAttribute": "Do you think that this headline refers to an acquisition or merger?",
@@ -900,78 +967,90 @@ def create_question(curr_title, curr, disp_settings = [], train_ans_lst = [], tr
 				},
 			}
 
+			real_qtype_lst.append(0)
+
 			add_score(elem, mc_weight, "MC", train_ans)
 		elif subpart == 2:
-			elem = {
-				"SurveyID": "SV_eLnpGNWb3hM31cy",
-				"Element": "SQ",
-				"PrimaryAttribute": qid,
-				"SecondaryAttribute": "ACQUIRER (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.):",
-				"TertiaryAttribute": None,
-				"Payload": {
-					"QuestionText": "ACQUIRER (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.):\n\n",
-					"DefaultChoices": False,
-					"QuestionID": qid,
-					"QuestionType": "TE",
-					"Selector": "SL",
-					"Configuration": {
-						"QuestionDescriptionOption": "UseText"
-					},
-					"QuestionDescription": "ACQUIRER (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.):",
-					"Validation": {
-						"Settings": {
-							"ForceResponse": "OFF",
-							"Type": "None"
-						}
-					},
-					"GradingData": [],
-					"Language": [],
-					"NextChoiceId": 4,
-        			"NextAnswerId": 1,
-					"SearchSource": {
-						"AllowFreeResponse": "false"
-					},
-					"DataExportTag": qid,
+			if highlight_mode:
+				elem = create_highlight_question(qid, mode = "acquirer")
+			else:
+				elem = {
+					"SurveyID": "{}".format(survey_id),
+					"Element": "SQ",
+					"PrimaryAttribute": qid,
+					"SecondaryAttribute": "ACQUIRER (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.):",
+					"TertiaryAttribute": None,
+					"Payload": {
+						"QuestionText": "ACQUIRER (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.):\n\n",
+						"DefaultChoices": False,
+						"QuestionID": qid,
+						"QuestionType": "TE",
+						"Selector": "SL",
+						"Configuration": {
+							"QuestionDescriptionOption": "UseText"
+						},
+						"QuestionDescription": "ACQUIRER (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.):",
+						"Validation": {
+							"Settings": {
+								"ForceResponse": "OFF",
+								"Type": "None"
+							}
+						},
+						"GradingData": [],
+						"Language": [],
+						"NextChoiceId": 4,
+						"NextAnswerId": 1,
+						"SearchSource": {
+							"AllowFreeResponse": "false"
+						},
+						"DataExportTag": qid,
+					}
 				}
-		    }
+
+			real_qtype_lst.append(1)
 
 			merger = train_ans == 1
 			if merger: train_ans_arg = [train_ans_acquirer, train_ans_acquired]
 			else: train_ans_arg = train_ans_acquirer
 			add_score(elem, te_weight, "TE", train_ans_arg, merger = merger)
 		elif subpart == 3:
-			elem = {
-				"SurveyID": "SV_eLnpGNWb3hM31cy",
-				"Element": "SQ",
-				"PrimaryAttribute": qid,
-				"SecondaryAttribute": "ACQUIRED (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.):",
-				"TertiaryAttribute": None,
-				"Payload": {
-					"QuestionText": "ACQUIRED (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.):\n\n",
-					"DefaultChoices": False,
-					"QuestionID": qid,
-					"QuestionType": "TE",
-					"Selector": "SL",
-					"Configuration": {
-						"QuestionDescriptionOption": "UseText"
-					},
-					"QuestionDescription": "ACQUIRED (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.):",
-					"Validation": {
-						"Settings": {
-							"ForceResponse": "OFF",
-							"Type": "None"
-						}
-					},
-					"GradingData": [],
-					"Language": [],
-					"NextChoiceId": 4,
-        			"NextAnswerId": 1,
-					"SearchSource": {
-						"AllowFreeResponse": "false"
-					},
-					"DataExportTag": qid,
+			if highlight_mode:
+				elem = create_highlight_question(qid, mode = "acquired")
+			else: 
+				elem = {
+					"SurveyID": "{}".format(survey_id),
+					"Element": "SQ",
+					"PrimaryAttribute": qid,
+					"SecondaryAttribute": "ACQUIRED (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.):",
+					"TertiaryAttribute": None,
+					"Payload": {
+						"QuestionText": "ACQUIRED (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.):\n\n",
+						"DefaultChoices": False,
+						"QuestionID": qid,
+						"QuestionType": "TE",
+						"Selector": "SL",
+						"Configuration": {
+							"QuestionDescriptionOption": "UseText"
+						},
+						"QuestionDescription": "ACQUIRED (Leave blank if not indicated or unclear. You are encouraged to copy-paste from the headline text.):",
+						"Validation": {
+							"Settings": {
+								"ForceResponse": "OFF",
+								"Type": "None"
+							}
+						},
+						"GradingData": [],
+						"Language": [],
+						"NextChoiceId": 4,
+						"NextAnswerId": 1,
+						"SearchSource": {
+							"AllowFreeResponse": "false"
+						},
+						"DataExportTag": qid,
+					}
 				}
-		    }
+
+			real_qtype_lst.append(2)
 
 			merger = train_ans == 1
 			if merger: train_ans_arg = [train_ans_acquired, train_ans_acquirer]
@@ -979,7 +1058,7 @@ def create_question(curr_title, curr, disp_settings = [], train_ans_lst = [], tr
 			add_score(elem, te_weight, "TE", train_ans_arg, merger = merger)
 		elif subpart == 4:
 			elem = {
-		      "SurveyID": "SV_eLnpGNWb3hM31cy",
+		      "SurveyID": "{}".format(survey_id),
 		      "Element": "SQ",
 		      "PrimaryAttribute": qid,
 		      "SecondaryAttribute": "Timing",
@@ -1025,77 +1104,6 @@ def create_question(curr_title, curr, disp_settings = [], train_ans_lst = [], tr
 		"Type": "Page Break"
 	})
 
-# # start by asking respondent to enter MTurk worker id, add pagebreak
-# mturk_worker_id = -10000
-# qid = "QID{}".format(mturk_worker_id)
-
-# survey_info["SurveyElements"][0]["Payload"].append({
-# 	"Type": "Standard",
-# 	"SubType": "",
-# 	"Description": "Block {}".format(mturk_worker_id),
-# 	"ID": "BL_{}".format(mturk_worker_id),
-# 	"BlockElements": [],
-# 	"Options": {
-# 		"BlockLocking": "false",
-# 		"RandomizeQuestions": "false",
-# 		"BlockVisibility": "Collapsed",
-# 	}
-# })
-# block_elements = survey_info["SurveyElements"][0]["Payload"][curr + 1]["BlockElements"]
-
-# # append to flow payload
-# survey_info["SurveyElements"][1]["Payload"]["Flow"].append(
-# 	{
-# 		"ID": "BL_{}".format(mturk_worker_id),
-# 		"Type": "Block",
-# 		"FlowID": "FL_{}".format(mturk_worker_id)
-# 	}
-# )
-
-# block_elements.append({
-# 	"Type": "Question",
-# 	"QuestionID": qid,
-# })
-
-# elem = {
-# 	"SurveyID": "SV_eLnpGNWb3hM31cy",
-# 	"Element": "SQ",
-# 	"PrimaryAttribute": qid,
-# 	"SecondaryAttribute": "Enter your MTurk worker ID:",
-# 	"TertiaryAttribute": None,
-# 	"Payload": {
-# 		"QuestionText": "Enter your MTurk worker ID:\n\n",
-# 		"DefaultChoices": False,
-# 		"QuestionID": qid,
-# 		"QuestionType": "TE",
-# 		"Selector": "SL",
-# 		"Configuration": {
-# 			"QuestionDescriptionOption": "UseText"
-# 		},
-# 		"QuestionDescription": "Enter your MTurk worker ID:",
-# 		"Validation": {
-# 			"Settings": {
-# 				"ForceResponse": "OFF",
-# 				"Type": "None"
-# 			}
-# 		},
-# 		"GradingData": [],
-# 		"Language": [],
-# 		"NextChoiceId": 4,
-# 		"NextAnswerId": 1,
-# 		"SearchSource": {
-# 			"AllowFreeResponse": "false"
-# 		},
-# 		"DataExportTag": qid,
-# 	}
-# }
-
-# survey_elements.append(elem)
-# block_elements.append({
-# 	"Type": "Page Break"
-# })
-# curr += 1
-
 curr_offset = curr
 total_questions_done = 0
 # start with all training headlines
@@ -1111,24 +1119,13 @@ set_score_copy["FlowID"] = "FL_{}".format(set_score_id)
 flow_elements.append(set_score_copy)
 set_score_id -= 1
 
-# # add branch logic to kick respondent out of survey after training q's
+# add branch logic to kick respondent out of survey after training q's
 eos_block_id = -1000
-# training_thresh_mc_num = math.ceil(training_mc_weight * training_thresh_mc * training_length)
-# training_thresh_te_num = math.ceil(training_te_weight * training_thresh_te * 2 * training_length)
-# attention_thresh_mc_num = math.ceil(attention_mc_weight * attention_thresh_mc * attention_check_length)
-# attention_thresh_te_num = math.ceil(attention_te_weight * attention_thresh_te * 2 * attention_check_length)
 fl_id = -1
-# flow_elements.append(create_branch_logic(branch_logic_template, fl_id, eos_block_id, training_thresh_mc_num, training_thresh_te_num, total_questions_done, segment = 0))
-# end_survey_display_flow_id -= 1
-# end_survey_flow_id -= 1
-# set_end_id_flow_id -= 1
-# fl_id -= curr_offset
-# eos_block_id -= 1
 
 num_blocks = len(attention_check_headlines)
 
 for i in range(num_blocks):
-	# print('block', i)
 	# in every iteration
 	# pick attention check number of attention check headlines
 	curr_at_check = attention_check_headlines[i]
@@ -1148,9 +1145,6 @@ for i in range(num_blocks):
 		
 		# remove the chosen headline idxes from all student assignments
 		student_assignments[j] = list(set(student_assignments[j]) - set(regular_headline_idxes[j]))
-		# for sa in student_assignments.keys():
-		# 	print('x', sa, student_assignments[sa], regular_headline_idxes[j])
-		# 	student_assignments[sa] = list(set(student_assignments[sa]) - set(regular_headline_idxes[j]))
 		regular_headlines = titles[np.array(regular_headline_idxes[j])]
 		curr_headlines = curr_headlines.union(set(regular_headlines))
 		for r in regular_headlines:
@@ -1159,14 +1153,11 @@ for i in range(num_blocks):
 			else:
 				regular_headline_to_student[r] = [j]
 
-		# print(j, 'regular headline to student', regular_headline_to_student, '\n')
-
 		if j == 0:
 			total_questions_done += block_size
 	
 	# shuffle attention check and regular headlines in a block
 	np.random.shuffle(np.array(list(curr_headlines)))
-	# print(curr_headlines)
 
 	for c in curr_headlines:
 		if c in regular_headline_to_student:
@@ -1181,15 +1172,6 @@ for i in range(num_blocks):
 	set_score_copy["FlowID"] = "FL_{}".format(set_score_id)
 	flow_elements.append(set_score_copy)
 	set_score_id -= 1
-
-	# curr_attention_thresh_mc_num = training_thresh_mc_num + attention_thresh_mc_num * (i + 1) #sum(calc_attention_thresh[:i + 1])
-	# curr_attention_thresh_te_num = training_thresh_te_num + attention_thresh_te_num * (i + 1)
-	# flow_elements.append(create_branch_logic(branch_logic_template, fl_id, eos_block_id, curr_attention_thresh_mc_num, curr_attention_thresh_te_num, total_questions_done, segment = 1))
-	# end_survey_display_flow_id -= 1
-	# end_survey_flow_id -= 1
-	# set_end_id_flow_id -= 1
-	# eos_block_id -= 1
-	# fl_id -= 2
 
 # create the rest of the questions for the remaining regular headlines
 remaining_headlines = []
@@ -1251,3 +1233,10 @@ att_flat = set(np.array(attention_check_headlines).flatten())
 assert(len(displayed.intersection(set(training_headlines))) == len(training_headlines))
 assert(len(displayed.intersection(att_flat)) == num_blocks * attention_check_length)
 assert(len(displayed.intersection(set(titles_to_classify))) == num_headlines)
+
+q_desc_info = pd.DataFrame({
+	"QID": real_qid_lst,
+	"Headline": real_headline_lst,
+	"QType": real_qtype_lst
+})
+q_desc_info.to_csv(q_desc_name)
